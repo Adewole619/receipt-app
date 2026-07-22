@@ -177,3 +177,269 @@ git push -u origin main
 ---
 
 **End of Week 1 – Day 1**
+
+# Week 1 – Day 2 Journal
+
+**Date:** 22 July 2026
+
+**Project:** Receipt Manager App with Python
+
+**Study Duration:** 3–4 Hours
+
+---
+
+# Topic
+
+Variables, Data Types, and User Input
+
+---
+
+# Objectives
+
+Today I wanted to:
+
+- Learn what variables are.
+- Understand the basic Python data types.
+- Learn how to get input from the user.
+- Learn how to display stored information.
+- Build a simple console receipt application.
+
+---
+
+# What I Learned
+
+Today I learned that a variable is like a labeled box that stores information. Instead of writing the same value repeatedly, I can store it in a variable and use it whenever I need it.
+
+I also learned that the `=` operator in Python is an assignment operator. It stores the value on the right-hand side into the variable on the left-hand side. It does not mean "is equal to" like it does in mathematics.
+
+I learned that variables can change. If I assign a new value to a variable, the old value is replaced.
+
+For example:
+
+```python
+store = "Shoprite"
+store = "Spar"
+store = "Game"
+```
+
+At the end, the variable `store` contains only `"Game"`.
+
+---
+
+# Data Types I Learned
+
+Today I learned four basic Python data types:
+
+| Data Type | Description | Example |
+|-----------|-------------|---------|
+| `str` | Stores text | `"Shoprite"` |
+| `int` | Stores whole numbers | `10` |
+| `float` | Stores decimal numbers | `2500.50` |
+| `bool` | Stores `True` or `False` | `True` |
+
+I also learned that I can use the `type()` function to check the data type of a variable.
+
+Example:
+
+```python
+store = "Shoprite"
+print(type(store))
+```
+
+Output:
+
+```text
+<class 'str'>
+```
+
+---
+
+# User Input
+
+Today I learned how to use the `input()` function.
+
+Example:
+
+```python
+name = input("Enter your name: ")
+```
+
+This allows my program to ask the user for information instead of displaying only fixed text.
+
+I also learned that `input()` always returns a string, even if the user types a number.
+
+---
+
+# Practice Completed
+
+Today I completed the following exercises:
+
+- Asked the user for their name.
+- Asked for their favorite food.
+- Asked for their dream job.
+- Displayed the information entered by the user.
+- Created variables using different data types.
+- Used the `type()` function to identify data types.
+- Built a simple receipt display that collected:
+  - Store name
+  - Receipt number
+  - Item name
+  - Quantity
+  - Price
+
+---
+
+# Challenges I Faced
+
+While working on today's exercises, I made a mistake by trying to check the data type of variables before creating them.
+
+For example:
+
+```python
+print(type(store))
+```
+
+before writing:
+
+```python
+store = "Shoprite"
+```
+
+This caused a `NameError` because the variable did not exist yet.
+
+---
+
+# How I Solved It
+
+I learned that a variable must be created before it can be used.
+
+The correct order is:
+
+```python
+store = "Shoprite"
+print(type(store))
+```
+
+I also learned the importance of writing code in the correct sequence.
+
+---
+
+# Key Concepts I Remember
+
+- Variables store information.
+- Variables can be updated with new values.
+- `=` assigns a value to a variable.
+- `input()` collects information from the user.
+- `type()` checks the data type of a variable.
+- `input()` always returns a string.
+- Variables must be created before they are used.
+
+---
+
+# Mentor Feedback
+
+Today's feedback helped me understand:
+
+- Why variables should have meaningful names.
+- Why Python developers prefer `snake_case` for variable names.
+- Why the order of code matters.
+- Why a variable must exist before I can use it.
+
+---
+
+# What I Enjoyed
+
+I enjoyed making my program interactive by asking the user questions.
+
+Instead of displaying fixed messages, my program now responds to the user's input, which makes it feel like a real application.
+
+---
+
+# What I Found Difficult
+
+The biggest challenge today was understanding why I received a `NameError`.
+
+After reviewing my code, I realized I was trying to use variables before creating them.
+
+This taught me to carefully think about the order in which my code runs.
+
+---
+
+# Goals for Tomorrow
+
+Tomorrow I want to learn:
+
+- Arithmetic operators
+- Assignment operators
+- Comparison operators
+- Type conversion using `int()` and `float()`
+- How to calculate receipt totals
+
+---
+
+# Reflection
+
+Today was an exciting lesson because my programs became interactive.
+
+I learned how to store information using variables, collect input from the user, and display the information in a simple receipt format.
+
+I also learned that programming is not just about writing code but also about understanding the order in which the computer executes instructions.
+
+Every lesson is bringing me one step closer to building my own Receipt Manager application.
+
+---
+
+# Commands I Used Today
+
+```bash
+python3 lessons/day02.py
+python3 practice/practice_day02.py
+python3 challenges/challenge_day02.py
+
+git add .
+git commit -m "Week 1 Day 2: Learned variables, data types, and user input"
+```
+
+---
+
+# Vocabulary
+
+| Term | Meaning |
+|------|---------|
+| Variable | A named location that stores data. |
+| Assignment | Storing a value in a variable using `=`. |
+| String (`str`) | A sequence of characters or text. |
+| Integer (`int`) | A whole number. |
+| Float (`float`) | A decimal number. |
+| Boolean (`bool`) | A value that is either `True` or `False`. |
+| `input()` | Collects information from the user. |
+| `type()` | Displays the data type of a value or variable. |
+| `snake_case` | A naming style where words are lowercase and separated by underscores, e.g., `store_name`. |
+
+---
+
+# Daily Rating
+
+**Understanding:** ⭐⭐⭐⭐⭐ (5/5)
+
+**Difficulty:** ⭐⭐⭐☆☆ (3/5)
+
+**Confidence:** ⭐⭐⭐⭐☆ (4/5)
+
+---
+
+# End of Week 1 – Day 2
+
+## Progress Summary
+
+✅ Learned variables
+
+✅ Learned data types
+
+✅ Learned user input
+
+✅ Learned how to use `type()`
+
+✅ Built a simple console receipt application
+
+✅ Improved my understanding of variable assignment and code execution order
