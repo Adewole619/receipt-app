@@ -443,3 +443,359 @@ git commit -m "Week 1 Day 2: Learned variables, data types, and user input"
 ✅ Built a simple console receipt application
 
 ✅ Improved my understanding of variable assignment and code execution order
+
+# Week 1 – Day 3 Journal
+
+**Date:** 23 July 2026
+
+**Project:** Receipt Manager App with Python
+
+**Study Duration:** 3–4 Hours
+
+---
+
+# Topic
+
+Operators, Type Conversion, and Calculations
+
+---
+
+# Objectives
+
+Today I wanted to:
+
+- Learn arithmetic operators.
+- Learn assignment operators.
+- Learn comparison operators.
+- Understand why `input()` returns a string.
+- Learn how to convert strings into numbers.
+- Build my first receipt calculator.
+
+---
+
+# What I Learned
+
+Today I learned how Python performs mathematical calculations using arithmetic operators.
+
+I also learned that when a user enters information using the `input()` function, Python always stores the value as a string (`str`). If I want to perform calculations, I must first convert the string into a number using either `int()` or `float()`.
+
+This was an important lesson because my receipt application needs to calculate totals instead of only displaying information.
+
+---
+
+# Arithmetic Operators
+
+Today I learned these arithmetic operators:
+
+| Operator | Meaning | Example | Result |
+|----------|---------|---------|--------|
+| `+` | Addition | `5 + 3` | `8` |
+| `-` | Subtraction | `5 - 3` | `2` |
+| `*` | Multiplication | `5 * 3` | `15` |
+| `/` | Division | `10 / 2` | `5.0` |
+| `//` | Floor Division | `10 // 3` | `3` |
+| `%` | Modulus (Remainder) | `10 % 3` | `1` |
+| `**` | Exponent (Power) | `2 ** 3` | `8` |
+
+---
+
+# Type Conversion
+
+Today I learned that I can convert data into different types.
+
+Example:
+
+```python
+price = float(input("Enter price: "))
+quantity = int(input("Enter quantity: "))
+```
+
+This converts:
+
+- `"1500.50"` into `1500.50`
+- `"2"` into `2`
+
+Now Python can perform calculations.
+
+---
+
+# Assignment Operators
+
+I learned that instead of writing:
+
+```python
+total = total + price
+```
+
+I can write:
+
+```python
+total += price
+```
+
+Other assignment operators I learned:
+
+| Operator | Example |
+|----------|---------|
+| `+=` | `x += 5` |
+| `-=` | `x -= 5` |
+| `*=` | `x *= 2` |
+| `/=` | `x /= 2` |
+
+These operators make my code shorter and easier to read.
+
+---
+
+# Comparison Operators
+
+I also learned comparison operators.
+
+These operators return either `True` or `False`.
+
+Examples:
+
+```python
+5 > 3
+5 < 3
+5 == 5
+5 != 5
+```
+
+Output:
+
+```text
+True
+False
+True
+False
+```
+
+Although I have not used them much yet, I learned that they will be important when I start using `if` statements.
+
+---
+
+# Practice Completed
+
+Today I completed the following:
+
+- Practiced arithmetic operations.
+- Practiced assignment operators.
+- Practiced comparison operators.
+- Converted user input into integers and floats.
+- Calculated receipt subtotals.
+- Displayed receipt information using f-strings.
+
+---
+
+# Receipt Calculator
+
+Today I built my first receipt calculator.
+
+The program asked the user for:
+
+- Store name
+- Item name
+- Price
+- Quantity
+
+It then calculated:
+
+```text
+Subtotal = Price × Quantity
+```
+
+Finally, it displayed the receipt in a clean format.
+
+---
+
+# Challenges I Faced
+
+At first, I was unsure why calculations could not be performed directly on values returned by `input()`.
+
+I learned that `input()` always returns a string, so Python cannot multiply two strings together.
+
+For example:
+
+```python
+price = input("Price: ")
+quantity = input("Quantity: ")
+
+subtotal = price * quantity
+```
+
+This produces a `TypeError`.
+
+---
+
+# How I Solved It
+
+I solved the problem by converting the input values.
+
+Example:
+
+```python
+price = float(input("Price: "))
+quantity = int(input("Quantity: "))
+
+subtotal = price * quantity
+```
+
+Now Python correctly performs the calculation.
+
+---
+
+# New Things I Discovered
+
+Today I discovered that Python can multiply a string by an integer.
+
+Example:
+
+```python
+print("Hi" * 3)
+```
+
+Output:
+
+```text
+HiHiHi
+```
+
+I also learned that Python cannot multiply two strings.
+
+Example:
+
+```python
+"100" * "3"
+```
+
+This results in a `TypeError`.
+
+---
+
+# Mentor Challenges
+
+Today I answered several programming questions without running the code.
+
+Some of the concepts I understood were:
+
+- Variables can store new values by replacing old ones.
+- Multiplying a string by an integer repeats the string.
+- Type conversion is necessary before performing calculations.
+- Formatting numbers with `.2f` displays two decimal places.
+
+These exercises helped me think like a programmer instead of relying only on running the code.
+
+---
+
+# Key Concepts I Remember
+
+- `input()` always returns a string.
+- `int()` converts text into whole numbers.
+- `float()` converts text into decimal numbers.
+- Arithmetic operators perform calculations.
+- Assignment operators update variable values.
+- Comparison operators return `True` or `False`.
+- f-strings make output easier to read.
+- `:.2f` formats numbers with two decimal places.
+
+---
+
+# What I Enjoyed
+
+I enjoyed building my first receipt calculator because my program finally started doing real calculations instead of only displaying information.
+
+It felt like I was building something useful.
+
+---
+
+# What I Found Difficult
+
+The most challenging part was understanding why strings cannot be multiplied together.
+
+After practicing type conversion, the concept became much clearer.
+
+---
+
+# Goals for Tomorrow
+
+Tomorrow I want to learn:
+
+- `if` statements
+- `elif`
+- `else`
+- Boolean logic
+- Input validation
+- Making my receipt application smarter by checking user input
+
+---
+
+# Reflection
+
+Today was one of my favorite lessons so far.
+
+I learned how to perform calculations, convert data types, and build a simple receipt calculator.
+
+I also practiced tracing code before running it, which helped me understand how Python executes programs step by step.
+
+I can already see my programming skills improving each day, and I feel more confident writing Python code on my own.
+
+---
+
+# Commands I Used Today
+
+```bash
+python3 lessons/day03.py
+python3 practice/practice_day03.py
+python3 challenges/challenge_day03.py
+
+git add .
+git commit -m "Week 1 Day 3: Learned operators, type conversion, and calculations"
+```
+
+---
+
+# Vocabulary
+
+| Term | Meaning |
+|------|---------|
+| Arithmetic Operator | Performs mathematical calculations. |
+| Assignment Operator | Updates the value of a variable. |
+| Comparison Operator | Compares two values and returns `True` or `False`. |
+| Type Conversion | Changing one data type into another. |
+| `int()` | Converts a value into an integer. |
+| `float()` | Converts a value into a floating-point number. |
+| `subtotal` | The total amount before taxes or discounts. |
+| f-string | A way to insert variables directly into a string. |
+| `.2f` | Formats a floating-point number with two decimal places. |
+
+---
+
+# Daily Rating
+
+**Understanding:** ⭐⭐⭐⭐⭐ (5/5)
+
+**Difficulty:** ⭐⭐⭐⭐☆ (4/5)
+
+**Confidence:** ⭐⭐⭐⭐⭐ (5/5)
+
+---
+
+# Progress Summary
+
+✅ Learned arithmetic operators
+
+✅ Learned assignment operators
+
+✅ Learned comparison operators
+
+✅ Learned type conversion
+
+✅ Built my first receipt calculator
+
+✅ Practiced tracing Python code before running it
+
+✅ Improved my understanding of calculations and formatted output
+
+---
+
+# End of Week 1 – Day 3
