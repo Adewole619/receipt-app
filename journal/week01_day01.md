@@ -799,3 +799,326 @@ git commit -m "Week 1 Day 3: Learned operators, type conversion, and calculation
 ---
 
 # End of Week 1 – Day 3
+
+# Week 1 – Day 4 Journal
+
+**Date:** 24 July 2026
+
+**Project:** Receipt Manager App with Python
+
+**Study Duration:** 3–4 Hours
+
+---
+
+# Topic
+
+Decision Making with `if`, `elif`, and `else`
+
+---
+
+# Objectives
+
+Today I wanted to:
+
+- Learn how Python makes decisions.
+- Understand `if`, `elif`, and `else` statements.
+- Learn Boolean expressions.
+- Validate user input.
+- Improve my receipt calculator by preventing invalid data.
+
+---
+
+# What I Learned
+
+Today I learned that programs can make decisions using `if`, `elif`, and `else`.
+
+Instead of always running every line of code, Python can decide what to do based on whether a condition is `True` or `False`.
+
+This makes my programs smarter because they can respond differently depending on what the user enters.
+
+---
+
+# The `if` Statement
+
+I learned that an `if` statement allows Python to execute code only when a condition is true.
+
+Example:
+
+```python
+age = 18
+
+if age >= 18:
+    print("You are an adult.")
+```
+
+If the condition is true, Python runs the indented code.
+
+---
+
+# The `else` Statement
+
+I learned that `else` runs when the `if` condition is false.
+
+Example:
+
+```python
+age = 15
+
+if age >= 18:
+    print("Adult")
+else:
+    print("Minor")
+```
+
+Only one block of code is executed.
+
+---
+
+# The `elif` Statement
+
+I learned that `elif` lets me check another condition if the previous one is false.
+
+Example:
+
+```python
+score = 75
+
+if score >= 90:
+    print("Excellent")
+elif score >= 70:
+    print("Good")
+else:
+    print("Keep Practicing")
+```
+
+This allows a program to make multiple decisions.
+
+---
+
+# Boolean Expressions
+
+Today I learned that every condition evaluates to either:
+
+- `True`
+- `False`
+
+Python uses these values to decide which block of code should run.
+
+---
+
+# Comparison Operators
+
+Today I reviewed comparison operators.
+
+| Operator | Meaning |
+|----------|---------|
+| `==` | Equal to |
+| `!=` | Not equal to |
+| `>` | Greater than |
+| `<` | Less than |
+| `>=` | Greater than or equal to |
+| `<=` | Less than or equal to |
+
+These operators are used inside `if` statements to compare values.
+
+---
+
+# Receipt Validation
+
+Today I improved my receipt application by validating user input.
+
+My program checks:
+
+- Store name is not empty.
+- Item name is not empty.
+- Price is valid.
+- Quantity is valid.
+
+If any of these checks fail, the program displays an error message.
+
+Otherwise, it calculates the subtotal and prints the receipt.
+
+---
+
+# My Solution
+
+One thing I am proud of today is that I wrote my own validation logic.
+
+I used the `or` operator to check multiple conditions at once.
+
+```python
+if store_name == "" or item_name == "" or quantity <= 0 or price <= 0:
+```
+
+Then I displayed a specific error message for each invalid field.
+
+This helped me understand how to combine conditions while still giving meaningful feedback to the user.
+
+---
+
+# Mentor Feedback
+
+Today I received useful feedback about my solution.
+
+### What I did well
+
+- Used `if` statements correctly.
+- Validated multiple inputs.
+- Printed all validation errors instead of stopping after the first one.
+- Created a clean receipt layout.
+- Continued using f-strings.
+
+### Improvements I made
+
+I learned that my original code used:
+
+```python
+quantity < 0
+price < 0
+```
+
+This accidentally allowed the value `0`.
+
+I corrected my validation to:
+
+```python
+quantity <= 0
+price <= 0
+```
+
+Now my program correctly follows the requirement that both values must be greater than zero.
+
+---
+
+# Challenges I Faced
+
+At first, I thought checking for values less than zero was enough.
+
+After testing my program, I realized that entering `0` still printed a receipt with a subtotal of `₦0.00`.
+
+This taught me an important lesson about carefully reading program requirements.
+
+---
+
+# How I Solved It
+
+I changed my validation conditions from:
+
+```python
+quantity < 0
+price < 0
+```
+
+to:
+
+```python
+quantity <= 0
+price <= 0
+```
+
+Now invalid values are rejected before the receipt is displayed.
+
+---
+
+# Key Concepts I Remember
+
+- `if` executes code when a condition is true.
+- `else` executes when the condition is false.
+- `elif` allows multiple conditions.
+- Conditions return either `True` or `False`.
+- Input validation prevents invalid data.
+- Multiple conditions can be combined using `or`.
+- Programs should validate data before performing calculations.
+
+---
+
+# What I Enjoyed
+
+Today was my favorite lesson so far because my receipt application became smarter.
+
+Instead of accepting every input, it now checks whether the data is valid before calculating the subtotal.
+
+It feels more like a real application.
+
+---
+
+# What I Found Difficult
+
+The biggest challenge was identifying a logic bug.
+
+My program worked without crashing, but it still accepted a price of `0`.
+
+This taught me that a program can run successfully while still producing incorrect results.
+
+---
+
+# Reflection
+
+Today I learned that writing code is not only about making it run.
+
+It is also about making sure it behaves correctly.
+
+I learned how to use decision-making statements, validate user input, and think carefully about program logic.
+
+I also learned to mentally trace my program before running it, which helps me find bugs more easily.
+
+I feel more confident because my receipt application is becoming more realistic every day.
+
+---
+
+# Commands I Used Today
+
+```bash
+python3 lessons/day04.py
+python3 practice/practice_day04.py
+python3 challenges/challenge_day04.py
+
+git add .
+git commit -m "Week 1 Day 4: Learned if statements and input validation"
+```
+
+---
+
+# Vocabulary
+
+| Term | Meaning |
+|------|---------|
+| `if` | Executes code when a condition is true. |
+| `elif` | Checks another condition if the previous one is false. |
+| `else` | Executes when all previous conditions are false. |
+| Boolean | A value that is either `True` or `False`. |
+| Validation | Checking whether user input is correct before using it. |
+| Logic Bug | A mistake where the program runs but produces the wrong result. |
+| Condition | An expression that evaluates to `True` or `False`. |
+
+---
+
+# Daily Rating
+
+**Understanding:** ⭐⭐⭐⭐⭐ (5/5)
+
+**Difficulty:** ⭐⭐⭐⭐☆ (4/5)
+
+**Confidence:** ⭐⭐⭐⭐⭐ (5/5)
+
+---
+
+# Progress Summary
+
+✅ Learned `if`, `elif`, and `else`
+
+✅ Learned Boolean expressions
+
+✅ Validated receipt input
+
+✅ Fixed a logic bug by changing `< 0` to `<= 0`
+
+✅ Improved my receipt application with input validation
+
+✅ Practiced thinking through code before running it
+
+---
+
+# End of Week 1 – Day 4
+
+Today was an important milestone. My receipt application no longer just accepts input—it now checks that the input is valid before processing it. This is a key step toward building a reliable and professional application.
