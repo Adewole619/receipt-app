@@ -19,6 +19,6 @@ print("******************************")
 
 print("Welcome!\nThis program will help you save receipts.\nLet's begin...")
 
-Python
+print("Python")
 
-Receipt App
+print("Receipt App")

@@ -1122,3 +1122,726 @@ git commit -m "Week 1 Day 4: Learned if statements and input validation"
 # End of Week 1 – Day 4
 
 Today was an important milestone. My receipt application no longer just accepts input—it now checks that the input is valid before processing it. This is a key step toward building a reliable and professional application.
+
+
+# Week 1 – Day 5 Journal
+
+**Date:** 26 July 2026
+
+**Project:** Receipt Manager App with Python
+
+**Study Duration:** 3–4 Hours
+
+---
+
+# Topic
+
+Functions – Organizing and Reusing Code
+
+---
+
+# Objectives
+
+Today I wanted to:
+
+- Learn what functions are.
+- Understand how to create and call functions.
+- Learn about parameters and arguments.
+- Understand the `return` statement.
+- Organize my receipt application using functions.
+
+---
+
+# What I Learned
+
+Today I learned that a function is a reusable block of code that performs a specific task.
+
+Instead of writing the same code repeatedly, I can write it once inside a function and call it whenever I need it.
+
+Functions make programs:
+
+- Easier to read
+- Easier to maintain
+- Easier to debug
+- Easier to reuse
+
+---
+
+# Creating My First Function
+
+I learned that a function is created using the `def` keyword.
+
+Example:
+
+```python
+def greet():
+    print("Hello!")
+```
+
+The function does nothing until it is called.
+
+To execute it:
+
+```python
+greet()
+```
+
+---
+
+# Parameters and Arguments
+
+Today I learned the difference between parameters and arguments.
+
+Example:
+
+```python
+def greet(name):
+    print(f"Hello {name}")
+```
+
+When I call:
+
+```python
+greet("Ayoola")
+```
+
+- `name` is the **parameter**.
+- `"Ayoola"` is the **argument**.
+
+A parameter is like an empty box, while an argument is the value placed inside that box.
+
+---
+
+# Return Values
+
+I learned that some functions calculate a value and send it back using the `return` statement.
+
+Example:
+
+```python
+def add(a, b):
+    return a + b
+```
+
+Calling:
+
+```python
+result = add(5, 3)
+```
+
+stores the returned value inside `result`.
+
+I learned that `return` allows one function to produce a result that another part of the program can use.
+
+---
+
+# Building Functions for My Receipt App
+
+Today I began organizing my receipt application into smaller functions.
+
+I created:
+
+```python
+def calculate_subtotal(price, quantity):
+    return price * quantity
+```
+
+This function has one responsibility:
+
+- Calculate and return the subtotal.
+
+---
+
+I also created:
+
+```python
+def print_receipt(store_name, item_name, price, quantity, subtotal):
+```
+
+This function prints the receipt in a clean format.
+
+Separating the printing logic into its own function made the rest of my program much easier to read.
+
+---
+
+# Building My Validation Function
+
+I also created:
+
+```python
+def validate_input(store_name, item_name, price, quantity):
+```
+
+At first, I made a mistake by trying to calculate the subtotal and print the receipt inside this function.
+
+After reviewing my code, I realized that the function had too many responsibilities.
+
+I improved it so that it only checks whether the input is valid.
+
+The final version returns:
+
+```python
+return False
+```
+
+when there is invalid input, and
+
+```python
+return True
+```
+
+when everything is valid.
+
+This made the function much cleaner and more useful.
+
+---
+
+# Understanding Single Responsibility
+
+One of the biggest lessons I learned today was that each function should have only one responsibility.
+
+My application now has three separate functions:
+
+```text
+validate_input()
+        ↓
+Checks user input
+
+calculate_subtotal()
+        ↓
+Calculates the subtotal
+
+print_receipt()
+        ↓
+Displays the receipt
+```
+
+Each function has one clear job.
+
+This makes the program easier to understand and easier to modify in the future.
+
+---
+
+# Mentor Feedback
+
+Today I received valuable feedback about my functions.
+
+### What I did well
+
+- Created separate functions.
+- Used parameters correctly.
+- Used `return` correctly.
+- Organized the receipt application.
+- Improved the readability of my code.
+
+### Mistakes I Fixed
+
+At first, I mistakenly called:
+
+```python
+calculate_subtotal(store_name, item_name, price, quantity)
+```
+
+even though the function only expected:
+
+```python
+price
+quantity
+```
+
+I corrected it to:
+
+```python
+calculate_subtotal(price, quantity)
+```
+
+I also learned that validation should not calculate totals or print receipts.
+
+Instead, it should simply return `True` or `False`.
+
+---
+
+# Challenges I Faced
+
+The biggest challenge today was understanding how functions should work together.
+
+Initially, I thought every function should perform multiple tasks.
+
+After reviewing my code, I learned that functions should focus on one responsibility.
+
+This made my program much cleaner.
+
+---
+
+# How I Solved It
+
+I reorganized my receipt application into three independent functions.
+
+The main program now follows a simple flow:
+
+1. Get user input.
+2. Validate the input.
+3. Calculate the subtotal.
+4. Print the receipt.
+
+This made the overall program easier to read and understand.
+
+---
+
+# Key Concepts I Remember
+
+- Functions help organize code.
+- Functions reduce code duplication.
+- Parameters receive values.
+- Arguments are the actual values passed into a function.
+- `return` sends a value back to the caller.
+- A function should have one responsibility.
+- Breaking a program into smaller functions makes it easier to maintain.
+
+---
+
+# What I Enjoyed
+
+Today was one of my favorite lessons because I learned how professional developers organize their programs.
+
+Instead of writing one long program, I now understand how to split it into smaller, reusable pieces.
+
+This made my receipt application look much more professional.
+
+---
+
+# What I Found Difficult
+
+The most difficult part was deciding what each function should do.
+
+It took some practice to understand that validation, calculation, and printing should each be handled by different functions.
+
+Once I separated those responsibilities, the program became much easier to follow.
+
+---
+
+# Reflection
+
+Today I learned that writing good software is not just about making it work.
+
+It is also about organizing code so that it is easy to read, test, and improve.
+
+Functions are one of the most important tools for achieving this.
+
+I also learned that each function should have one clear purpose and communicate with the rest of the program using parameters and return values.
+
+This lesson changed the way I think about writing programs.
+
+---
+
+# Commands I Used Today
+
+```bash
+python3 lessons/day05.py
+python3 practice/practice_day05.py
+python3 challenges/challenge_day05.py
+
+git add .
+git commit -m "Week 1 Day 5: Learned functions and code organization"
+git push
+```
+
+---
+
+# Vocabulary
+
+| Term | Meaning |
+|------|---------|
+| Function | A reusable block of code that performs a specific task. |
+| Parameter | A variable defined in a function that receives a value. |
+| Argument | The value passed to a function when it is called. |
+| Return | Sends a value back to the code that called the function. |
+| Reusability | Writing code once and using it multiple times. |
+| Code Organization | Structuring a program into smaller, manageable parts. |
+| Single Responsibility | The principle that a function should have one clear job. |
+
+---
+
+# Daily Rating
+
+**Understanding:** ⭐⭐⭐⭐⭐ (5/5)
+
+**Difficulty:** ⭐⭐⭐⭐☆ (4/5)
+
+**Confidence:** ⭐⭐⭐⭐⭐ (5/5)
+
+---
+
+# Progress Summary
+
+✅ Learned how to create functions
+
+✅ Learned how to call functions
+
+✅ Learned parameters and arguments
+
+✅ Learned the `return` statement
+
+✅ Organized my receipt application into reusable functions
+
+✅ Improved code readability
+
+✅ Learned the Single Responsibility Principle
+
+---
+
+# End of Week 1 – Day 5
+
+Today was a major step forward in my Python learning journey. My receipt application is no longer one long block of code—it is now organized into reusable functions that each perform one specific task. This lesson taught me how professional developers structure their programs and prepared me for building larger, more maintainable applications in the future.
+
+
+# Week 1 – Day 6 Journal
+
+**Date:** 27 July 2026
+
+**Project:** Receipt Manager App with Python
+
+**Study Duration:** 3–4 Hours
+
+---
+
+# Topic
+
+Lists (`list`) and Loops (`for`)
+
+---
+
+# Objectives
+
+Today I wanted to:
+
+- Learn how to store multiple values using lists.
+- Understand how `for` loops work.
+- Build a receipt that supports multiple items.
+- Learn how to calculate a running total.
+- Learn how to reuse functions instead of copying code.
+
+---
+
+# What I Learned
+
+Today I learned that a list allows me to store many values inside a single variable.
+
+Instead of creating variables like:
+
+```python
+item1 = "Bread"
+item2 = "Milk"
+item3 = "Rice"
+```
+
+I can simply write:
+
+```python
+items = ["Bread", "Milk", "Rice"]
+```
+
+This makes my code cleaner and easier to manage.
+
+---
+
+# Understanding Lists
+
+A list is a collection of values.
+
+Example:
+
+```python
+items = ["Bread", "Milk", "Rice"]
+```
+
+Each item has an index.
+
+| Index | Value |
+|------:|-------|
+| 0 | Bread |
+| 1 | Milk |
+| 2 | Rice |
+
+I learned that Python starts counting from **0**.
+
+---
+
+# Understanding Loops
+
+Today I learned that a `for` loop repeats the same block of code.
+
+Example:
+
+```python
+for item in items:
+    print(item)
+```
+
+Output:
+
+```
+Bread
+Milk
+Rice
+```
+
+Instead of writing multiple `print()` statements, the loop automatically prints every item in the list.
+
+---
+
+# Building My Receipt
+
+Today I upgraded my receipt application.
+
+Instead of supporting only one item, my program can now store multiple items.
+
+My program asks for:
+
+- Store name
+- Number of items
+
+Then for each item it asks for:
+
+- Item name
+- Price
+- Quantity
+
+It calculates the subtotal for each item and finally displays the grand total.
+
+---
+
+# My Solution
+
+I created four lists:
+
+```python
+items = []
+prices = []
+quants = []
+sub_totals = []
+```
+
+As the user entered each item, I stored the information inside the appropriate list.
+
+For every item I calculated:
+
+```python
+sub_total = item_price * item_quantity
+```
+
+Then I added it to the grand total:
+
+```python
+grand_total += sub_total
+```
+
+Finally, I used another loop to print the receipt.
+
+---
+
+# What I Learned About Accumulators
+
+Today I learned about the accumulator pattern.
+
+An accumulator keeps adding values during a loop.
+
+Example:
+
+```python
+total = 0
+
+for number in numbers:
+    total += number
+```
+
+I also used this idea in my receipt application:
+
+```python
+grand_total += sub_total
+```
+
+This allowed my application to calculate the total cost of all purchased items.
+
+---
+
+# Mentor Feedback
+
+Today I received positive feedback on my receipt application.
+
+### What I did well
+
+- Used lists correctly.
+- Used `for` loops correctly.
+- Calculated subtotals correctly.
+- Calculated the grand total correctly.
+- Printed a professional-looking receipt.
+- Successfully supported multiple receipt items.
+
+### Improvements Suggested
+
+I learned that I should format prices consistently:
+
+```python
+print(f"Price: ₦{price:.2f}")
+```
+
+instead of:
+
+```python
+print(f"Price: ₦{price}")
+```
+
+I also learned that using more descriptive variable names, such as `quantities` instead of `quants`, makes code easier to understand.
+
+---
+
+# Learning About Code Reuse
+
+One of the most important lessons today was learning how professional developers reuse code.
+
+I asked whether I should copy my Day 5 functions into my Day 6 program.
+
+I learned that copying code is not the best practice.
+
+Instead, reusable functions should be placed inside a shared module, for example:
+
+```
+utils/
+    receipt_utils.py
+```
+
+Then other programs can import them:
+
+```python
+from utils.receipt_utils import calculate_subtotal
+```
+
+This allows one function to be used by many files without duplication.
+
+---
+
+# Challenges I Faced
+
+At first, I thought copying functions into every new file was the normal way to reuse code.
+
+After learning about modules and imports, I now understand why programmers organize reusable code into separate files.
+
+---
+
+# How I Solved It
+
+I learned that instead of copying functions repeatedly, I should:
+
+1. Create a reusable module.
+2. Store common functions inside it.
+3. Import those functions whenever I need them.
+
+This makes programs easier to maintain and update.
+
+---
+
+# Key Concepts I Remember
+
+- A list stores multiple values.
+- Python lists start indexing at 0.
+- `append()` adds new items to a list.
+- A `for` loop repeats code for every item in a list.
+- An accumulator keeps a running total.
+- Functions can be reused by importing them from another module.
+- Reusing code is better than copying code.
+
+---
+
+# What I Enjoyed
+
+Today was exciting because my receipt application became much more realistic.
+
+Instead of handling only one item, it now supports multiple products just like a real supermarket receipt.
+
+I also enjoyed learning how reusable functions make programs cleaner and easier to maintain.
+
+---
+
+# What I Found Difficult
+
+The biggest challenge today was understanding how to reuse functions across different files.
+
+I originally thought I needed to copy the functions into every new program.
+
+Now I understand that importing functions from a shared module is a better approach.
+
+---
+
+# Reflection
+
+Today I learned that programming is not just about making a program work.
+
+It is also about organizing code so that it is reusable and easy to maintain.
+
+Using lists and loops helped me build a more realistic receipt application, and learning about modules introduced me to how larger Python projects are structured.
+
+I feel more confident because my application is beginning to resemble a real-world program.
+
+---
+
+# Commands I Used Today
+
+```bash
+python3 lessons/day06.py
+python3 practice/practice_day06.py
+python3 challenges/challenge_day06.py
+
+git add .
+git commit -m "Week 1 Day 6: Learned lists, loops, and reusable functions"
+git push
+```
+
+---
+
+# Vocabulary
+
+| Term | Meaning |
+|------|---------|
+| List | A collection of multiple values stored in one variable. |
+| Loop | A way to repeat code automatically. |
+| `for` Loop | Repeats code for each item in a collection. |
+| `append()` | Adds a new item to a list. |
+| Accumulator | A variable that keeps a running total. |
+| Module | A Python file that contains reusable code. |
+| Import | Bringing functions or classes from one Python file into another. |
+| Reusability | Writing code once and using it in many places. |
+
+---
+
+# Daily Rating
+
+**Understanding:** ⭐⭐⭐⭐⭐ (5/5)
+
+**Difficulty:** ⭐⭐⭐⭐☆ (4/5)
+
+**Confidence:** ⭐⭐⭐⭐⭐ (5/5)
+
+---
+
+# Progress Summary
+
+✅ Learned Python lists
+
+✅ Learned `for` loops
+
+✅ Built a receipt that supports multiple items
+
+✅ Calculated subtotals and a grand total
+
+✅ Learned the accumulator pattern
+
+✅ Learned why importing functions is better than copying code
+
+✅ Improved my understanding of professional project organization
+
+---
+
+# End of Week 1 – Day 6
+
+Today was a major milestone in my Python journey. My receipt application now supports multiple items, calculates a grand total, and is moving toward a more professional structure through reusable modules and imports. I can see my application becoming more powerful and better organized with each new lesson.
