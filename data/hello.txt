@@ -1,0 +1,2 @@
+Welcome to my Receipt App!
+Another receipt

@@ -1,0 +1,140 @@
+==========RECEIPT==============
+Store: jfjf
+
+1. jfjf
+Price: ₦34.00
+Qty: 2
+Subtotal: ₦68.00
+
+2. jfjf
+Price: ₦34.00
+Qty: 32
+Subtotal: ₦1088.00
+
+------------------------
+Grand Total: ₦1156.00
+Thank you for shopping!
+
+==========RECEIPT==============
+Store: isds
+
+1. hfjf
+Price: ₦22.00
+Qty: 22
+Subtotal: ₦484.00
+
+------------------------
+Grand Total: ₦484.00
+Thank you for shopping!
+
+==========RECEIPT==============
+Store: hymres
+Receipt No: R11110
+
+1. hfhf
+Price: ₦64.00
+Qty: 3
+Subtotal: ₦192.00
+
+2. jdjdj
+Price: ₦65.00
+Qty: 34
+Subtotal: ₦2210.00
+
+------------------------
+Grand Total: ₦2402.00
+Thank you for shopping!
+
+==========RECEIPT==============
+Store: dss
+Receipt No: 2323
+
+1. css
+Price: ₦2.00
+Qty: 3
+Subtotal: ₦6.00
+
+------------------------
+Grand Total: ₦6.00
+Thank you for shopping!
+
+==========RECEIPT==============
+Store: 0
+Receipt No: 0
+
+------------------------
+Grand Total: ₦0.00
+Thank you for shopping!
+
+==========RECEIPT==============
+Store: Hymres
+Receipt No: R00001
+
+1. Hp
+Price: ₦1000.00
+Qty: 2
+Subtotal: ₦2000.00
+
+2. Dell
+Price: ₦550.00
+Qty: 3
+Subtotal: ₦1650.00
+
+------------------------
+Grand Total: ₦3650.00
+Thank you for shopping!
+
+==========RECEIPT==============
+Store: s
+Receipt No: R00000001
+
+1. GG
+Price: ₦600.00
+Qty: 1
+Subtotal: ₦600.00
+
+2. jj
+Price: ₦65.00
+Qty: 2
+Subtotal: ₦130.00
+
+------------------------
+Grand Total: ₦730.00
+Thank you for shopping!
+
+==========RECEIPT==============
+Store: gh
+Receipt No: uuu8888
+
+1. yuyyu
+Price: ₦787.00
+Qty: 2
+Subtotal: ₦1574.00
+
+2. yyhj;
+Price: ₦767.00
+Qty: 4
+Subtotal: ₦3068.00
+
+------------------------
+Grand Total: ₦4642.00
+Thank you for shopping!
+
+==========RECEIPT==============
+Store: rccc
+Receipt No: y776tgg
+
+1. nuu
+Price: ₦6456.00
+Qty: 3
+Subtotal: ₦19368.00
+
+2. hhkkjju
+Price: ₦77655.00
+Qty: 4
+Subtotal: ₦310620.00
+
+------------------------
+Grand Total: ₦329988.00
+Thank you for shopping!
+

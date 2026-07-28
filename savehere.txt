@@ -1,0 +1,18 @@
+==========RECEIPT==============
+Store: Hymers
+Receipt No: R000023
+
+1. HP
+Price: ₦5000.00
+Qty: 2
+Subtotal: ₦10000.00
+
+2. DELL
+Price: ₦7699.00
+Qty: 4
+Subtotal: ₦30796.00
+
+------------------------
+Grand Total: ₦40796.00
+Thank you for shopping!
+

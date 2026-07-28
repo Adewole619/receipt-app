@@ -1845,3 +1845,354 @@ git push
 # End of Week 1 – Day 6
 
 Today was a major milestone in my Python journey. My receipt application now supports multiple items, calculates a grand total, and is moving toward a more professional structure through reusable modules and imports. I can see my application becoming more powerful and better organized with each new lesson.
+
+# Week 1 – Day 7 Journal
+
+**Date:** 28 July 2026
+
+**Project:** Receipt Manager App with Python
+
+**Study Duration:** 3–4 Hours
+
+---
+
+# Topic
+
+Dictionaries (`dict`), Modules, and Code Reusability
+
+---
+
+# Objectives
+
+Today I wanted to:
+
+- Learn what dictionaries are.
+- Store related data together using dictionaries.
+- Replace multiple lists with a list of dictionaries.
+- Reuse functions by importing them from another file.
+- Continue improving my receipt application.
+
+---
+
+# What I Learned
+
+Today I learned that a **dictionary** stores related pieces of information together using **key-value pairs**.
+
+Instead of storing data in four separate lists:
+
+```python
+items = []
+prices = []
+quantities = []
+sub_totals = []
+```
+
+I learned that I can store everything about one receipt item inside a single dictionary.
+
+Example:
+
+```python
+item = {
+    "name": "Bread",
+    "price": 1500,
+    "quantity": 2,
+    "subtotal": 3000,
+}
+```
+
+This makes the code cleaner and easier to understand.
+
+---
+
+# Understanding Dictionaries
+
+A dictionary stores information using keys and values.
+
+Example:
+
+```python
+item = {
+    "name": "Milk",
+    "price": 1200,
+    "quantity": 1,
+}
+```
+
+To access a value:
+
+```python
+print(item["name"])
+```
+
+Output:
+
+```
+Milk
+```
+
+I learned that:
+
+- A **key** is the name used to identify a value.
+- A **value** is the actual information stored.
+
+---
+
+# List of Dictionaries
+
+Today I learned that I can store many dictionaries inside a list.
+
+```python
+receipt_items = []
+```
+
+For every item entered by the user, I created a dictionary:
+
+```python
+item = {
+    "name": item_name,
+    "price": item_price,
+    "quantity": item_quantity,
+    "subtotal": sub_total,
+}
+```
+
+Then I added it to the list:
+
+```python
+receipt_items.append(item)
+```
+
+This structure is much better than keeping separate lists for names, prices, quantities, and subtotals.
+
+---
+
+# Reusing Functions
+
+One of the biggest lessons today was learning how to reuse functions properly.
+
+Instead of copying my Day 5 functions into the new file, I created a reusable module:
+
+```python
+from utils.receipt_utils import calculate_subtotal, validate_input
+```
+
+I learned that professional programmers avoid copying code because it creates unnecessary duplication.
+
+By importing functions, I can write code once and use it in many files.
+
+---
+
+# Using Validation Correctly
+
+At first, I called:
+
+```python
+validate_input(store_name, item_name, item_price, item_quantity)
+```
+
+but I ignored the result.
+
+I learned that since `validate_input()` returns either `True` or `False`, I should use it like this:
+
+```python
+if validate_input(store_name, item_name, item_price, item_quantity):
+```
+
+This ensures that only valid items are added to the receipt.
+
+Invalid items are rejected instead of being saved.
+
+---
+
+# Improving My Receipt Application
+
+My receipt application now follows this process:
+
+1. Ask for the store name.
+2. Ask how many items the customer bought.
+3. Get the details for each item.
+4. Validate the input.
+5. Calculate the subtotal.
+6. Store the item inside a dictionary.
+7. Add the dictionary to a list.
+8. Calculate the grand total.
+9. Print a formatted receipt.
+
+This structure is much cleaner than my earlier versions.
+
+---
+
+# Learning `enumerate()`
+
+Today I also learned about `enumerate()`.
+
+Instead of manually counting items like this:
+
+```python
+i = 1
+
+for item in receipt_items:
+    print(i)
+    i += 1
+```
+
+I learned I can write:
+
+```python
+for index, item in enumerate(receipt_items, start=1):
+```
+
+This automatically provides the item number while looping through the list.
+
+It makes the code shorter and easier to read.
+
+---
+
+# Mentor Feedback
+
+Today I received excellent feedback on my code.
+
+### What I did well
+
+- Imported reusable functions instead of copying them.
+- Replaced four parallel lists with a list of dictionaries.
+- Reused `calculate_subtotal()`.
+- Used validation correctly with `if validate_input(...)`.
+- Used `enumerate()` to number receipt items.
+- Improved the overall organization of my program.
+
+### Improvements Suggested
+
+I learned that I can still improve my application by handling situations where every item entered is invalid.
+
+In the future, I will learn how to keep asking the user for valid input instead of simply skipping invalid items.
+
+---
+
+# Challenges I Faced
+
+The biggest challenge today was understanding how dictionaries work and how to organize receipt data more effectively.
+
+I also had to understand how imported functions communicate with the main program by returning `True` or `False`.
+
+---
+
+# How I Solved It
+
+I solved these challenges by:
+
+- Replacing multiple lists with dictionaries.
+- Importing reusable functions.
+- Using the return value of `validate_input()`.
+- Organizing my receipt data into a cleaner structure.
+
+---
+
+# Key Concepts I Remember
+
+- A dictionary stores related data together.
+- Dictionaries use key-value pairs.
+- A list can contain multiple dictionaries.
+- Functions can be reused through imports.
+- Validation should control whether data is accepted.
+- `enumerate()` automatically numbers items in a loop.
+- Good code organization makes programs easier to maintain.
+
+---
+
+# What I Enjoyed
+
+Today I enjoyed seeing my receipt application become more professional.
+
+Using dictionaries made the data much easier to manage, and importing reusable functions helped me understand how larger Python projects are organized.
+
+---
+
+# What I Found Difficult
+
+The most difficult part was understanding how imported functions return values and how those values should control the program's flow.
+
+After updating my code to use:
+
+```python
+if validate_input(...):
+```
+
+everything made much more sense.
+
+---
+
+# Reflection
+
+Today was an important milestone in my Python journey.
+
+I learned that writing good software is not only about solving a problem—it is also about organizing data and writing reusable code.
+
+Replacing multiple lists with dictionaries made my program cleaner, and importing functions instead of copying them introduced me to a professional way of structuring Python projects.
+
+I also learned that validation should determine whether information is accepted into the program.
+
+Every improvement I make is helping my receipt application become closer to a real-world software project.
+
+---
+
+# Commands I Used Today
+
+```bash
+python3 lessons/day07.py
+python3 practice/practice_day07.py
+python3 challenges/challenge_day07.py
+
+git add .
+git commit -m "Week 1 Day 7: Learned dictionaries and improved receipt data structure"
+git push
+```
+
+---
+
+# Vocabulary
+
+| Term | Meaning |
+|------|---------|
+| Dictionary | A collection of key-value pairs used to store related data. |
+| Key | The name used to identify a value in a dictionary. |
+| Value | The information associated with a key. |
+| Module | A Python file containing reusable code. |
+| Import | Bringing code from one module into another. |
+| Reusability | Writing code once and using it in many places. |
+| `enumerate()` | A function that provides both the index and value while looping. |
+| Key-Value Pair | The relationship between a dictionary key and its stored value. |
+
+---
+
+# Daily Rating
+
+**Understanding:** ⭐⭐⭐⭐⭐ (5/5)
+
+**Difficulty:** ⭐⭐⭐⭐☆ (4/5)
+
+**Confidence:** ⭐⭐⭐⭐⭐ (5/5)
+
+---
+
+# Progress Summary
+
+✅ Learned dictionaries
+
+✅ Learned key-value pairs
+
+✅ Replaced parallel lists with a list of dictionaries
+
+✅ Imported reusable functions from a module
+
+✅ Used validation correctly with `if`
+
+✅ Learned `enumerate()`
+
+✅ Improved the organization of my receipt application
+
+---
+
+# End of Week 1 – Day 7
+
+Today was one of the most important days in my Python learning journey. I transformed my receipt application by organizing related data into dictionaries and by reusing functions through imports instead of copying code. These improvements made my application cleaner, easier to maintain, and closer to the structure used in professional Python software development.

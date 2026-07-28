@@ -55,15 +55,12 @@ print()
 #     print(f"Subtotal: ₦{sub_totals[i]:.2f}")
 #     print()
 
-i = 1
-
 for index, item in enumerate(receipt_items, start=1):
     
     print(f"{index}. {item['name']}")
     print(f"Price: ₦{item['price']:.2f}")
     print(f"Qty: {item['quantity']}")
     print(f"Subtotal: ₦{item['subtotal']:.2f}")
-    i += 1
 
 print("------------------------")
 print(f"Grand Total: ₦{grand_total:.2f}")
