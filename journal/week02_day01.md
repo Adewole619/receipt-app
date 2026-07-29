@@ -363,3 +363,344 @@ git push
 # End of Week 2 – Day 8
 
 Today my receipt application reached another important milestone. It now stores receipt data permanently, reads saved receipts, validates user input through reusable functions, and uses a cleaner project structure. I can see how each improvement builds toward creating a complete receipt management system.
+
+# Week 2 – Day 9 Journal
+
+**Date:** July 29, 2026
+
+**Project:** Receipt Manager App with Python
+
+**Study Duration:** 3–4 Hours
+
+---
+
+# Topic
+
+Working with JSON (JavaScript Object Notation)
+
+---
+
+# Objectives
+
+Today I wanted to:
+
+* Learn how to store receipt data using JSON.
+* Automatically generate unique receipt numbers.
+* Save multiple receipts in a structured format.
+* Load receipts back into my program.
+* Continue improving the architecture of my receipt manager.
+
+---
+
+# What I Learned
+
+Today I learned that although text files are easy for people to read, they are not the best format for applications that need to search, update, or delete data.
+
+JSON stores information in a structured way that Python can easily understand. It is very similar to Python dictionaries, making it an excellent choice before moving to SQLite.
+
+---
+
+# Understanding JSON
+
+I learned about Python's built-in `json` module.
+
+The four most important functions are:
+
+* `json.dump()` – Writes Python objects directly to a JSON file.
+* `json.dumps()` – Converts a Python object into a JSON string.
+* `json.load()` – Reads JSON from a file and converts it into a Python object.
+* `json.loads()` – Converts a JSON string into a Python object.
+
+---
+
+# Automatic Receipt Numbers
+
+One of the biggest improvements I made today was removing manual receipt number entry.
+
+Instead of asking the user to type a receipt number, my application now generates one automatically.
+
+Example:
+
+```text
+RCP0000001
+RCP0000002
+RCP0000003
+```
+
+I created a reusable function:
+
+```python
+generate_receipt_number()
+```
+
+This function:
+
+* Checks whether the JSON file exists.
+* Starts from `RCP0000001` if no receipts have been saved.
+* Reads the last saved receipt.
+* Extracts the numeric part.
+* Increments it by one.
+* Formats it with leading zeros.
+
+This makes the receipt numbers unique, consistent, and easier to manage.
+
+---
+
+# Saving Receipts as JSON
+
+Instead of saving formatted text, I now save each receipt as a dictionary.
+
+Each receipt contains:
+
+* Store name
+* Receipt number
+* Receipt items
+* Grand total
+
+Each receipt is added to a list of receipts before being written back to `receipts.json`.
+
+My save process became:
+
+```text
+Load Existing Receipts
+        ↓
+Append New Receipt
+        ↓
+Save Updated List
+```
+
+This was one of the most important concepts I learned today.
+
+---
+
+# Loading Receipts
+
+I created:
+
+```python
+load_receipts_json()
+```
+
+This function:
+
+* Opens the JSON file.
+* Reads all saved receipts.
+* Returns them as a Python list.
+
+If the file does not exist, it safely returns an empty list instead of crashing.
+
+---
+
+# Error Handling
+
+I learned that programs should expect things to go wrong.
+
+My functions now handle situations where:
+
+* The JSON file does not exist.
+* The JSON file is empty.
+* The JSON file contains invalid JSON.
+
+Instead of crashing, the program recovers and continues running.
+
+---
+
+# Improving My Project Structure
+
+My project is becoming more organized.
+
+Current structure:
+
+```text
+receipt-app/
+│
+├── main.py
+│
+├── utils/
+│   └── receipt_utils.py
+│
+├── data/
+│   └── receipts.json
+│
+├── journal/
+│
+└── README.md
+```
+
+Most of my reusable logic now lives inside `receipt_utils.py`.
+
+---
+
+# Functions Added Today
+
+Today I created:
+
+* `generate_receipt_number()`
+* `save_receipt_json()`
+* `load_receipts_json()`
+
+These functions made my application much cleaner and easier to maintain.
+
+---
+
+# Mentor Feedback
+
+Today I received several suggestions for improving my code.
+
+### What I did well
+
+* Automatically generated receipt numbers.
+* Used JSON instead of plain text.
+* Stored multiple receipts in one file.
+* Used reusable functions.
+* Handled missing files.
+* Handled invalid JSON.
+* Continued separating responsibilities.
+
+### Improvements Suggested
+
+I learned that:
+
+* The JSON key should be `"items"` instead of `"item"` because each receipt contains multiple items.
+* I should consistently use my `RECEIPT_FILE_JSON` constant instead of hardcoding the file path.
+* In the future, I can pass the entire receipt dictionary into `save_receipt_json()` instead of passing multiple parameters.
+
+These suggestions will make my code even cleaner as the project grows.
+
+---
+
+# Challenges I Faced
+
+The biggest challenge today was understanding how to store multiple receipts without overwriting previous data.
+
+I learned that the correct process is:
+
+1. Load existing receipts.
+2. Append the new receipt.
+3. Save the updated list back to the JSON file.
+
+---
+
+# How I Solved It
+
+I used:
+
+```python
+json.load()
+```
+
+to read the existing receipts into a list.
+
+Then I added the new receipt using:
+
+```python
+append()
+```
+
+Finally, I used:
+
+```python
+json.dump()
+```
+
+to save the updated list back into the file.
+
+---
+
+# Key Concepts I Remember
+
+* JSON stores structured data.
+* Python dictionaries map naturally to JSON objects.
+* Lists of dictionaries are useful for storing multiple records.
+* `json.dump()` writes to a file.
+* `json.load()` reads from a file.
+* Automatic receipt numbers improve consistency.
+* Functions should each have one responsibility.
+* Error handling makes applications more reliable.
+
+---
+
+# What I Enjoyed
+
+I enjoyed implementing automatic receipt number generation.
+
+Seeing receipt numbers increase automatically made my receipt manager feel much more like a real business application.
+
+I also enjoyed seeing how JSON organizes data in a way that is much easier for programs to process.
+
+---
+
+# What I Found Difficult
+
+The most challenging part was understanding how to update a JSON file without losing the previous receipts.
+
+Once I understood the **Load → Append → Save** workflow, the process became much clearer.
+
+---
+
+# Reflection
+
+Today was another important milestone in my Python journey.
+
+My receipt manager has moved beyond storing plain text and now stores structured data using JSON.
+
+I also learned how to generate unique receipt numbers automatically, making the application more realistic and reducing the chance of duplicate receipt numbers.
+
+Each day my project becomes cleaner, more organized, and closer to the type of applications used in the real world.
+
+---
+
+# Commands I Used Today
+
+```bash
+python3 lessons/day09.py
+python3 practice/practice_day09.py
+python3 challenges/challenge_day09.py
+
+git add .
+git commit -m "Week 2 Day 9: Added JSON storage and automatic receipt number generation"
+git push
+```
+
+---
+
+# Vocabulary
+
+| Term                  | Meaning                                                        |
+| --------------------- | -------------------------------------------------------------- |
+| JSON                  | A structured text format used to store and exchange data.      |
+| `json.dump()`         | Writes a Python object to a JSON file.                         |
+| `json.load()`         | Reads a JSON file into a Python object.                        |
+| Dictionary            | A collection of key-value pairs.                               |
+| List                  | An ordered collection of values.                               |
+| Exception Handling    | Writing code to deal with errors without crashing the program. |
+| Refactoring           | Improving code structure without changing its behavior.        |
+| Sequential Identifier | A unique number that increases in order, such as `RCP0000001`. |
+
+---
+
+# Daily Rating
+
+**Understanding:** ⭐⭐⭐⭐⭐ (5/5)
+
+**Difficulty:** ⭐⭐⭐⭐☆ (4/5)
+
+**Confidence:** ⭐⭐⭐⭐⭐ (5/5)
+
+---
+
+# Progress Summary
+
+* ✅ Learned JSON fundamentals
+* ✅ Stored multiple receipts in a JSON file
+* ✅ Automatically generated receipt numbers
+* ✅ Loaded receipts from JSON
+* ✅ Improved error handling
+* ✅ Continued refactoring the project into reusable functions
+* ✅ Prepared the project for searching, updating, deleting, and future SQLite integration
+
+---
+
+# End of Week 2 – Day 9
+
+Today my receipt manager became much more like a real application. Instead of storing plain text, it now stores structured JSON data, generates receipt numbers automatically, and safely manages multiple receipts. This lays a strong foundation for implementing search, update, delete, reporting, and eventually migrating the application to SQLite.

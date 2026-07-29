@@ -138,3 +138,78 @@ Subtotal: ₦310620.00
 Grand Total: ₦329988.00
 Thank you for shopping!
 
+==========RECEIPT==============
+Store: hymrs
+Receipt No: RCP0000001
+
+1. hp
+Price: ₦1000.00
+Qty: 3
+Subtotal: ₦3000.00
+
+------------------------
+Grand Total: ₦3000.00
+Thank you for shopping!
+
+==========RECEIPT==============
+Store: HYMERS
+Receipt No: RCP0000002
+
+1. Acer
+Price: ₦657.00
+Qty: 3
+Subtotal: ₦1971.00
+
+2. Asus
+Price: ₦6535.00
+Qty: 6
+Subtotal: ₦39210.00
+
+------------------------
+Grand Total: ₦41181.00
+Thank you for shopping!
+
+==========RECEIPT==============
+Store: hgff
+Receipt No: RCP0000002
+
+1. fxdj
+Price: ₦54.00
+Qty: 3
+Subtotal: ₦162.00
+
+2. xdxf
+Price: ₦65.00
+Qty: 5
+Subtotal: ₦325.00
+
+------------------------
+Grand Total: ₦487.00
+Thank you for shopping!
+
+==========RECEIPT==============
+Store: yffu
+Receipt No: RCP0000002
+
+1. dsfz
+Price: ₦54.00
+Qty: 3
+Subtotal: ₦162.00
+
+------------------------
+Grand Total: ₦162.00
+Thank you for shopping!
+
+==========RECEIPT==============
+Store: tfy
+Receipt No: RCP0000003
+
+1. rt
+Price: ₦54.00
+Qty: 3
+Subtotal: ₦162.00
+
+------------------------
+Grand Total: ₦162.00
+Thank you for shopping!
+

@@ -1,8 +1,8 @@
-from utils.receipt_utils import calculate_subtotal, validate_input, validate_string_input, validate_num_input, save_receipt, load_receipts
+from utils.receipt_utils import calculate_subtotal, validate_input, validate_string_input, validate_num_input, save_receipt, load_receipts , generate_receipt_number, load_receipts_json, save_receipt_json
 
 store_name = validate_string_input("Store name")
 
-receipt_number = validate_string_input("Receipt number")
+receipt_number = generate_receipt_number()
 
 receipt_items = []
 
@@ -31,6 +31,18 @@ for i in range(count):
 
 
 save_receipt(store_name, receipt_number, receipt_items, grand_total)
-
 content = load_receipts()
 print(content)
+
+
+receipt = {
+    "store": store_name,
+    "receipt_number": receipt_number,
+    "items": receipt_items,
+    "grand_total": grand_total,
+}
+
+save_receipt_json(receipt)
+
+content_json = load_receipts_json()
+# print(content_json)
