@@ -995,3 +995,288 @@ git push
 # End of Week 2 – Day 10
 
 Today I transformed my receipt manager into a more complete application by implementing search functionality. I learned how to design reusable functions, return meaningful results, and organize my code more professionally. My application can now create and read receipts, providing a strong foundation for implementing Update and Delete in the coming days.
+
+
+# Week 2 – Day 11 Journal
+
+**Date:** August 4, 2026
+
+**Project:** Receipt Manager App with Python
+
+**Study Duration:** 3–4 Hours
+
+---
+
+# Topic
+
+Update Receipts (Update - CRUD)
+
+---
+
+# Objectives
+
+Today I wanted to:
+
+* Learn how to update an existing receipt.
+* Understand the update workflow.
+* Reuse previously written functions.
+* Save updated data back to the JSON file.
+* Improve my understanding of mutable objects in Python.
+
+---
+
+# What I Learned
+
+Today I implemented the **Update (U)** operation of CRUD.
+
+Instead of creating a new receipt every time, my application can now locate an existing receipt using its unique receipt number and update its store name.
+
+I also learned that updating data follows a simple workflow:
+
+```text
+Load Receipts
+      │
+      ▼
+Search Receipt
+      │
+      ▼
+Modify Data
+      │
+      ▼
+Save Updated List
+```
+
+This pattern is common in many applications that work with files or databases.
+
+---
+
+# Reusing Existing Functions
+
+One of the biggest lessons today was learning to reuse code instead of rewriting it.
+
+I reused:
+
+* `load_receipts_json()`
+* `search_by_receipt_number()`
+
+Instead of writing another search loop inside `update_receipt()`.
+
+This made my code shorter, cleaner, and easier to maintain.
+
+---
+
+# Loading Data Only Once
+
+Originally, my code loaded the JSON file twice:
+
+```text
+update_receipt()
+
+↓
+
+load_receipts_json()
+
+↓
+
+search_by_receipt_number()
+
+↓
+
+load_receipts_json()
+```
+
+I learned this was unnecessary.
+
+I improved my design by passing the loaded receipts into my search function.
+
+```python
+receipt = search_by_receipt_number(receipts, rcp_number)
+```
+
+Now the JSON file is loaded only once.
+
+---
+
+# Mutable Objects
+
+Today I learned an important Python concept.
+
+Lists and dictionaries are **mutable objects**.
+
+When I updated:
+
+```python
+receipt["store"] = new_rcp_store_name
+```
+
+I wasn't creating a new receipt.
+
+I was modifying the existing dictionary that already existed inside the `receipts` list.
+
+Because dictionaries are mutable, the change automatically appeared inside the list.
+
+---
+
+# Input Validation
+
+I prevented users from saving an empty store name.
+
+```python
+if not new_rcp_store_name:
+    print("Store name cannot be empty.")
+    return
+```
+
+This ensures invalid data is not written to the JSON file.
+
+---
+
+# Creating `save_all_receipts()`
+
+Previously, I wrote JSON-saving code directly inside my update function.
+
+Today I created a reusable helper:
+
+```python
+def save_all_receipts(receipts):
+```
+
+Its only responsibility is to save the updated list back into `receipts.json`.
+
+This follows the **Single Responsibility Principle**.
+
+---
+
+# Understanding Function Parameters
+
+Today I asked whether I could use:
+
+```python
+def search_by_receipt_number(rcp_number, receipts=load_receipts_json()):
+```
+
+I learned that default parameter values are evaluated only once when Python defines the function, not every time the function is called.
+
+Instead, I learned the better pattern:
+
+```python
+def search_by_receipt_number(rcp_number, receipts=None):
+```
+
+or passing the already-loaded receipts into the function.
+
+This was one of my biggest lessons today.
+
+---
+
+# Challenges I Faced
+
+At first, I tried to access receipts like this:
+
+```python
+receipts[rcp_number]
+```
+
+I learned this was incorrect because:
+
+* `receipts` is a list.
+* Lists use integer indexes.
+* Receipt numbers are strings like `"RCP0000007"`.
+
+The correct approach is to search the list until the matching receipt number is found.
+
+---
+
+# Mentor Feedback
+
+Today I received helpful feedback about software design.
+
+I learned that professional code should avoid:
+
+* Loading the same file multiple times.
+* Repeating the same code.
+* Giving one function too many responsibilities.
+
+Instead, functions should do one job well.
+
+---
+
+# Key Concepts I Remember
+
+* CRUD = Create, Read, Update, Delete.
+* Receipt numbers uniquely identify receipts.
+* Lists contain multiple receipts.
+* Each receipt is a dictionary.
+* Dictionaries are mutable.
+* Load data once whenever possible.
+* Reuse existing functions.
+* Validate user input before saving.
+* Save the updated list after making changes.
+
+---
+
+# Reflection
+
+Today helped me move beyond writing code that simply works.
+
+I started thinking more about software design and efficiency.
+
+I now understand why reusable functions, single responsibilities, and passing data between functions make programs cleaner and easier to maintain.
+
+I also realized that understanding how lists and dictionaries work together is essential when working with JSON data.
+
+---
+
+# Commands Used Today
+
+```bash
+python3 practice/practice_day11.py
+
+git add .
+git commit -m "Week 2 Day 11: Implemented receipt update functionality"
+git push
+```
+
+---
+
+# Vocabulary
+
+| Term                            | Meaning                                      |
+| ------------------------------- | -------------------------------------------- |
+| Update                          | Modifying existing data                      |
+| Mutable                         | An object whose contents can be changed      |
+| Dictionary                      | A collection of key-value pairs              |
+| List                            | An ordered collection of items               |
+| Parameter                       | A value passed into a function               |
+| JSON                            | A text format used to store structured data  |
+| Single Responsibility Principle | A function should perform one task well      |
+| Refactoring                     | Improving code without changing its behavior |
+
+---
+
+# Daily Rating
+
+**Understanding:** ⭐⭐⭐⭐⭐ (5/5)
+
+**Difficulty:** ⭐⭐⭐⭐☆ (4/5)
+
+**Confidence:** ⭐⭐⭐⭐⭐ (5/5)
+
+---
+
+# Progress Summary
+
+* ✅ Completed the **Update (U)** operation of CRUD.
+* ✅ Reused search functions instead of duplicating code.
+* ✅ Loaded JSON data only once.
+* ✅ Updated a receipt's store name.
+* ✅ Added validation for empty store names.
+* ✅ Created a reusable `save_all_receipts()` function.
+* ✅ Improved my understanding of mutable objects and function design.
+
+---
+
+# End of Week 2 – Day 11
+
+Today I successfully implemented the Update feature of my Receipt Manager application. More importantly, I learned how to design reusable functions, avoid unnecessary work, and organize my code into clear responsibilities. My application now supports Create, Read, and Update operations, and I am ready to implement Delete to complete the CRUD cycle.
+
