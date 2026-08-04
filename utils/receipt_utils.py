@@ -99,6 +99,29 @@ def save_receipt(store_name, receipt_number, receipt_items, grand_total):
 
         file.write("Thank you for shopping!\n\n")
 
+def print_receipt_out(receipt):
+    store_name = receipt["store"]
+    receipt_number = receipt["receipt_number"]
+    receipt_items = receipt["items"]
+    grand_total = receipt["grand_total"]
+    print("==========RECEIPT==============")
+    print(f"Store: {store_name}")
+    print(f"Receipt No: {receipt_number}\n")
+
+    for index, item in enumerate(receipt_items, start=1):
+            
+        print(f"{index}. {item['name']}")
+        print(f"Price: ₦{item['price']:.2f}")
+        print(f"Qty: {item['quantity']}")
+        print(f"Subtotal: ₦{item['subtotal']:.2f}\n")
+
+    print("------------------------")
+    print(f"Grand Total: ₦{grand_total:.2f}")
+        # print()
+
+    print("Thank you for shopping!\n")
+
+
 def load_receipts():
     try:
         with open(RECEIPT_FILE, "r") as file:
@@ -163,3 +186,32 @@ def load_receipts_json():
     except FileNotFoundError:
         print("No receipts have been saved yet.")
         return []
+
+def search_by_receipt_number(rcp_number):
+    
+    saved_receipt_json = load_receipts_json()
+    if not saved_receipt_json:
+        return None
+
+    rcp_number = rcp_number.strip().upper()
+
+    for rcp in saved_receipt_json:
+        if rcp["receipt_number"].strip().upper() == rcp_number :
+            return rcp
+
+    return None
+
+
+def search_by_store(st_name):
+    
+    saved_receipt_json = load_receipts_json()
+    if not saved_receipt_json:
+        return []
+
+    st_name = st_name.strip().lower()
+    rcp_receipts = []
+    for rcp in saved_receipt_json:
+        if rcp["store"].strip().lower() == st_name:
+            rcp_receipts.append(rcp)
+
+    return rcp_receipts

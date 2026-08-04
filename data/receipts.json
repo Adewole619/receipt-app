@@ -37,5 +37,37 @@
             }
         ],
         "grand_total": 162.0
+    },
+    {
+        "store": "hhh",
+        "receipt_number": "RCP0000001",
+        "items": [
+            {
+                "name": "gh",
+                "price": 7.0,
+                "quantity": 2,
+                "subtotal": 14.0
+            }
+        ],
+        "grand_total": 14.0
+    },
+    {
+        "store": "gg",
+        "receipt_number": "RCP0000005",
+        "items": [
+            {
+                "name": "jj",
+                "price": 23.0,
+                "quantity": 2,
+                "subtotal": 46.0
+            },
+            {
+                "name": "kk",
+                "price": 76.0,
+                "quantity": 3,
+                "subtotal": 228.0
+            }
+        ],
+        "grand_total": 274.0
     }
 ]

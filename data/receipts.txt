@@ -213,3 +213,34 @@ Subtotal: ₦162.00
 Grand Total: ₦162.00
 Thank you for shopping!
 
+==========RECEIPT==============
+Store: hhh
+Receipt No: RCP0000004
+
+1. gh
+Price: ₦7.00
+Qty: 2
+Subtotal: ₦14.00
+
+------------------------
+Grand Total: ₦14.00
+Thank you for shopping!
+
+==========RECEIPT==============
+Store: gg
+Receipt No: RCP0000005
+
+1. jj
+Price: ₦23.00
+Qty: 2
+Subtotal: ₦46.00
+
+2. kk
+Price: ₦76.00
+Qty: 3
+Subtotal: ₦228.00
+
+------------------------
+Grand Total: ₦274.00
+Thank you for shopping!
+

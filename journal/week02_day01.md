@@ -704,3 +704,294 @@ git push
 # End of Week 2 – Day 9
 
 Today my receipt manager became much more like a real application. Instead of storing plain text, it now stores structured JSON data, generates receipt numbers automatically, and safely manages multiple receipts. This lays a strong foundation for implementing search, update, delete, reporting, and eventually migrating the application to SQLite.
+
+# Week 2 – Day 10 Journal
+
+**Date:** July 30, 2026
+
+**Project:** Receipt Manager App with Python
+
+**Study Duration:** 3–4 Hours
+
+---
+
+# Topic
+
+Searching Receipts (Read Operation - CRUD)
+
+---
+
+# Objectives
+
+Today I wanted to:
+
+* Learn how to search receipts stored in a JSON file.
+* Search receipts by receipt number.
+* Search receipts by store name.
+* Separate user interface code from business logic.
+* Write reusable search functions.
+
+---
+
+# What I Learned
+
+Today I learned that saving data is only one part of an application. A useful application must also allow users to find previously saved information quickly.
+
+I implemented the **Read (R)** operation of CRUD by adding search functionality to my receipt manager.
+
+---
+
+# Search by Receipt Number
+
+I created a reusable function:
+
+```python
+def search_by_receipt_number(rcp_number):
+```
+
+This function:
+
+* Loads all receipts from `receipts.json`.
+* Accepts a receipt number as a parameter.
+* Searches every receipt.
+* Returns the matching receipt if found.
+* Returns `None` if no receipt exists.
+
+I also learned that receipt numbers are unique, so once a match is found, the function can immediately return the receipt.
+
+---
+
+# Search by Store Name
+
+I also created:
+
+```python
+def search_by_store(st_name):
+```
+
+Unlike receipt numbers, a store can have many receipts.
+
+For this reason, I created an empty list:
+
+```python
+rcp_receipts = []
+```
+
+Every matching receipt is added to the list using:
+
+```python
+rcp_receipts.append(rcp)
+```
+
+The function finally returns the complete list of matching receipts.
+
+---
+
+# Understanding Return Values
+
+One of the biggest lessons today was understanding that different functions may return different kinds of data.
+
+### `search_by_receipt_number()`
+
+Returns:
+
+* One receipt dictionary
+* Or `None`
+
+### `search_by_store()`
+
+Returns:
+
+* A list of receipt dictionaries
+* Or an empty list (`[]`) when nothing is found
+
+This made me understand when to return a single object and when to return a collection.
+
+---
+
+# Separating Responsibilities
+
+Earlier, my search functions asked the user for input and printed results.
+
+Today I refactored them so they only perform the search.
+
+Now the menu:
+
+* Gets user input.
+* Calls the search function.
+* Displays the result.
+
+The search functions simply return data.
+
+This follows the **Single Responsibility Principle**, making the code easier to reuse and maintain.
+
+---
+
+# Improving My Menu
+
+I created a simple search menu that allows users to:
+
+```text
+1. Search by Receipt Number
+2. Search by Store
+3. Exit
+```
+
+The menu now calls the appropriate search function and displays the results.
+
+---
+
+# Testing My Functions
+
+I learned that functions can be tested without rewriting the entire application.
+
+I tested:
+
+* Searching for an existing receipt number.
+* Searching for a receipt number that does not exist.
+* Searching for an existing store.
+* Searching for a store with multiple receipts.
+* Searching using uppercase, lowercase, and mixed-case letters.
+* Exiting the search menu.
+
+---
+
+# Mentor Feedback
+
+Today I received useful feedback that improved my code.
+
+### Improvements I Made
+
+* Removed `input()` from my search functions.
+* Removed printing from the search functions.
+* Passed parameters into the functions instead.
+* Returned search results instead of displaying them immediately.
+* Used a list to collect multiple store receipts.
+
+These changes made my code much more reusable.
+
+---
+
+# Challenges I Faced
+
+At first, I made `search_by_store()` return only the first matching receipt.
+
+After reviewing the logic, I realized that one store can have many receipts.
+
+I fixed the problem by storing every matching receipt in a list and returning that list.
+
+---
+
+# How I Solved It
+
+I used:
+
+```python
+rcp_receipts = []
+```
+
+Then:
+
+```python
+rcp_receipts.append(rcp)
+```
+
+Finally:
+
+```python
+return rcp_receipts
+```
+
+This allowed the function to return all matching receipts instead of just one.
+
+---
+
+# Key Concepts I Remember
+
+* CRUD stands for Create, Read, Update, and Delete.
+* Searching by receipt number returns one receipt.
+* Searching by store returns many receipts.
+* Functions should accept parameters instead of calling `input()`.
+* Functions should return data instead of printing whenever possible.
+* Lists are useful for collecting multiple results.
+* Separating business logic from user interface makes code cleaner and easier to reuse.
+
+---
+
+# What I Enjoyed
+
+I enjoyed refactoring my code into reusable functions.
+
+It made the program easier to read and gave me a better understanding of how larger software projects are organized.
+
+---
+
+# What I Found Difficult
+
+The most difficult part was understanding why `search_by_store()` should return a list while `search_by_receipt_number()` returns only one receipt.
+
+After working through examples, I now understand the difference.
+
+---
+
+# Reflection
+
+Today was an important step in my programming journey.
+
+I moved beyond simply writing code that works and started writing code that is reusable and well organized.
+
+I now understand why functions should have a single responsibility and how separating user interaction from business logic makes an application easier to maintain.
+
+---
+
+# Commands I Used Today
+
+```bash
+python3 practice/practice_day10.py
+
+git add .
+git commit -m "Week 2 Day 10: Added receipt search functionality"
+git push
+```
+
+---
+
+# Vocabulary
+
+| Term                            | Meaning                                      |
+| ------------------------------- | -------------------------------------------- |
+| CRUD                            | Create, Read, Update, Delete                 |
+| Search                          | Finding information based on a condition     |
+| Return Value                    | The data a function sends back to its caller |
+| Parameter                       | A value passed into a function               |
+| List                            | A collection that can store multiple values  |
+| Dictionary                      | A collection of key-value pairs              |
+| Refactoring                     | Improving code without changing its behavior |
+| Single Responsibility Principle | A function should perform one task well      |
+
+---
+
+# Daily Rating
+
+**Understanding:** ⭐⭐⭐⭐⭐ (5/5)
+
+**Difficulty:** ⭐⭐⭐⭐☆ (4/5)
+
+**Confidence:** ⭐⭐⭐⭐⭐ (5/5)
+
+---
+
+# Progress Summary
+
+* ✅ Completed the **Read (Search)** operation of CRUD.
+* ✅ Added search by receipt number.
+* ✅ Added search by store.
+* ✅ Returned data from functions instead of printing.
+* ✅ Separated business logic from user interaction.
+* ✅ Improved code organization and reusability.
+
+---
+
+# End of Week 2 – Day 10
+
+Today I transformed my receipt manager into a more complete application by implementing search functionality. I learned how to design reusable functions, return meaningful results, and organize my code more professionally. My application can now create and read receipts, providing a strong foundation for implementing Update and Delete in the coming days.
