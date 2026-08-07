@@ -1,207 +1,134 @@
-from utils.receipt_utils import load_receipts_json , print_receipt_out 
+from utils.storage import load_receipts_json
 import sys
 import json
 
 RECEIPT_FILE = "data/receipts.txt"
 RECEIPT_FILE_JSON = "data/receipts.json"
 
-def search_by_receipt_number(receipts, rcp_number):
-    
+receipts = load_receipts_json()
+
+
+
+def total_receipts(receipts):
+    total = len(receipts)
+    return total
+
+
+def total_sales(receipts):
+    total_sales = 0
+    for receipt in receipts:
+        total_sales += receipt.get("grand_total", 0)
+
+    return total_sales
+
+def average_receipt(receipts):
+    if not receipts:
+        return 0
+    average = total_sales(receipts) / total_receipts(receipts)
+    return average
+
+def smallest_receipt(receipts):
+    # return min(receipt["grand_total"] for receipt in receipts)
     if not receipts:
         return None
+    smallest = receipts[0]
 
-    rcp_number = rcp_number.strip().upper()
+    for receipt in receipts:
+        if receipt["grand_total"] < smallest["grand_total"]:
+            smallest = receipt
 
-    for rcp in receipts:
-        if rcp["receipt_number"].strip().upper() == rcp_number :
-            return rcp
+    return smallest
 
-    return None
-
-
-def search_by_store(receipts, st_name):
-    
+def largest_receipt(receipts):
+    # return max(receipt["grand_total"] for receipt in receipts)
     if not receipts:
-        return []
-
-    st_name = st_name.strip().lower()
-    rcp_receipts = []
-    for rcp in receipts:
-        if rcp["store"].strip().lower() == st_name:
-            rcp_receipts.append(rcp)
-
-    return rcp_receipts
-
-
-def update_receipt(rcp_number):
-    receipts = load_receipts_json()
-    receipt = search_by_receipt_number(receipts, rcp_number)
-    if receipt is None:
-        print("Receipt not found.")
-    else:
-        new_rcp_store_name = get_menu_choice(f"Update Store name?\nCurren store name: {receipt['store']}\n New store name: ")
-        if not new_rcp_store_name:
-            print("Store name cannot be empty.")
-            return
-        
-        receipt["store"] = new_rcp_store_name
-        try:
-            save_all_receipts(receipts)
-            print("Store updated successfully.")
-        except OSError:
-            print("Failed to save receipt.")
-            return
-            
-        
-
-def save_all_receipts(receipts):
-    with open(RECEIPT_FILE_JSON, "w") as file:
-        json.dump(receipts, file, indent=4)
-
-def delete_receipt(receipts, rcp_number):
-    receipt = search_by_receipt_number(receipts, rcp_number)
-    if receipt is None:
-        print("Receipt not found.")
         return None
-    else:
-        print_receipt_out(receipt)
-        confirm_delete = input(
-            "Permanently deleted receipts cannot be restored.\n"
-            "Type Yes to delete or No to cancel: "
-        )
-
-        if confirm_delete.strip().lower() == "yes":
-            receipts.remove(receipt)
-            save_all_receipts(receipts)
-            print("Receipt deleted successfully")
-            return True
-        
-        return False
-
-def delete_receipt_object(receipts, receipt):
-    if receipt is None:
-        return False
     
-    print_receipt_out(receipt)
-    confirm_delete = input(
-                "Permanently deleted receipts cannot be restored.\n"
-                "Type Yes to delete or No to cancel: "
-            )
-    if confirm_delete.strip().lower() == "yes":
-                receipts.remove(receipt)
-                save_all_receipts(receipts)
-                print("Receipt deleted successfully")
-                return True
-    
-    return False
+    largest = receipts[0]
 
-def print_receipt_list(receipts):
-    for i, receipt in enumerate(receipts, start = 1):
-                print(f"Selection [{i}]")
-                print_receipt_out(receipt)
+    for receipt in receipts:
+        if receipt["grand_total"] > largest["grand_total"]:
+            largest = receipt
 
-def choose_receipt(receipts):
-    try:
-        select_index = int(get_menu_choice("0. cancel selection\nPick selection-number: "))
-        if select_index == 0:
-            print("Cancelling...")
-            return None
-        elif 1 <= select_index <= len(receipts):
-            return receipts[select_index - 1]
-        else:
-            print("Invalid display number.")
-            return None
-    except (ValueError, IndexError):
-        print("Enter selection number")
-        return None
+    return largest
 
-def delete_menu(receipts):
-    print("Searching for receipt")
-    print("1. Search by Store")
-    print("2. Search by Receipt Number")
+def print_a_receipt(receipt, title="Receipt"):
+    print(f"{title}\n")
+    print(f"Store:\n{receipt['store']}\n")
+    print(f"Receipt:\n{receipt['receipt_number']}\n")
+    print(f"Grand Total:\n₦{receipt['grand_total']:,.2f}")
 
-    delete_type = get_menu_choice("Choose: ")
+def receipts_per_store(receipts):
+    store_counts = {}
 
-    if delete_type == "1":
+    for receipt in receipts:
+        store = receipt["store"]
 
-        st_name = get_menu_choice("Enter store name: ")
-        st_receipts = search_by_store(receipts, st_name)
-        if not st_receipts:
-            print("No receipts found.")
-        else:
-            print_receipt_list(st_receipts)
-            receipt = choose_receipt(st_receipts)
-            deleted = delete_receipt_object(receipts, receipt)
-            if not deleted:
-                print("Deletion canceled.")      
+        # if store in store_count:
+        #     store_counts[store] +=1
+        # else:
+        #     store_counts[store] = 1
+        store_counts[store]= store_counts.get(store, 0) + 1
 
-    elif delete_type == "2":
-        delete_receipt_menu(receipts)
+    return store_counts
 
-    else:
-        print("Invalid option.")
+def print_store_count(store_counts):
+    for store, count in store_counts.items():
+        label = "receipt" if count == 1 else "receipts"
+        print(f"{store}: {count} {label}")
 
+    # counts = receipts_per_store(receipts)
+    # for store, count in counts.items():
+    #     print(f"{store}: {count} receipt{'s' if count != 1 else ''}")
 
-
-def delete_receipt_menu(receipts):
-    receipt_number = get_receipt_number()
-               
-    deleted = delete_receipt(receipts, receipt_number)
-    if not deleted:
-        print("Deletion cancelled.")
-
-def get_menu_choice(prompt):
-    return input(prompt).strip()
-
-def get_receipt_number():
-    return input("Enter receipt number: ").strip().upper()
-
-def search_by_receipt_menu(receipts):
-    rcp_number = get_receipt_number()
-            
-    receipt = search_by_receipt_number(receipts, rcp_number)
-    
-    if receipt is None:
-        print("Receipt not found or no receipts have been saved.")
-    else:
-        print_receipt_out(receipt)
-
-def search_by_store_menu(receipts):
-    st_name =  get_menu_choice("Enter store name: ")
-
-    st_receipts = search_by_store(receipts, st_name)
-
-    if not st_receipts:
-        print("No receipts found.")
-    else:
-        for st_receipt in st_receipts :
-            print_receipt_out(st_receipt)
-
-
-
-
-def main_menu():
+def statistics_menu(receipts):
     while True:
-        # MAIN MENU 
-        print("====== Receipt Search and Receipt Deletion Menu ======")
-        print("1. Search by Receipt Number\n2. Search by Store\n3. Delete a Receipt\n4. Exit")  
-            
-        choice = get_menu_choice("Choose an option: ")
-        receipts = load_receipts_json()
+        print("""
+====== Statistics ======
+
+1. Total Receipts
+
+2. Total Sales
+
+3. Average Receipt
+
+4. Largest Receipt
+
+5. Smallest Receipt
+
+6. Receipts Per Store
+
+7. Back
+""")
+
+        choice = input("Choose an option: ")
+
         if choice == "1":
-            search_by_receipt_menu(receipts)
+            print(total_receipts(receipts))
 
         elif choice == "2":
-            search_by_store_menu(receipts)
+            print(total_sales(receipts))
 
         elif choice == "3":
-            delete_menu(receipts)
+            print(average_receipt(receipts))
 
         elif choice == "4":
-            print("receipt Search terminated")
-            sys.exit()
-        else:
-            print("Invalid option")
+            largest = largest_receipt(receipts)
+            print_a_receipt(largest, "Largest Receipt")
 
-# main menu
-main_menu()
+        elif choice == "5":
+            smallest = smallest_receipt(receipts)
+            print_a_receipt(smallest, "Smallest Receipt")
+
+        elif choice == "6":
+            stores = receipts_per_store(receipts)
+
+            print_store_count(stores)
+
+        elif choice == "7":
+            break
+
+        else:
+            print("Invalid option. Try again.")
+
+statistics_menu(receipts)

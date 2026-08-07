@@ -99,27 +99,7 @@ def save_receipt(store_name, receipt_number, receipt_items, grand_total):
 
         file.write("Thank you for shopping!\n\n")
 
-def print_receipt_out(receipt):
-    store_name = receipt["store"]
-    receipt_number = receipt["receipt_number"]
-    receipt_items = receipt["items"]
-    grand_total = receipt["grand_total"]
-    print("==========RECEIPT==============")
-    print(f"Store: {store_name}")
-    print(f"Receipt No: {receipt_number}\n")
 
-    for index, item in enumerate(receipt_items, start=1):
-            
-        print(f"{index}. {item['name']}")
-        print(f"Price: ₦{item['price']:.2f}")
-        print(f"Qty: {item['quantity']}")
-        print(f"Subtotal: ₦{item['subtotal']:.2f}\n")
-
-    print("------------------------")
-    print(f"Grand Total: ₦{grand_total:.2f}")
-        # print()
-
-    print("Thank you for shopping!\n")
 
 
 def load_receipts():
@@ -179,13 +159,7 @@ def save_receipt_json(receipt):
     with open(RECEIPT_FILE_JSON, "w") as file:
         json.dump(receipts, file, indent=4)
 
-def load_receipts_json():
-    try:
-        with open(RECEIPT_FILE_JSON, "r") as file:
-            return json.load(file)
-    except FileNotFoundError:
-        print("No receipts have been saved yet.")
-        return []
+
 
 def search_by_receipt_number(rcp_number):
     
@@ -215,3 +189,109 @@ def search_by_store(st_name):
             rcp_receipts.append(rcp)
 
     return rcp_receipts
+
+
+def search_by_receipt_number(receipts, rcp_number):
+    
+    if not receipts:
+        return None
+
+    rcp_number = rcp_number.strip().upper()
+
+    for rcp in receipts:
+        if rcp["receipt_number"].strip().upper() == rcp_number :
+            return rcp
+
+    return None
+
+
+def search_by_store(receipts, st_name):
+    
+    if not receipts:
+        return []
+
+    st_name = st_name.strip().lower()
+    rcp_receipts = []
+    for rcp in receipts:
+        if rcp["store"].strip().lower() == st_name:
+            rcp_receipts.append(rcp)
+
+    return rcp_receipts
+
+
+def update_receipt(rcp_number):
+    receipts = load_receipts_json()
+    receipt = search_by_receipt_number(receipts, rcp_number)
+    if receipt is None:
+        print("Receipt not found.")
+    else:
+        new_rcp_store_name = get_menu_choice(f"Update Store name?\nCurren store name: {receipt['store']}\n New store name: ")
+        if not new_rcp_store_name:
+            print("Store name cannot be empty.")
+            return
+        
+        receipt["store"] = new_rcp_store_name
+        try:
+            save_all_receipts(receipts)
+            print("Store updated successfully.")
+        except OSError:
+            print("Failed to save receipt.")
+            return
+
+def delete_receipt(receipts, rcp_number):
+    receipt = search_by_receipt_number(receipts, rcp_number)
+    if receipt is None:
+        print("Receipt not found.")
+        return None
+    else:
+        print_receipt_out(receipt)
+        confirm_delete = input(
+            "Permanently deleted receipts cannot be restored.\n"
+            "Type Yes to delete or No to cancel: "
+        )
+
+        if confirm_delete.strip().lower() == "yes":
+            receipts.remove(receipt)
+            save_all_receipts(receipts)
+            print("Receipt deleted successfully")
+            return True
+        
+        return False
+
+def delete_receipt_object(receipts, receipt):
+    if receipt is None:
+        return False
+    
+    print_receipt_out(receipt)
+    confirm_delete = input(
+                "Permanently deleted receipts cannot be restored.\n"
+                "Type Yes to delete or No to cancel: "
+            )
+    if confirm_delete.strip().lower() == "yes":
+                receipts.remove(receipt)
+                save_all_receipts(receipts)
+                print("Receipt deleted successfully")
+                return True
+    
+    return False
+
+def choose_receipt(receipts):
+    try:
+        select_index = int(get_menu_choice("0. cancel selection\nPick selection-number: "))
+        if select_index == 0:
+            print("Cancelling...")
+            return None
+        elif 1 <= select_index <= len(receipts):
+            return receipts[select_index - 1]
+        else:
+            print("Invalid display number.")
+            return None
+    except (ValueError, IndexError):
+        print("Enter selection number")
+        return None
+
+
+
+
+def get_receipt_number():
+    return input("Enter receipt number: ").strip().upper()

@@ -46,3 +46,8 @@ save_receipt_json(receipt)
 
 content_json = load_receipts_json()
 # print(content_json)
+
+
+
+# main menu
+main_menu()
