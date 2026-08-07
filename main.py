@@ -6,16 +6,16 @@ receipt_number = generate_receipt_number()
 
 receipt_items = []
 
-count = validate_num_input("Number of items", int)
+count = validate_num_input("Number of items to generate receipt for", int)
 
 grand_total = 0
 
 for i in range(count):
-    item_name = validate_string_input("Item name")
+    item_name = validate_string_input(f"Enter item [{i + 1}] name")
     
-    item_price = validate_num_input("Item price", float)
+    item_price = validate_num_input(f"Enter {item_name} price", float)
 
-    item_quantity = validate_num_input("Item quantity", int)
+    item_quantity = validate_num_input(f"Enter {item_name} quantity", int)
 
     sub_total = calculate_subtotal(item_price, item_quantity)
 

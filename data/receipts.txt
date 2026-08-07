@@ -244,3 +244,21 @@ Subtotal: ₦228.00
 Grand Total: ₦274.00
 Thank you for shopping!
 
+==========RECEIPT==============
+Store: EASYMONEY
+Receipt No: RCP0000006
+
+1. TESLA
+Price: ₦200000.00
+Qty: 100
+Subtotal: ₦20000000.00
+
+2. LAMBO
+Price: ₦150000000000000.00
+Qty: 50
+Subtotal: ₦7500000000000000.00
+
+------------------------
+Grand Total: ₦7500000020000000.00
+Thank you for shopping!
+

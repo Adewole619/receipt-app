@@ -69,5 +69,43 @@
             }
         ],
         "grand_total": 274.0
+    },
+    {
+        "store": "GG",
+        "receipt_number": "RCP0000005",
+        "items": [
+            {
+                "name": "jj",
+                "price": 23.0,
+                "quantity": 2,
+                "subtotal": 46.0
+            },
+            {
+                "name": "kk",
+                "price": 76.0,
+                "quantity": 3,
+                "subtotal": 228.0
+            }
+        ],
+        "grand_total": 274.0
+    },
+    {
+        "store": "EASYMONEY",
+        "receipt_number": "RCP0000006",
+        "items": [
+            {
+                "name": "TESLA",
+                "price": 200000.0,
+                "quantity": 100,
+                "subtotal": 20000000.0
+            },
+            {
+                "name": "LAMBO",
+                "price": 150000000000000.0,
+                "quantity": 50,
+                "subtotal": 7500000000000000.0
+            }
+        ],
+        "grand_total": 7500000020000000.0
     }
 ]

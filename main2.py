@@ -1,5 +1,9 @@
 from utils.receipt_utils import load_receipts_json , print_receipt_out 
 import sys
+import json
+
+RECEIPT_FILE = "data/receipts.txt"
+RECEIPT_FILE_JSON = "data/receipts.json"
 
 def search_by_receipt_number(receipts, rcp_number):
     
@@ -28,50 +32,6 @@ def search_by_store(receipts, st_name):
 
     return rcp_receipts
 
-print("====== Receipt Search ======")
-print("1. Search by Receipt Number\n2. Search by Store\n3. Exit")
-while True:
-    
-    
-    choice = input("Choose an option: ").strip()
-    # except ValueError:
-    #     print("Please enter a number.")
-    #     continue
-    receipts = load_receipts_json()
-    if choice == "1":
-
-        rcp_number = input("Receipt Number: ")
-        
-        receipt = search_by_receipt_number(receipts, rcp_number)
-
-        if receipt is None:
-            print("Receipt not found or no receipts have been saved.")
-        else:
-            print_receipt_out(receipt)
-
-        break    
-
-    elif choice == "2":
-
-        st_name =  input("Enter store name: ")
-
-        st_receipts = search_by_store(st_name)
-
-        if not st_receipts:
-            print("No receipts found.")
-        else:
-            for st_receipt in st_receipts :
-                    print_receipt_out(st_receipt)
-
-        break
-    elif choice == "3":
-            print("receipt Search terminated")
-            sys.exit()
-    else:
-
-        print("Invalid option")
-        break
-
 
 def update_receipt(rcp_number):
     receipts = load_receipts_json()
@@ -79,7 +39,7 @@ def update_receipt(rcp_number):
     if receipt is None:
         print("Receipt not found.")
     else:
-        new_rcp_store_name = input(f"Update Store name?\nCurren store name: {receipt['store']}\n New store name: ").strip()
+        new_rcp_store_name = get_menu_choice(f"Update Store name?\nCurren store name: {receipt['store']}\n New store name: ")
         if not new_rcp_store_name:
             print("Store name cannot be empty.")
             return
@@ -98,7 +58,150 @@ def save_all_receipts(receipts):
     with open(RECEIPT_FILE_JSON, "w") as file:
         json.dump(receipts, file, indent=4)
 
-1. the receipts number is the first object to search for first
-2. from the search by receipt number, we get the receipt, then use receipt["items"]["name"]
-access "Riceand change it to "beans" with our update_receipt function
-3. we write the new updated list of dictionaries from memory to file, then save as json
+def delete_receipt(receipts, rcp_number):
+    receipt = search_by_receipt_number(receipts, rcp_number)
+    if receipt is None:
+        print("Receipt not found.")
+        return None
+    else:
+        print_receipt_out(receipt)
+        confirm_delete = input(
+            "Permanently deleted receipts cannot be restored.\n"
+            "Type Yes to delete or No to cancel: "
+        )
+
+        if confirm_delete.strip().lower() == "yes":
+            receipts.remove(receipt)
+            save_all_receipts(receipts)
+            print("Receipt deleted successfully")
+            return True
+        
+        return False
+
+def delete_receipt_object(receipts, receipt):
+    if receipt is None:
+        return False
+    
+    print_receipt_out(receipt)
+    confirm_delete = input(
+                "Permanently deleted receipts cannot be restored.\n"
+                "Type Yes to delete or No to cancel: "
+            )
+    if confirm_delete.strip().lower() == "yes":
+                receipts.remove(receipt)
+                save_all_receipts(receipts)
+                print("Receipt deleted successfully")
+                return True
+    
+    return False
+
+def print_receipt_list(receipts):
+    for i, receipt in enumerate(receipts, start = 1):
+                print(f"Selection [{i}]")
+                print_receipt_out(receipt)
+
+def choose_receipt(receipts):
+    try:
+        select_index = int(get_menu_choice("0. cancel selection\nPick selection-number: "))
+        if select_index == 0:
+            print("Cancelling...")
+            return None
+        elif 1 <= select_index <= len(receipts):
+            return receipts[select_index - 1]
+        else:
+            print("Invalid display number.")
+            return None
+    except (ValueError, IndexError):
+        print("Enter selection number")
+        return None
+
+def delete_menu(receipts):
+    print("Searching for receipt")
+    print("1. Search by Store")
+    print("2. Search by Receipt Number")
+
+    delete_type = get_menu_choice("Choose: ")
+
+    if delete_type == "1":
+
+        st_name = get_menu_choice("Enter store name: ")
+        st_receipts = search_by_store(receipts, st_name)
+        if not st_receipts:
+            print("No receipts found.")
+        else:
+            print_receipt_list(st_receipts)
+            receipt = choose_receipt(st_receipts)
+            deleted = delete_receipt_object(receipts, receipt)
+            if not deleted:
+                print("Deletion canceled.")      
+
+    elif delete_type == "2":
+        delete_receipt_menu(receipts)
+
+    else:
+        print("Invalid option.")
+
+
+
+def delete_receipt_menu(receipts):
+    receipt_number = get_receipt_number()
+               
+    deleted = delete_receipt(receipts, receipt_number)
+    if not deleted:
+        print("Deletion cancelled.")
+
+def get_menu_choice(prompt):
+    return input(prompt).strip()
+
+def get_receipt_number():
+    return input("Enter receipt number: ").strip().upper()
+
+def search_by_receipt_menu(receipts):
+    rcp_number = get_receipt_number()
+            
+    receipt = search_by_receipt_number(receipts, rcp_number)
+    
+    if receipt is None:
+        print("Receipt not found or no receipts have been saved.")
+    else:
+        print_receipt_out(receipt)
+
+def search_by_store_menu(receipts):
+    st_name =  get_menu_choice("Enter store name: ")
+
+    st_receipts = search_by_store(receipts, st_name)
+
+    if not st_receipts:
+        print("No receipts found.")
+    else:
+        for st_receipt in st_receipts :
+            print_receipt_out(st_receipt)
+
+
+
+
+def main_menu():
+    while True:
+        # MAIN MENU 
+        print("====== Receipt Search and Receipt Deletion Menu ======")
+        print("1. Search by Receipt Number\n2. Search by Store\n3. Delete a Receipt\n4. Exit")  
+            
+        choice = get_menu_choice("Choose an option: ")
+        receipts = load_receipts_json()
+        if choice == "1":
+            search_by_receipt_menu(receipts)
+
+        elif choice == "2":
+            search_by_store_menu(receipts)
+
+        elif choice == "3":
+            delete_menu(receipts)
+
+        elif choice == "4":
+            print("receipt Search terminated")
+            sys.exit()
+        else:
+            print("Invalid option")
+
+# main menu
+main_menu()
