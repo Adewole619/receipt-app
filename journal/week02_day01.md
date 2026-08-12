@@ -1233,7 +1233,7 @@ I also realized that understanding how lists and dictionaries work together is e
 python3 practice/practice_day11.py
 
 git add .
-git commit -m "Week 2 Day 11: Implemented receipt update functionality"
+git git
 git push
 ```
 
@@ -1279,4 +1279,994 @@ git push
 # End of Week 2 – Day 11
 
 Today I successfully implemented the Update feature of my Receipt Manager application. More importantly, I learned how to design reusable functions, avoid unnecessary work, and organize my code into clear responsibilities. My application now supports Create, Read, and Update operations, and I am ready to implement Delete to complete the CRUD cycle.
+
+# Receipt Manager Project – Day 12 Journal
+
+**Date:** August 6, 2026
+
+---
+
+# Objective
+
+Today's goal was to complete the **receipt deletion functionality** and improve the way users select receipts from search results.
+
+I also focused on making the deletion process safer because deleting a receipt is a permanent operation.
+
+---
+
+# What I Built
+
+Today I worked on:
+
+* Deleting receipts by receipt number.
+* Searching for receipts before deletion.
+* Confirming deletion with the user.
+* Saving the updated receipt list back to JSON.
+* Creating a reusable receipt-selection system.
+* Assigning temporary display numbers to search results.
+* Separating menu logic from business logic.
+
+---
+
+# 1. Deleting a Receipt
+
+I created a `delete_receipt()` function that searches for a receipt first.
+
+The basic process is:
+
+```text
+Receipt Number
+      ↓
+Search for Receipt
+      ↓
+Receipt Found?
+   ↙       ↘
+ No         Yes
+ ↓           ↓
+Stop     Display Receipt
+             ↓
+       Confirm Deletion
+          ↙       ↘
+        No         Yes
+        ↓           ↓
+      Cancel     Remove
+                    ↓
+              Save JSON
+```
+
+This taught me that deletion should not happen immediately after receiving the receipt number.
+
+The program should first make sure the receipt exists and then ask the user for confirmation.
+
+---
+
+# 2. Using `remove()`
+
+I learned how Python's list `.remove()` method can remove an object from a list.
+
+For example:
+
+```python
+receipts.remove(receipt)
+```
+
+The `receipt` dictionary returned from the search is removed from the `receipts` list.
+
+I also learned why deletion needs to be handled carefully:
+
+> Once the receipt is removed and the updated list is saved, it cannot easily be restored.
+
+Because of this, confirmation is important.
+
+---
+
+# 3. Confirming Permanent Deletion
+
+Before deleting a receipt, I display the receipt and ask the user:
+
+```text
+Permanently deleted receipts cannot be restored.
+Type Yes to delete or No to cancel:
+```
+
+The receipt is only deleted when the user enters:
+
+```text
+Yes
+```
+
+If the user enters:
+
+```text
+No
+```
+
+the deletion is cancelled.
+
+This is an example of adding a safety mechanism to a destructive operation.
+
+---
+
+# 4. Saving the Updated Receipt List
+
+After deleting the receipt:
+
+```python
+receipts.remove(receipt)
+```
+
+the list in memory has changed.
+
+Therefore, I save the entire updated list back to the JSON file.
+
+The process is:
+
+```text
+JSON file
+   ↓
+load_receipts_json()
+   ↓
+List of dictionaries in memory
+   ↓
+Remove receipt
+   ↓
+Updated list
+   ↓
+save_all_receipts()
+   ↓
+JSON file
+```
+
+I learned that the JSON file needs to represent the current state of the list in memory.
+
+---
+
+# 5. Searching by Store and Selecting a Receipt
+
+I improved the delete menu so that a user can search by store.
+
+For example:
+
+```text
+Search by Store
+      ↓
+Shoprite
+      ↓
+Multiple receipts found
+      ↓
+Display numbered results
+```
+
+Instead of forcing the user to type a long receipt number, I created temporary display numbers.
+
+For example:
+
+```text
+Selection [1]
+Receipt: RCP0000001
+
+Selection [2]
+Receipt: RCP0000027
+
+Selection [3]
+Receipt: RCP0000145
+```
+
+The user can simply select:
+
+```text
+2
+```
+
+and the program knows that this corresponds to the second receipt in the search results.
+
+---
+
+# 6. Creating `print_receipt_list()`
+
+I created a reusable function:
+
+```python
+def print_receipt_list(receipts):
+    for i, receipt in enumerate(receipts, start=1):
+        print(f"Selection [{i}]")
+        print_receipt_out(receipt)
+```
+
+This separates the responsibility of displaying a list of receipts from the menu logic.
+
+---
+
+# 7. Creating `choose_receipt()`
+
+I also created:
+
+```python
+def choose_receipt(receipts):
+```
+
+This function handles selecting a receipt from a list.
+
+The user enters a display number and the function returns the corresponding receipt.
+
+For example:
+
+```text
+Selection [1] → RCP0000001
+Selection [2] → RCP0000008
+Selection [3] → RCP0000015
+```
+
+If the user enters:
+
+```text
+2
+```
+
+the function returns:
+
+```text
+RCP0000008
+```
+
+The display number is only a temporary position in the search results. It does not replace the actual receipt number.
+
+---
+
+# Key Concept
+
+One of the most important things I learned today is the difference between:
+
+### Display number
+
+```text
+2
+```
+
+and:
+
+### Receipt number
+
+```text
+RCP0000008
+```
+
+The display number is temporary and only exists to make selection easier.
+
+The receipt number is the permanent unique identifier of the receipt.
+
+---
+
+# Code Organization
+
+I continued separating my application into smaller functions.
+
+Instead of putting everything inside one large menu, I now have separate responsibilities:
+
+```text
+main_menu()
+    ↓
+delete_menu()
+    ↓
+delete_by_receipt_number()
+    ↓
+delete_receipt()
+```
+
+I also have reusable functions such as:
+
+```text
+search_by_receipt_number()
+search_by_store()
+print_receipt_out()
+print_receipt_list()
+choose_receipt()
+save_all_receipts()
+```
+
+This makes the application easier to understand and maintain.
+
+---
+
+# What I Learned
+
+Today I reinforced:
+
+* Python lists.
+* `.remove()`.
+* Searching lists of dictionaries.
+* Returning objects from functions.
+* Confirmation before destructive operations.
+* Saving modified data back to JSON.
+* Temporary display numbers.
+* Function decomposition.
+* Separating menu logic from application logic.
+* Reusing functions.
+
+---
+
+# Reflection
+
+Today I started thinking more about the **user experience** of the application.
+
+Typing a long receipt number is not always convenient, especially when many receipts are stored.
+
+The temporary display-number system provides a better experience:
+
+```text
+Search results
+      ↓
+1. Receipt A
+2. Receipt B
+3. Receipt C
+      ↓
+User selects 2
+      ↓
+Application identifies Receipt B
+```
+
+I also learned that deleting data requires more care than simply removing an item from a list. The program needs to confirm the user's intention and then persist the changed state.
+
+---
+
+# Project Progress
+
+My Receipt Manager now supports:
+
+* ✅ Create receipts
+* ✅ Auto-generated receipt numbers
+* ✅ JSON storage
+* ✅ Load receipts
+* ✅ Search by receipt number
+* ✅ Search by store
+* ✅ Update receipts
+* ✅ Delete receipts
+* ✅ Confirmation before deletion
+* ✅ Reusable menus
+* ✅ Receipt selection using display numbers
+
+The project is becoming a proper CRUD application with the beginnings of a business analytics system.
+
+---
+
+# Tomorrow's Direction
+
+The next stage is to build more useful **business statistics and analytics** from the receipt data.
+
+I want the system to answer questions such as:
+
+* How many receipts exist?
+* How much have we sold?
+* What is the average receipt value?
+* Which receipt is the largest?
+* Which receipt is the smallest?
+* How many receipts does each store have?
+* Which store generates the most sales?
+
+This will begin moving the project from a simple receipt manager toward a **business analytics platform**.
+
+
+# Receipt Manager Project – Day 13 Journal
+
+**Date:** August 7, 2026
+
+---
+
+# Objective
+
+Today's goal was to transform my receipt manager from a CRUD application into a simple business reporting system by adding statistics and analytics.
+
+Instead of only storing receipts, I learned how to analyze the stored data and present meaningful information to the user.
+
+---
+
+# What I Built
+
+Today I implemented a Statistics module that can:
+
+* Count the total number of receipts.
+* Calculate total sales.
+* Calculate the average receipt value.
+* Find the largest receipt.
+* Find the smallest receipt.
+* Count how many receipts belong to each store.
+* Display all statistics through a dedicated statistics menu.
+
+---
+
+# What I Learned
+
+## 1. Counting Data
+
+I used Python's `len()` function to determine how many receipts have been stored.
+
+```python
+def total_receipts(receipts):
+    return len(receipts)
+```
+
+This taught me that counting records is one of the simplest forms of business analytics.
+
+---
+
+## 2. Calculating Total Sales
+
+I looped through every receipt and added each receipt's `grand_total`.
+
+```python
+total_sales += receipt.get("grand_total", 0)
+```
+
+Using `.get()` makes the program safer because it provides a default value if the key is missing.
+
+---
+
+## 3. Reusing Existing Functions
+
+Instead of recalculating everything inside `average_receipt()`, I reused my existing functions.
+
+```python
+average = total_sales(receipts) / total_receipts(receipts)
+```
+
+This reminded me that reusable functions make programs cleaner and easier to maintain.
+
+---
+
+## 4. Finding the Largest and Smallest Receipt
+
+I learned how to compare dictionaries by their values.
+
+I started with the first receipt and compared every other receipt against it.
+
+```python
+largest = receipts[0]
+```
+
+and
+
+```python
+smallest = receipts[0]
+```
+
+This helped me understand comparison algorithms without relying on Python's built-in `max()` or `min()` functions.
+
+---
+
+## 5. Counting Receipts Per Store
+
+I created a dictionary that keeps track of how many receipts belong to each store.
+
+```python
+store_counts[store] = store_counts.get(store, 0) + 1
+```
+
+This introduced me to grouping and counting data, which is commonly used in reporting systems.
+
+---
+
+## 6. Building a Statistics Menu
+
+I created a separate menu dedicated to business reports.
+
+Each menu option calls its own function, making the code organized and easy to extend.
+
+This reinforced the importance of separating responsibilities into small, focused functions.
+
+---
+
+# Challenges
+
+One challenge I discovered is that some functions can fail if the receipt list is empty.
+
+For example:
+
+* Calculating an average when there are no receipts causes a division by zero.
+* Accessing `receipts[0]` fails if the list is empty.
+
+I learned that defensive programming and validating data before processing it are important for building reliable software.
+
+---
+
+# Key Takeaways
+
+Today I learned that software is not only about storing information—it is also about extracting useful information from data.
+
+I also reinforced several software engineering principles:
+
+* Write small functions with one responsibility.
+* Reuse existing functions whenever possible.
+* Separate business logic from menu logic.
+* Think about error handling before users encounter problems.
+* Design code so that it can easily support future features.
+
+---
+
+# Reflection
+
+Today's lesson made my receipt manager feel much more like a real business application. Instead of simply recording receipts, it can now provide useful insights such as total sales, average receipt value, and store summaries.
+
+I also realized that analytics is the foundation for future dashboards and AI-powered reporting. The work I completed today is another step toward building a professional receipt management platform that can eventually support CRM, business intelligence, and AI features.
+
+---
+
+# Tomorrow's Goal
+
+Tomorrow I will continue improving the application by adding more advanced reporting features, strengthening error handling, and making the code even more modular and reusable.
+
+# Receipt Manager Project – Day 14 Journal
+
+**Date:** August 8, 2026
+
+---
+
+# Objective
+
+Today's goal was to expand the statistics functionality of my Receipt Manager.
+
+Yesterday, I calculated general receipt statistics such as total receipts, total sales, average receipt, largest receipt, smallest receipt, and receipts per store.
+
+Today, I focused on **store-level sales analytics**.
+
+---
+
+# What I Built
+
+Today I implemented functions to:
+
+* Calculate total sales per store.
+* Find the highest-spending store.
+* Find the lowest-spending store.
+* Calculate the average sales per receipt for each store.
+* Reuse existing statistics functions instead of duplicating logic.
+
+---
+
+# What I Learned
+
+## 1. Calculating Sales Per Store
+
+I created:
+
+```python
+def sales_per_store(receipts):
+```
+
+This function groups receipts by store and adds the `grand_total` of each receipt.
+
+For example:
+
+```python
+{
+    "Shoprite": 30000,
+    "Spar": 20000
+}
+```
+
+This means Shoprite generated ₦30,000 and Spar generated ₦20,000 from the stored receipts.
+
+I reused the dictionary `.get()` pattern:
+
+```python
+store_sales[store] = store_sales.get(store, 0) + receipt.get("grand_total", 0)
+```
+
+This allowed me to create the store automatically when it does not already exist.
+
+---
+
+# 2. Finding the Highest-Spending Store
+
+I created:
+
+```python
+def highest_spending_store(receipts):
+```
+
+First, I calculated the sales for every store.
+
+Then I used:
+
+```python
+max(store_sales, key=store_sales.get)
+```
+
+This allowed Python to find the store with the highest sales value.
+
+---
+
+# 3. Finding the Lowest-Spending Store
+
+I created:
+
+```python
+def lowest_spending_store(receipts):
+```
+
+This uses:
+
+```python
+min(store_sales, key=store_sales.get)
+```
+
+to find the store with the lowest total sales.
+
+This helped me understand how `max()` and `min()` can work with dictionaries.
+
+---
+
+# 4. Average Sales Per Store
+
+I created:
+
+```python
+def average_sales_per_store(receipts):
+```
+
+The calculation is:
+
+```text
+Store's Total Sales
+-------------------
+Number of Store Receipts
+```
+
+For example, if Shoprite has:
+
+```text
+Total sales: ₦30,000
+Receipts: 3
+```
+
+then:
+
+```text
+₦30,000 ÷ 3 = ₦10,000
+```
+
+So the average sale per receipt for Shoprite is ₦10,000.
+
+---
+
+# 5. Reusing Existing Functions
+
+One of the most important things I learned today was that I don't need to repeat calculations.
+
+My `average_sales_per_store()` function reuses:
+
+```python
+sales_per_store(receipts)
+```
+
+and:
+
+```python
+receipts_per_store(receipts)
+```
+
+This gives me:
+
+```text
+Sales per store
++
+Number of receipts per store
+        ↓
+Average sales per store
+```
+
+This makes my code easier to maintain.
+
+---
+
+# 6. Handling Empty Data
+
+I added a check:
+
+```python
+if not store_sales:
+    return None
+```
+
+This prevents the program from trying to calculate statistics when there are no receipts.
+
+I also learned that functions using `max()`, `min()`, or `receipts[0]` need to consider the possibility of an empty list or dictionary.
+
+---
+
+# Key Takeaways
+
+Today I learned about:
+
+* Data aggregation.
+* Grouping data by store.
+* Dictionary `.get()`.
+* `max()` with a dictionary.
+* `min()` with a dictionary.
+* Average calculations.
+* Reusing existing functions.
+* Handling empty datasets.
+* Building business-level statistics from receipt data.
+
+---
+
+# Business Analytics
+
+Today's work is starting to make the Receipt Manager more useful as a business analytics system.
+
+The application can now answer questions such as:
+
+```text
+How many receipts do we have?
+
+How much money was generated?
+
+How much did each store generate?
+
+Which store generated the most money?
+
+Which store generated the least?
+
+What is the average sale per receipt for each store?
+```
+
+These are examples of information that can eventually be displayed in a business dashboard.
+
+---
+
+# Reflection
+
+Today's lesson helped me understand that the value of a receipt management system is not only in storing receipts.
+
+The stored receipts can be transformed into useful business information.
+
+I also noticed that my functions are becoming more reusable. Instead of creating each statistic from scratch, I can build new statistics using functions I already created.
+
+This is making the project more modular and closer to the architecture of a real application.
+
+---
+
+# Tomorrow's Goal
+
+Tomorrow I will continue improving the analytics functionality and begin thinking about how customers and businesses can be represented in the system.
+
+I also want to start considering how the current JSON-based structure could eventually evolve into a proper database structure for the larger Receipt Management, CRM, and Business Analytics platform.
+
+
+# Receipt Manager Project – Day 14 Journal
+
+**Date:** August 8, 2026
+
+---
+
+# Objective
+
+Today's goal was to expand the statistics functionality of my Receipt Manager.
+
+Yesterday, I calculated general receipt statistics such as total receipts, total sales, average receipt, largest receipt, smallest receipt, and receipts per store.
+
+Today, I focused on **store-level sales analytics**.
+
+---
+
+# What I Built
+
+Today I implemented functions to:
+
+* Calculate total sales per store.
+* Find the highest-spending store.
+* Find the lowest-spending store.
+* Calculate the average sales per receipt for each store.
+* Reuse existing statistics functions instead of duplicating logic.
+
+---
+
+# What I Learned
+
+## 1. Calculating Sales Per Store
+
+I created:
+
+```python
+def sales_per_store(receipts):
+```
+
+This function groups receipts by store and adds the `grand_total` of each receipt.
+
+For example:
+
+```python
+{
+    "Shoprite": 30000,
+    "Spar": 20000
+}
+```
+
+This means Shoprite generated ₦30,000 and Spar generated ₦20,000 from the stored receipts.
+
+I reused the dictionary `.get()` pattern:
+
+```python
+store_sales[store] = store_sales.get(store, 0) + receipt.get("grand_total", 0)
+```
+
+This allowed me to create the store automatically when it does not already exist.
+
+---
+
+# 2. Finding the Highest-Spending Store
+
+I created:
+
+```python
+def highest_spending_store(receipts):
+```
+
+First, I calculated the sales for every store.
+
+Then I used:
+
+```python
+max(store_sales, key=store_sales.get)
+```
+
+This allowed Python to find the store with the highest sales value.
+
+---
+
+# 3. Finding the Lowest-Spending Store
+
+I created:
+
+```python
+def lowest_spending_store(receipts):
+```
+
+This uses:
+
+```python
+min(store_sales, key=store_sales.get)
+```
+
+to find the store with the lowest total sales.
+
+This helped me understand how `max()` and `min()` can work with dictionaries.
+
+---
+
+# 4. Average Sales Per Store
+
+I created:
+
+```python
+def average_sales_per_store(receipts):
+```
+
+The calculation is:
+
+```text
+Store's Total Sales
+-------------------
+Number of Store Receipts
+```
+
+For example, if Shoprite has:
+
+```text
+Total sales: ₦30,000
+Receipts: 3
+```
+
+then:
+
+```text
+₦30,000 ÷ 3 = ₦10,000
+```
+
+So the average sale per receipt for Shoprite is ₦10,000.
+
+---
+
+# 5. Reusing Existing Functions
+
+One of the most important things I learned today was that I don't need to repeat calculations.
+
+My `average_sales_per_store()` function reuses:
+
+```python
+sales_per_store(receipts)
+```
+
+and:
+
+```python
+receipts_per_store(receipts)
+```
+
+This gives me:
+
+```text
+Sales per store
++
+Number of receipts per store
+        ↓
+Average sales per store
+```
+
+This makes my code easier to maintain.
+
+---
+
+# 6. Handling Empty Data
+
+I added a check:
+
+```python
+if not store_sales:
+    return None
+```
+
+This prevents the program from trying to calculate statistics when there are no receipts.
+
+I also learned that functions using `max()`, `min()`, or `receipts[0]` need to consider the possibility of an empty list or dictionary.
+
+---
+
+# Key Takeaways
+
+Today I learned about:
+
+* Data aggregation.
+* Grouping data by store.
+* Dictionary `.get()`.
+* `max()` with a dictionary.
+* `min()` with a dictionary.
+* Average calculations.
+* Reusing existing functions.
+* Handling empty datasets.
+* Building business-level statistics from receipt data.
+
+---
+
+# Business Analytics
+
+Today's work is starting to make the Receipt Manager more useful as a business analytics system.
+
+The application can now answer questions such as:
+
+```text
+How many receipts do we have?
+
+How much money was generated?
+
+How much did each store generate?
+
+Which store generated the most money?
+
+Which store generated the least?
+
+What is the average sale per receipt for each store?
+```
+
+These are examples of information that can eventually be displayed in a business dashboard.
+
+---
+
+# Reflection
+
+Today's lesson helped me understand that the value of a receipt management system is not only in storing receipts.
+
+The stored receipts can be transformed into useful business information.
+
+I also noticed that my functions are becoming more reusable. Instead of creating each statistic from scratch, I can build new statistics using functions I already created.
+
+This is making the project more modular and closer to the architecture of a real application.
+
+---
+
+# Tomorrow's Goal
+
+Tomorrow I will continue improving the analytics functionality and begin thinking about how customers and businesses can be represented in the system.
+
+I also want to start considering how the current JSON-based structure could eventually evolve into a proper database structure for the larger Receipt Management, CRM, and Business Analytics platform.
+
 

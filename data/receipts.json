@@ -1,111 +1,608 @@
 [
     {
-        "store": "hymrs",
+        "store": "Lagos",
         "receipt_number": "RCP0000001",
-        "item": [
-            {
-                "name": "hp",
-                "price": 1000.0,
-                "quantity": 3,
-                "subtotal": 3000.0
-            }
-        ],
-        "grand_total": 3000.0
+        "items": [{"name": "Laptop", "price": 250000.0, "quantity": 1, "subtotal": 250000.0}],
+        "grand_total": 250000.0
     },
     {
-        "store": "yffu",
+        "store": "Abuja",
         "receipt_number": "RCP0000002",
-        "item": [
-            {
-                "name": "dsfz",
-                "price": 54.0,
-                "quantity": 3,
-                "subtotal": 162.0
-            }
-        ],
-        "grand_total": 162.0
+        "items": [{"name": "Mouse", "price": 8500.0, "quantity": 2, "subtotal": 17000.0}],
+        "grand_total": 17000.0
     },
     {
-        "store": "tfy",
+        "store": "Ibadan",
         "receipt_number": "RCP0000003",
-        "items": [
-            {
-                "name": "rt",
-                "price": 54.0,
-                "quantity": 3,
-                "subtotal": 162.0
-            }
-        ],
-        "grand_total": 162.0
+        "items": [{"name": "Keyboard", "price": 15000.0, "quantity": 1, "subtotal": 15000.0}],
+        "grand_total": 15000.0
     },
     {
-        "store": "hhh",
-        "receipt_number": "RCP0000001",
-        "items": [
-            {
-                "name": "gh",
-                "price": 7.0,
-                "quantity": 2,
-                "subtotal": 14.0
-            }
-        ],
-        "grand_total": 14.0
+        "store": "Kano",
+        "receipt_number": "RCP0000004",
+        "items": [{"name": "Monitor", "price": 120000.0, "quantity": 1, "subtotal": 120000.0}],
+        "grand_total": 120000.0
     },
     {
-        "store": "gg",
+        "store": "PortHarcourt",
         "receipt_number": "RCP0000005",
-        "items": [
-            {
-                "name": "jj",
-                "price": 23.0,
-                "quantity": 2,
-                "subtotal": 46.0
-            },
-            {
-                "name": "kk",
-                "price": 76.0,
-                "quantity": 3,
-                "subtotal": 228.0
-            }
-        ],
-        "grand_total": 274.0
+        "items": [{"name": "Headphones", "price": 25000.0, "quantity": 2, "subtotal": 50000.0}],
+        "grand_total": 50000.0
     },
     {
-        "store": "GG",
-        "receipt_number": "RCP0000005",
-        "items": [
-            {
-                "name": "jj",
-                "price": 23.0,
-                "quantity": 2,
-                "subtotal": 46.0
-            },
-            {
-                "name": "kk",
-                "price": 76.0,
-                "quantity": 3,
-                "subtotal": 228.0
-            }
-        ],
-        "grand_total": 274.0
-    },
-    {
-        "store": "EASYMONEY",
+        "store": "Lagos",
         "receipt_number": "RCP0000006",
+        "items": [{"name": "Phone", "price": 350000.0, "quantity": 1, "subtotal": 350000.0}],
+        "grand_total": 350000.0
+    },
+    {
+        "store": "Abuja",
+        "receipt_number": "RCP0000007",
+        "items": [{"name": "Charger", "price": 12000.0, "quantity": 3, "subtotal": 36000.0}],
+        "grand_total": 36000.0
+    },
+    {
+        "store": "Ibadan",
+        "receipt_number": "RCP0000008",
+        "items": [{"name": "USB Cable", "price": 5000.0, "quantity": 4, "subtotal": 20000.0}],
+        "grand_total": 20000.0
+    },
+    {
+        "store": "Kano",
+        "receipt_number": "RCP0000009",
+        "items": [{"name": "Printer", "price": 95000.0, "quantity": 1, "subtotal": 95000.0}],
+        "grand_total": 95000.0
+    },
+    {
+        "store": "PortHarcourt",
+        "receipt_number": "RCP0000010",
+        "items": [{"name": "Tablet", "price": 180000.0, "quantity": 1, "subtotal": 180000.0}],
+        "grand_total": 180000.0
+    },
+    {
+        "store": "Lagos",
+        "receipt_number": "RCP0000011",
         "items": [
-            {
-                "name": "TESLA",
-                "price": 200000.0,
-                "quantity": 100,
-                "subtotal": 20000000.0
-            },
-            {
-                "name": "LAMBO",
-                "price": 150000000000000.0,
-                "quantity": 50,
-                "subtotal": 7500000000000000.0
-            }
+            {"name": "Keyboard", "price": 15000.0, "quantity": 2, "subtotal": 30000.0},
+            {"name": "Mouse", "price": 8500.0, "quantity": 1, "subtotal": 8500.0}
         ],
-        "grand_total": 7500000020000000.0
+        "grand_total": 38500.0
+    },
+    {
+        "store": "Abuja",
+        "receipt_number": "RCP0000012",
+        "items": [{"name": "PowerBank", "price": 30000.0, "quantity": 2, "subtotal": 60000.0}],
+        "grand_total": 60000.0
+    },
+    {
+        "store": "Ibadan",
+        "receipt_number": "RCP0000013",
+        "items": [{"name": "Speaker", "price": 45000.0, "quantity": 1, "subtotal": 45000.0}],
+        "grand_total": 45000.0
+    },
+    {
+        "store": "Kano",
+        "receipt_number": "RCP0000014",
+        "items": [{"name": "Webcam", "price": 35000.0, "quantity": 2, "subtotal": 70000.0}],
+        "grand_total": 70000.0
+    },
+    {
+        "store": "PortHarcourt",
+        "receipt_number": "RCP0000015",
+        "items": [{"name": "SSD", "price": 85000.0, "quantity": 1, "subtotal": 85000.0}],
+        "grand_total": 85000.0
+    },
+    {
+        "store": "Lagos",
+        "receipt_number": "RCP0000016",
+        "items": [{"name": "HardDrive", "price": 75000.0, "quantity": 2, "subtotal": 150000.0}],
+        "grand_total": 150000.0
+    },
+    {
+        "store": "Abuja",
+        "receipt_number": "RCP0000017",
+        "items": [{"name": "Monitor", "price": 120000.0, "quantity": 2, "subtotal": 240000.0}],
+        "grand_total": 240000.0
+    },
+    {
+        "store": "Ibadan",
+        "receipt_number": "RCP0000018",
+        "items": [{"name": "LaptopBag", "price": 22000.0, "quantity": 2, "subtotal": 44000.0}],
+        "grand_total": 44000.0
+    },
+    {
+        "store": "Kano",
+        "receipt_number": "RCP0000019",
+        "items": [{"name": "Router", "price": 55000.0, "quantity": 1, "subtotal": 55000.0}],
+        "grand_total": 55000.0
+    },
+    {
+        "store": "PortHarcourt",
+        "receipt_number": "RCP0000020",
+        "items": [{"name": "Keyboard", "price": 15000.0, "quantity": 3, "subtotal": 45000.0}],
+        "grand_total": 45000.0
+    },
+    {
+        "store": "Lagos",
+        "receipt_number": "RCP0000021",
+        "items": [{"name": "Phone", "price": 450000.0, "quantity": 1, "subtotal": 450000.0}],
+        "grand_total": 450000.0
+    },
+    {
+        "store": "Abuja",
+        "receipt_number": "RCP0000022",
+        "items": [{"name": "Earbuds", "price": 40000.0, "quantity": 2, "subtotal": 80000.0}],
+        "grand_total": 80000.0
+    },
+    {
+        "store": "Ibadan",
+        "receipt_number": "RCP0000023",
+        "items": [{"name": "Mouse", "price": 8500.0, "quantity": 5, "subtotal": 42500.0}],
+        "grand_total": 42500.0
+    },
+    {
+        "store": "Kano",
+        "receipt_number": "RCP0000024",
+        "items": [{"name": "Laptop", "price": 300000.0, "quantity": 1, "subtotal": 300000.0}],
+        "grand_total": 300000.0
+    },
+    {
+        "store": "PortHarcourt",
+        "receipt_number": "RCP0000025",
+        "items": [{"name": "Printer", "price": 110000.0, "quantity": 1, "subtotal": 110000.0}],
+        "grand_total": 110000.0
+    },
+    {
+        "store": "Lagos",
+        "receipt_number": "RCP0000026",
+        "items": [{"name": "Tablet", "price": 200000.0, "quantity": 2, "subtotal": 400000.0}],
+        "grand_total": 400000.0
+    },
+    {
+        "store": "Abuja",
+        "receipt_number": "RCP0000027",
+        "items": [{"name": "Speaker", "price": 35000.0, "quantity": 3, "subtotal": 105000.0}],
+        "grand_total": 105000.0
+    },
+    {
+        "store": "Ibadan",
+        "receipt_number": "RCP0000028",
+        "items": [{"name": "Charger", "price": 10000.0, "quantity": 4, "subtotal": 40000.0}],
+        "grand_total": 40000.0
+    },
+    {
+        "store": "Kano",
+        "receipt_number": "RCP0000029",
+        "items": [{"name": "PowerBank", "price": 28000.0, "quantity": 2, "subtotal": 56000.0}],
+        "grand_total": 56000.0
+    },
+    {
+        "store": "PortHarcourt",
+        "receipt_number": "RCP0000030",
+        "items": [{"name": "Monitor", "price": 135000.0, "quantity": 1, "subtotal": 135000.0}],
+        "grand_total": 135000.0
+    },
+    {
+        "store": "Lagos",
+        "receipt_number": "RCP0000031",
+        "items": [{"name": "SSD", "price": 90000.0, "quantity": 2, "subtotal": 180000.0}],
+        "grand_total": 180000.0
+    },
+    {
+        "store": "Abuja",
+        "receipt_number": "RCP0000032",
+        "items": [{"name": "HardDrive", "price": 70000.0, "quantity": 1, "subtotal": 70000.0}],
+        "grand_total": 70000.0
+    },
+    {
+        "store": "Ibadan",
+        "receipt_number": "RCP0000033",
+        "items": [{"name": "Webcam", "price": 40000.0, "quantity": 1, "subtotal": 40000.0}],
+        "grand_total": 40000.0
+    },
+    {
+        "store": "Kano",
+        "receipt_number": "RCP0000034",
+        "items": [{"name": "Router", "price": 60000.0, "quantity": 2, "subtotal": 120000.0}],
+        "grand_total": 120000.0
+    },
+    {
+        "store": "PortHarcourt",
+        "receipt_number": "RCP0000035",
+        "items": [{"name": "LaptopBag", "price": 25000.0, "quantity": 2, "subtotal": 50000.0}],
+        "grand_total": 50000.0
+    },
+    {
+        "store": "Lagos",
+        "receipt_number": "RCP0000036",
+        "items": [{"name": "Laptop", "price": 275000.0, "quantity": 1, "subtotal": 275000.0}],
+        "grand_total": 275000.0
+    },
+    {
+        "store": "Abuja",
+        "receipt_number": "RCP0000037",
+        "items": [{"name": "Keyboard", "price": 18000.0, "quantity": 2, "subtotal": 36000.0}],
+        "grand_total": 36000.0
+    },
+    {
+        "store": "Ibadan",
+        "receipt_number": "RCP0000038",
+        "items": [{"name": "Mouse", "price": 9000.0, "quantity": 3, "subtotal": 27000.0}],
+        "grand_total": 27000.0
+    },
+    {
+        "store": "Kano",
+        "receipt_number": "RCP0000039",
+        "items": [{"name": "Phone", "price": 320000.0, "quantity": 1, "subtotal": 320000.0}],
+        "grand_total": 320000.0
+    },
+    {
+        "store": "PortHarcourt",
+        "receipt_number": "RCP0000040",
+        "items": [{"name": "Earbuds", "price": 35000.0, "quantity": 3, "subtotal": 105000.0}],
+        "grand_total": 105000.0
+    },
+    {
+        "store": "Lagos",
+        "receipt_number": "RCP0000041",
+        "items": [{"name": "Monitor", "price": 125000.0, "quantity": 2, "subtotal": 250000.0}],
+        "grand_total": 250000.0
+    },
+    {
+        "store": "Abuja",
+        "receipt_number": "RCP0000042",
+        "items": [{"name": "Tablet", "price": 190000.0, "quantity": 1, "subtotal": 190000.0}],
+        "grand_total": 190000.0
+    },
+    {
+        "store": "Ibadan",
+        "receipt_number": "RCP0000043",
+        "items": [{"name": "Printer", "price": 100000.0, "quantity": 1, "subtotal": 100000.0}],
+        "grand_total": 100000.0
+    },
+    {
+        "store": "Kano",
+        "receipt_number": "RCP0000044",
+        "items": [{"name": "Speaker", "price": 42000.0, "quantity": 2, "subtotal": 84000.0}],
+        "grand_total": 84000.0
+    },
+    {
+        "store": "PortHarcourt",
+        "receipt_number": "RCP0000045",
+        "items": [{"name": "Charger", "price": 11000.0, "quantity": 5, "subtotal": 55000.0}],
+        "grand_total": 55000.0
+    },
+    {
+        "store": "Lagos",
+        "receipt_number": "RCP0000046",
+        "items": [{"name": "Phone", "price": 500000.0, "quantity": 1, "subtotal": 500000.0}],
+        "grand_total": 500000.0
+    },
+    {
+        "store": "Abuja",
+        "receipt_number": "RCP0000047",
+        "items": [{"name": "Laptop", "price": 280000.0, "quantity": 1, "subtotal": 280000.0}],
+        "grand_total": 280000.0
+    },
+    {
+        "store": "Ibadan",
+        "receipt_number": "RCP0000048",
+        "items": [{"name": "PowerBank", "price": 25000.0, "quantity": 3, "subtotal": 75000.0}],
+        "grand_total": 75000.0
+    },
+    {
+        "store": "Kano",
+        "receipt_number": "RCP0000049",
+        "items": [{"name": "SSD", "price": 80000.0, "quantity": 1, "subtotal": 80000.0}],
+        "grand_total": 80000.0
+    },
+    {
+        "store": "PortHarcourt",
+        "receipt_number": "RCP0000050",
+        "items": [{"name": "HardDrive", "price": 65000.0, "quantity": 2, "subtotal": 130000.0}],
+        "grand_total": 130000.0
+    },
+    {
+        "store": "Lagos",
+        "receipt_number": "RCP0000051",
+        "items": [{"name": "Webcam", "price": 38000.0, "quantity": 2, "subtotal": 76000.0}],
+        "grand_total": 76000.0
+    },
+    {
+        "store": "Abuja",
+        "receipt_number": "RCP0000052",
+        "items": [{"name": "Router", "price": 58000.0, "quantity": 1, "subtotal": 58000.0}],
+        "grand_total": 58000.0
+    },
+    {
+        "store": "Ibadan",
+        "receipt_number": "RCP0000053",
+        "items": [{"name": "LaptopBag", "price": 20000.0, "quantity": 3, "subtotal": 60000.0}],
+        "grand_total": 60000.0
+    },
+    {
+        "store": "Kano",
+        "receipt_number": "RCP0000054",
+        "items": [{"name": "Keyboard", "price": 16000.0, "quantity": 2, "subtotal": 32000.0}],
+        "grand_total": 32000.0
+    },
+    {
+        "store": "PortHarcourt",
+        "receipt_number": "RCP0000055",
+        "items": [{"name": "Mouse", "price": 7500.0, "quantity": 4, "subtotal": 30000.0}],
+        "grand_total": 30000.0
+    },
+    {
+        "store": "Lagos",
+        "receipt_number": "RCP0000056",
+        "items": [{"name": "Tablet", "price": 210000.0, "quantity": 2, "subtotal": 420000.0}],
+        "grand_total": 420000.0
+    },
+    {
+        "store": "Abuja",
+        "receipt_number": "RCP0000057",
+        "items": [{"name": "Monitor", "price": 115000.0, "quantity": 1, "subtotal": 115000.0}],
+        "grand_total": 115000.0
+    },
+    {
+        "store": "Ibadan",
+        "receipt_number": "RCP0000058",
+        "items": [{"name": "Headphones", "price": 28000.0, "quantity": 2, "subtotal": 56000.0}],
+        "grand_total": 56000.0
+    },
+    {
+        "store": "Kano",
+        "receipt_number": "RCP0000059",
+        "items": [{"name": "Phone", "price": 290000.0, "quantity": 1, "subtotal": 290000.0}],
+        "grand_total": 290000.0
+    },
+    {
+        "store": "PortHarcourt",
+        "receipt_number": "RCP0000060",
+        "items": [{"name": "Laptop", "price": 260000.0, "quantity": 1, "subtotal": 260000.0}],
+        "grand_total": 260000.0
+    },
+    {
+        "store": "Lagos",
+        "receipt_number": "RCP0000061",
+        "items": [{"name": "Printer", "price": 105000.0, "quantity": 2, "subtotal": 210000.0}],
+        "grand_total": 210000.0
+    },
+    {
+        "store": "Abuja",
+        "receipt_number": "RCP0000062",
+        "items": [{"name": "Speaker", "price": 38000.0, "quantity": 2, "subtotal": 76000.0}],
+        "grand_total": 76000.0
+    },
+    {
+        "store": "Ibadan",
+        "receipt_number": "RCP0000063",
+        "items": [{"name": "Charger", "price": 9000.0, "quantity": 3, "subtotal": 27000.0}],
+        "grand_total": 27000.0
+    },
+    {
+        "store": "Kano",
+        "receipt_number": "RCP0000064",
+        "items": [{"name": "PowerBank", "price": 27000.0, "quantity": 2, "subtotal": 54000.0}],
+        "grand_total": 54000.0
+    },
+    {
+        "store": "PortHarcourt",
+        "receipt_number": "RCP0000065",
+        "items": [{"name": "SSD", "price": 95000.0, "quantity": 2, "subtotal": 190000.0}],
+        "grand_total": 190000.0
+    },
+    {
+        "store": "Lagos",
+        "receipt_number": "RCP0000066",
+        "items": [{"name": "HardDrive", "price": 72000.0, "quantity": 1, "subtotal": 72000.0}],
+        "grand_total": 72000.0
+    },
+    {
+        "store": "Abuja",
+        "receipt_number": "RCP0000067",
+        "items": [{"name": "Webcam", "price": 42000.0, "quantity": 2, "subtotal": 84000.0}],
+        "grand_total": 84000.0
+    },
+    {
+        "store": "Ibadan",
+        "receipt_number": "RCP0000068",
+        "items": [{"name": "Router", "price": 50000.0, "quantity": 2, "subtotal": 100000.0}],
+        "grand_total": 100000.0
+    },
+    {
+        "store": "Kano",
+        "receipt_number": "RCP0000069",
+        "items": [{"name": "LaptopBag", "price": 23000.0, "quantity": 2, "subtotal": 46000.0}],
+        "grand_total": 46000.0
+    },
+    {
+        "store": "PortHarcourt",
+        "receipt_number": "RCP0000070",
+        "items": [{"name": "Keyboard", "price": 17000.0, "quantity": 3, "subtotal": 51000.0}],
+        "grand_total": 51000.0
+    },
+    {
+        "store": "Lagos",
+        "receipt_number": "RCP0000071",
+        "items": [{"name": "Mouse", "price": 8000.0, "quantity": 5, "subtotal": 40000.0}],
+        "grand_total": 40000.0
+    },
+    {
+        "store": "Abuja",
+        "receipt_number": "RCP0000072",
+        "items": [{"name": "Phone", "price": 375000.0, "quantity": 1, "subtotal": 375000.0}],
+        "grand_total": 375000.0
+    },
+    {
+        "store": "Ibadan",
+        "receipt_number": "RCP0000073",
+        "items": [{"name": "Laptop", "price": 255000.0, "quantity": 1, "subtotal": 255000.0}],
+        "grand_total": 255000.0
+    },
+    {
+        "store": "Kano",
+        "receipt_number": "RCP0000074",
+        "items": [{"name": "Monitor", "price": 130000.0, "quantity": 1, "subtotal": 130000.0}],
+        "grand_total": 130000.0
+    },
+    {
+        "store": "PortHarcourt",
+        "receipt_number": "RCP0000075",
+        "items": [{"name": "Tablet", "price": 175000.0, "quantity": 2, "subtotal": 350000.0}],
+        "grand_total": 350000.0
+    },
+    {
+        "store": "Lagos",
+        "receipt_number": "RCP0000076",
+        "items": [{"name": "Headphones", "price": 30000.0, "quantity": 1, "subtotal": 30000.0}],
+        "grand_total": 30000.0
+    },
+    {
+        "store": "Abuja",
+        "receipt_number": "RCP0000077",
+        "items": [{"name": "Printer", "price": 115000.0, "quantity": 1, "subtotal": 115000.0}],
+        "grand_total": 115000.0
+    },
+    {
+        "store": "Ibadan",
+        "receipt_number": "RCP0000078",
+        "items": [{"name": "Speaker", "price": 40000.0, "quantity": 2, "subtotal": 80000.0}],
+        "grand_total": 80000.0
+    },
+    {
+        "store": "Kano",
+        "receipt_number": "RCP0000079",
+        "items": [{"name": "Charger", "price": 8500.0, "quantity": 4, "subtotal": 34000.0}],
+        "grand_total": 34000.0
+    },
+    {
+        "store": "PortHarcourt",
+        "receipt_number": "RCP0000080",
+        "items": [{"name": "PowerBank", "price": 32000.0, "quantity": 3, "subtotal": 96000.0}],
+        "grand_total": 96000.0
+    },
+    {
+        "store": "Lagos",
+        "receipt_number": "RCP0000081",
+        "items": [{"name": "Router", "price": 62000.0, "quantity": 1, "subtotal": 62000.0}],
+        "grand_total": 62000.0
+    },
+    {
+        "store": "Abuja",
+        "receipt_number": "RCP0000082",
+        "items": [{"name": "SSD", "price": 88000.0, "quantity": 2, "subtotal": 176000.0}],
+        "grand_total": 176000.0
+    },
+    {
+        "store": "Ibadan",
+        "receipt_number": "RCP0000083",
+        "items": [{"name": "HardDrive", "price": 68000.0, "quantity": 2, "subtotal": 136000.0}],
+        "grand_total": 136000.0
+    },
+    {
+        "store": "Kano",
+        "receipt_number": "RCP0000084",
+        "items": [{"name": "Webcam", "price": 36000.0, "quantity": 1, "subtotal": 36000.0}],
+        "grand_total": 36000.0
+    },
+    {
+        "store": "PortHarcourt",
+        "receipt_number": "RCP0000085",
+        "items": [{"name": "LaptopBag", "price": 21000.0, "quantity": 3, "subtotal": 63000.0}],
+        "grand_total": 63000.0
+    },
+    {
+        "store": "Lagos",
+        "receipt_number": "RCP0000086",
+        "items": [{"name": "Keyboard", "price": 14000.0, "quantity": 2, "subtotal": 28000.0}],
+        "grand_total": 28000.0
+    },
+    {
+        "store": "Abuja",
+        "receipt_number": "RCP0000087",
+        "items": [{"name": "Mouse", "price": 7500.0, "quantity": 6, "subtotal": 45000.0}],
+        "grand_total": 45000.0
+    },
+    {
+        "store": "Ibadan",
+        "receipt_number": "RCP0000088",
+        "items": [{"name": "Phone", "price": 310000.0, "quantity": 1, "subtotal": 310000.0}],
+        "grand_total": 310000.0
+    },
+    {
+        "store": "Kano",
+        "receipt_number": "RCP0000089",
+        "items": [{"name": "Laptop", "price": 290000.0, "quantity": 1, "subtotal": 290000.0}],
+        "grand_total": 290000.0
+    },
+    {
+        "store": "PortHarcourt",
+        "receipt_number": "RCP0000090",
+        "items": [{"name": "Monitor", "price": 118000.0, "quantity": 2, "subtotal": 236000.0}],
+        "grand_total": 236000.0
+    },
+    {
+        "store": "Lagos",
+        "receipt_number": "RCP0000091",
+        "items": [{"name": "Tablet", "price": 185000.0, "quantity": 1, "subtotal": 185000.0}],
+        "grand_total": 185000.0
+    },
+    {
+        "store": "Abuja",
+        "receipt_number": "RCP0000092",
+        "items": [{"name": "Headphones", "price": 27000.0, "quantity": 2, "subtotal": 54000.0}],
+        "grand_total": 54000.0
+    },
+    {
+        "store": "Ibadan",
+        "receipt_number": "RCP0000093",
+        "items": [{"name": "Printer", "price": 98000.0, "quantity": 1, "subtotal": 98000.0}],
+        "grand_total": 98000.0
+    },
+    {
+        "store": "Kano",
+        "receipt_number": "RCP0000094",
+        "items": [{"name": "Speaker", "price": 46000.0, "quantity": 3, "subtotal": 138000.0}],
+        "grand_total": 138000.0
+    },
+    {
+        "store": "PortHarcourt",
+        "receipt_number": "RCP0000095",
+        "items": [{"name": "Charger", "price": 10000.0, "quantity": 5, "subtotal": 50000.0}],
+        "grand_total": 50000.0
+    },
+    {
+        "store": "Lagos",
+        "receipt_number": "RCP0000096",
+        "items": [{"name": "PowerBank", "price": 29000.0, "quantity": 2, "subtotal": 58000.0}],
+        "grand_total": 58000.0
+    },
+    {
+        "store": "Abuja",
+        "receipt_number": "RCP0000097",
+        "items": [{"name": "Router", "price": 57000.0, "quantity": 2, "subtotal": 114000.0}],
+        "grand_total": 114000.0
+    },
+    {
+        "store": "Ibadan",
+        "receipt_number": "RCP0000098",
+        "items": [{"name": "SSD", "price": 92000.0, "quantity": 1, "subtotal": 92000.0}],
+        "grand_total": 92000.0
+    },
+    {
+        "store": "Kano",
+        "receipt_number": "RCP0000099",
+        "items": [{"name": "HardDrive", "price": 73000.0, "quantity": 2, "subtotal": 146000.0}],
+        "grand_total": 146000.0
+    },
+    {
+        "store": "PortHarcourt",
+        "receipt_number": "RCP0000100",
+        "items": [
+            {"name": "Laptop", "price": 270000.0, "quantity": 1, "subtotal": 270000.0},
+            {"name": "Mouse", "price": 8000.0, "quantity": 2, "subtotal": 16000.0}
+        ],
+        "grand_total": 286000.0
     }
 ]
