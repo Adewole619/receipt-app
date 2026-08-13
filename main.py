@@ -1,4 +1,7 @@
 from utils.receipt_utils import calculate_subtotal, validate_input, validate_string_input, validate_num_input, save_receipt, load_receipts , generate_receipt_number, load_receipts_json, save_receipt_json
+from main3 import get_customer_for_receipt
+from utils.menus import main_menu
+
 
 store_name = validate_string_input("Store name")
 
@@ -30,14 +33,17 @@ for i in range(count):
     grand_total += sub_total 
 
 
-save_receipt(store_name, receipt_number, receipt_items, grand_total)
-content = load_receipts()
-print(content)
+# save_receipt(store_name, receipt_number, receipt_items, grand_total)
+# content = load_receipts()
+# print(content)
 
+customer = get_customer_for_receipt()
+customer_id = customer["customer_id"]
 
 receipt = {
     "store": store_name,
     "receipt_number": receipt_number,
+    "customer_id": customer_id,
     "items": receipt_items,
     "grand_total": grand_total,
 }

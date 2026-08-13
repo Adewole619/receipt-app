@@ -7,10 +7,7 @@ RECEIPT_FILE_JSON = "data/receipts.json"
 
 
 
-def print_receipt_list(receipts):
-    for i, receipt in enumerate(receipts, start = 1):
-                print(f"Selection [{i}]")
-                print_receipt_out(receipt)
+
 
 
 

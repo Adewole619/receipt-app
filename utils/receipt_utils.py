@@ -5,110 +5,42 @@ import os
 RECEIPT_FILE = "data/receipts.txt"
 RECEIPT_FILE_JSON = "data/receipts.json"
 
-def calculate_subtotal(price, quantity):
-    return price * quantity
+import sys
+import json
+import os
 
-def print_receipt(store_name, item_name, price, quantity, subtotal):
-    print("========================")
-    print("        RECEIPT")
-    print("========================")
-    print()
-    print(f"Store: {store_name}")
-    print(f"Item: {item_name}")
-    print(f"Price: #{price:.2f}")
-    print(f"Quantity: {quantity}")
-    print("")
-    print(f"Subtotal: {subtotal:.2f}")
-    print()
-    print("Thank you for shopping!")
+RECEIPT_FILE = "data/receipts.txt"
+RECEIPT_FILE_JSON = "data/receipts.json"
 
-def validate_input(store_name,receipt_number, item_name, price, quantity):
-
-    if store_name == "" or receipt_number == "" or item_name=="" or quantity <= 0 or price <= 0:
-        if store_name == "":
-            print("Store name cannot be empty.")
-        if receipt_number == "":
-            print("Store name cannot be empty.")
-        if item_name == "":
-            print("Receipt number cannot be empty.")
-        if quantity <= 0:
-            print("Quantity must be greater than 0.")
-        if price <= 0:
-            print("Price must be greater than 0.")
-
-        return False
-    
-    return True
-
-def validate_string_input(field_name):
-    while True:
-        string_input = input(f"Enter {field_name} (or q to quit): ").strip()
-
-        if string_input.lower() == "q":
-            print("Program terminated.")
-            sys.exit()
-
-        if not string_input:
-            print(f"{field_name} can not be empty. Try again.")
-            continue
-    
-        # print(f"{field_name} is stored successfully")
-        return string_input
-
-def validate_num_input(field_name, num_type):
-    while True:
-        int_input = input(f"Enter {field_name} (or q to quit): ").strip()
-
-        if int_input.lower() == "q":
-            print("Program terminated.")
-            sys.exit()
-        try:
-            if num_type == int:
-                val = int(int_input)
-            elif num_type == float:
-                val = float(int_input)
-            else:
-                raise ValueError("num_type must be int or float")
-
-            if val <= 0:
-                print(f"{field_name} must be greater than 0. Try again.")
-                continue
-    
-            # print(f"{field_name} is stored successfully.")
-            return val
-        except ValueError:
-            print("Invalid input. Please enter a valid number.")
+# ------------------STORAGE METHODS------------------------------
+def save_all_receipts(receipts):
+    with open(RECEIPT_FILE_JSON, "w") as file:
+        json.dump(receipts, file, indent=4)
 
 
-def save_receipt(store_name, receipt_number, receipt_items, grand_total):
-    with open(RECEIPT_FILE , "a") as file:
-        file.write("==========RECEIPT==============\n")
-        file.write(f"Store: {store_name}\n")
-        file.write(f"Receipt No: {receipt_number}\n\n")
-
-        for index, item in enumerate(receipt_items, start=1):
-            
-            file.write(f"{index}. {item['name']}\n")
-            file.write(f"Price: ₦{item['price']:.2f}\n")
-            file.write(f"Qty: {item['quantity']}\n")
-            file.write(f"Subtotal: ₦{item['subtotal']:.2f}\n\n")
-
-        file.write("------------------------\n")
-        file.write(f"Grand Total: ₦{grand_total:.2f}\n")
-        # print()
-
-        file.write("Thank you for shopping!\n\n")
-
-
-
-
-def load_receipts():
+def load_receipts_json():
     try:
-        with open(RECEIPT_FILE, "r") as file:
-            return file.read()
+        with open(RECEIPT_FILE_JSON, "r") as file:
+            return json.load(file)
     except FileNotFoundError:
         print("No receipts have been saved yet.")
+        return []
 
+
+def save_receipt_json(receipt):
+
+    try:
+        with open(RECEIPT_FILE_JSON, "r") as file:
+            receipts = json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        receipts = []
+
+    receipts.append(receipt)
+
+    with open(RECEIPT_FILE_JSON, "w") as file:
+        json.dump(receipts, file, indent=4)
+
+# ----------------------RECEIPT ID METHOD------------------------------
 
 def generate_receipt_number():
     # # Path to the JSON file where receipts are stored
@@ -146,20 +78,7 @@ def generate_receipt_number():
     # and pad the number with leading zeros to make it 7 digits long
     return f"RCP{number:07d}"
 
-def save_receipt_json(receipt):
-
-    try:
-        with open(RECEIPT_FILE_JSON, "r") as file:
-            receipts = json.load(file)
-    except (FileNotFoundError, json.JSONDecodeError):
-        receipts = []
-
-    receipts.append(receipt)
-
-    with open(RECEIPT_FILE_JSON, "w") as file:
-        json.dump(receipts, file, indent=4)
-
-
+# ------------------------RECEIPT SEARCHING METHODS -----------------------
 
 def search_by_receipt_number(rcp_number):
     
@@ -218,6 +137,7 @@ def search_by_store(receipts, st_name):
 
     return rcp_receipts
 
+# -----------------------------RECEIPTS MODIFICATION METHODS----------------------------------
 
 def update_receipt(rcp_number):
     receipts = load_receipts_json()
@@ -258,37 +178,100 @@ def delete_receipt(receipts, rcp_number):
         
         return False
 
-def delete_receipt_object(receipts, receipt):
-    if receipt is None:
+# ------------------------RECEIPT DISPLAY-----------------------
+
+def print_receipt_out(receipt):
+    store_name = receipt["store"]
+    receipt_number = receipt["receipt_number"]
+    receipt_items = receipt["items"]
+    grand_total = receipt["grand_total"]
+    print("==========RECEIPT==============")
+    print(f"Store: {store_name}")
+    print(f"Receipt No: {receipt_number}\n")
+
+    for index, item in enumerate(receipt_items, start=1):
+            
+        print(f"{index}. {item['name']}")
+        print(f"Price: ₦{item['price']:.2f}")
+        print(f"Qty: {item['quantity']}")
+        print(f"Subtotal: ₦{item['subtotal']:.2f}\n")
+
+    print("------------------------")
+    print(f"Grand Total: ₦{grand_total:.2f}")
+        # print()
+
+    print("Thank you for shopping!\n")
+
+#------------------------------------------------END-----------------------------------------------------------------------
+def calculate_subtotal(price, quantity):
+    return price * quantity
+
+def print_receipt(store_name, item_name, price, quantity, subtotal):
+    print("========================")
+    print("        RECEIPT")
+    print("========================")
+    print()
+    print(f"Store: {store_name}")
+    print(f"Item: {item_name}")
+    print(f"Price: #{price:.2f}")
+    print(f"Quantity: {quantity}")
+    print("")
+    print(f"Subtotal: {subtotal:.2f}")
+    print()
+    print("Thank you for shopping!")
+
+def validate_input(store_name,receipt_number, item_name, price, quantity):
+
+    if store_name == "" or receipt_number == "" or item_name=="" or quantity <= 0 or price <= 0:
+        if store_name == "":
+            print("Store name cannot be empty.")
+        if receipt_number == "":
+            print("Store name cannot be empty.")
+        if item_name == "":
+            print("Receipt number cannot be empty.")
+        if quantity <= 0:
+            print("Quantity must be greater than 0.")
+        if price <= 0:
+            print("Price must be greater than 0.")
+
         return False
     
-    print_receipt_out(receipt)
-    confirm_delete = input(
-                "Permanently deleted receipts cannot be restored.\n"
-                "Type Yes to delete or No to cancel: "
-            )
-    if confirm_delete.strip().lower() == "yes":
-                receipts.remove(receipt)
-                save_all_receipts(receipts)
-                print("Receipt deleted successfully")
-                return True
-    
-    return False
+    return True
 
-def choose_receipt(receipts):
+
+def save_receipt(store_name, receipt_number, receipt_items, grand_total):
+    with open(RECEIPT_FILE , "a") as file:
+        file.write("==========RECEIPT==============\n")
+        file.write(f"Store: {store_name}\n")
+        file.write(f"Receipt No: {receipt_number}\n\n")
+
+        for index, item in enumerate(receipt_items, start=1):
+            
+            file.write(f"{index}. {item['name']}\n")
+            file.write(f"Price: ₦{item['price']:.2f}\n")
+            file.write(f"Qty: {item['quantity']}\n")
+            file.write(f"Subtotal: ₦{item['subtotal']:.2f}\n\n")
+
+        file.write("------------------------\n")
+        file.write(f"Grand Total: ₦{grand_total:.2f}\n")
+        # print()
+
+        file.write("Thank you for shopping!\n\n")
+
+
+
+
+def load_receipts():
     try:
-        select_index = int(get_menu_choice("0. cancel selection\nPick selection-number: "))
-        if select_index == 0:
-            print("Cancelling...")
-            return None
-        elif 1 <= select_index <= len(receipts):
-            return receipts[select_index - 1]
-        else:
-            print("Invalid display number.")
-            return None
-    except (ValueError, IndexError):
-        print("Enter selection number")
-        return None
+        with open(RECEIPT_FILE, "r") as file:
+            return file.read()
+    except FileNotFoundError:
+        print("No receipts have been saved yet.")
+
+
+
+
+
 
 
 

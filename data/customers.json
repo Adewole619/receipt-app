@@ -1,0 +1,27 @@
+[
+    {
+        "customer_id": "CUS000001",
+        "name": "Ayoola",
+        "phone": "08000000000"
+    },
+    {
+        "customer_id": "CUS000001",
+        "name": "Ayoola",
+        "phone": "08000000000"
+    },
+    {
+        "customer_id": "CUS000002",
+        "name": "John",
+        "phone": "08111111111"
+    },
+    {
+        "customer_id": "CUS000003",
+        "name": "Easy",
+        "phone": "0812345678"
+    },
+    {
+        "customer_id": "CUS000004",
+        "name": "adewole",
+        "phone": "09099999999"
+    }
+]
