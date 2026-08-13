@@ -295,3 +295,9 @@ def choose_receipt(receipts):
 
 def get_receipt_number():
     return input("Enter receipt number: ").strip().upper()
+
+def print_a_receipt(receipt, title="Receipt"):
+    print(f"{title}")
+    print(f"Store:         {receipt['store']}")
+    print(f"Receipt:       {receipt['receipt_number']}")
+    print(f"Grand Total:   ₦{receipt['grand_total']:,.2f}\n")

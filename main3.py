@@ -1,4 +1,5 @@
 from utils.storage import load_receipts_json
+from utils.receipt_utils import print_a_receipt
 import os
 import json
 
@@ -143,18 +144,59 @@ def print_customer_purchase_history(history):
         print("No purchases found.")
         return
 
-    total_spent = 0
-
     for receipt in receipts:
         print(f"\nReceipt No: {receipt['receipt_number']}")
         print(f"Store:      {receipt['store']}")
         print(f"Total:      ₦{receipt['grand_total']:,.2f}")
 
-        total_spent += receipt.get("grand_total", 0)
+    total_spent = customer_total_spent(receipts)
 
-    print("\n--------------------------------------")
-    print(f"Total Receipts: {len(receipts)}")
-    print(f"Total Spent:    ₦{total_spent:,.2f}")
+    print("\n========== CUSTOMER ANALYTICS ==========")
+    print(f"Total Receipts:     {len(receipts)}")
+    print(f"Total Spent:        ₦{total_spent:,.2f}")
+    average_purchase = customer_average_purchase(receipts)
+    print(f"Average Purchase:   ₦{average_purchase:,.2f}\n")
+
+    largest_purchase = customer_largest_purchase(receipts)
+    print_a_receipt(largest_purchase, title="Largest Purchase:")
+
+    lowest_purchase = customer_lowest_purchase(receipts)
+    print_a_receipt(lowest_purchase, title="Lowest Purchase:")
+
+
+# ---------------Customer Analytics--------------
+def customer_total_spent(customer_receipts):
+    if not customer_receipts:
+        return 0
+    
+    total = 0
+
+    for receipt in customer_receipts:
+        total += receipt.get("grand_total", 0)
+
+    return total
+
+def customer_average_purchase(customer_receipts):
+    if not customer_receipts:
+        return 0
+
+    total = customer_total_spent(customer_receipts)
+
+    return total / len(customer_receipts)
+
+def customer_largest_purchase(customer_receipts):
+
+    if not customer_receipts:
+        return None
+
+    return max(customer_receipts, key=lambda receipt: receipt.get("grand_total", 0))
+
+def customer_lowest_purchase(customer_receipts):
+
+    if not customer_receipts:
+        return None
+
+    return min(customer_receipts, key=lambda receipt: receipt.get("grand_total", 0))
 
 receipts = [
     {
@@ -199,6 +241,6 @@ result = search_receipts_by_customer(receipts, "CUS000001")
 
 customer = search_customer(customers, "CUS000001")
 
-his = customer_purchase_history(customers, receipts, "CUS000001")
+history = customer_purchase_history(customers, receipts, "CUS000001")
 
-print_customer_purchase_history(his)
+print_customer_purchase_history(history)
