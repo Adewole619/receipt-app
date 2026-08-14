@@ -26,12 +26,12 @@
     },
     {
         "customer_id": "CUS000005",
-        "name": "Ayoola",
-        "phone": "12345678912"
+        "name": "Ayo",
+        "phone": "08012345678"
     },
     {
         "customer_id": "CUS000006",
         "name": "John",
-        "phone": "67548399"
+        "phone": "08123456789"
     }
 ]

@@ -42,3 +42,55 @@ def validate_num_input(field_name, num_type):
 
 def get_menu_choice(prompt):
     return input(prompt).strip()
+
+def get_optional_string_input(prompt):
+    return input(prompt).strip()
+
+def validate_phone_number():
+
+    while True:
+
+        phone = get_menu_choice("Enter phone number: ").strip()
+        if not phone:
+            print("Phone number cannot be empty.")
+            continue
+
+        if not phone.isdigit():
+            print("Phone number must contain digits only.")
+            continue
+
+        if len(phone) != 11:
+            print("Phone number must contain 11 digits.")
+            continue
+
+        if not phone.startswith("0"):
+            print("Phone number must start with 0.")
+            continue
+
+        return phone
+
+def validate_optional_phone():
+
+    while True:
+
+        phone = input(
+            "New phone (press Enter to keep current): "
+        ).strip()
+
+        # Keep the current phone
+        if phone == "":
+            return ""
+
+        if not phone.isdigit():
+            print("Phone number must contain digits only.")
+            continue
+
+        if len(phone) != 11:
+            print("Phone number must contain 11 digits.")
+            continue
+
+        if not phone.startswith("0"):
+            print("Phone number must start with 0.")
+            continue
+
+        return phone

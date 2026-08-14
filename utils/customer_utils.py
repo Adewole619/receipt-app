@@ -1,5 +1,7 @@
 from utils.validation import (
     validate_string_input,
+    validate_optional_phone,
+    get_optional_string_input,
     get_menu_choice,
     )
 from utils.analytics import print_a_receipt
@@ -77,11 +79,12 @@ def create_customer():
     customers = load_customers_json()
 
     customer_name = validate_string_input("Customer name")
-    customer_phone = validate_string_input("Phone number")
+    customer_phone = validate_phone_number()
 
     existing_customer = search_customer_by_phone(customers,customer_phone)
     if existing_customer:
         print("Customer already existed.")
+        print_customer(existing_customer)
         return existing_customer
     
     customer_id = generate_customer_id()
@@ -93,6 +96,8 @@ def create_customer():
     }
 
     save_customers_json(customer_details)
+
+    print("Customer successfully created.")
 
     return customer_details
 
@@ -253,5 +258,108 @@ def print_customer_purchase_history(history):
     lowest_purchase = customer_lowest_purchase(receipts)
     print_a_receipt(lowest_purchase, title="Lowest Purchase:")
 
+def print_customers(customers):
+    print("\n========== CUSTOMER ==========")
+
+    for i,customer in enumerate(customers, start=1):
+        print(f"\n[{i}]\n")
+        print(f"Customer ID: {customer['customer_id']}")
+        print(f"Name:        {customer['name']}")
+        print(f"Phone:       {customer['phone']}")
+
+def print_customer(customer):
+    print("\n========== CUSTOMER ==========")
+    print(f"Customer ID: {customer['customer_id']}")
+    print(f"Name:        {customer['name']}")
+    print(f"Phone:       {customer['phone']}")
+#------------------CUSTOMER MODIFICATION METHOD-------------
+
+def update_customer(customers, customer_id):
+
+    customer = search_customer_by_customer_id(customers, customer_id)
+
+    if customer is None:
+        print("Customer not found.")
+        return None
+
+    print("\n========== UPDATE CUSTOMER ==========")
+
+    print(f"Current name: {customer['name']}")
+    print(f'Current phone: {customer['phone']}')
+
+    new_name = get_optional_string_input("New name (press Enter to keep current): ")
+
+    # new_phone = get_optional_string_input("New phone (press Enter to keep current): ")
+    new_phone = validate_optional_phone()
+
+    if new_name:
+        customer["name"]= new_name
+
+    if new_phone:
+        existing_customer = search_customer_by_phone(customers, new_phone)
+        if (existing_customer is not None and existing_customer is not customer):
+            print(
+                "\nThis phone number already belongs "
+                "to another customer."
+            )
+
+            return None
+        
+        customer["phone"]= new_phone
+
+    save_all_customers(customers)
+
+    print("Customer successfully updated.")
+
+    return customer
+
+def delete_customer(customers, receipts, customer_id):
+
+    customer = search_customer_by_customer_id(customers, customer_id)
+    if customer is None:
+        print("customer not found.")
+        return False
+
+    customer_receipts = search_receipts_by_customer_id(receipts, customer_id)
+    if customer_receipts:
+        print(
+            f"\nCannot delete customer "
+            f"{customer['customer_id']}"
+        )
+
+        print(
+            "Delete the customer's receipts first "
+            "before deleting the customer."
+        )
+
+        return False
+
+    print_customer(customer)
+
+    confirm = input(
+        "\nPermanently delete this customer?\n"
+        "Type Yes to delete or No to cancel: "
+    ).strip().lower()
+
+    if confirm == "no":
+        print("Deletion cancelled.")
+        return False
+    elif confirm == "yes":
+        customers.remove(customer)
+
+        save_all_customers(customers)
+
+        print("Customer deleted successfully.")
+
+        return True
+    else:
+        print("Invalid option\nDeletion cancelled.")
+        return False
+
+
+
+def save_all_customers(customers):
+    with open(CUSTOMER_FILE_JSON, "w") as file:
+        json.dump(customers, file, indent=4)
 #--------------------END----------------------------------------
 
