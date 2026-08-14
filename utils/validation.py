@@ -1,3 +1,5 @@
+import sys
+
 def validate_string_input(field_name):
     while True:
         string_input = input(f"Enter {field_name} (or q to quit): ").strip()
@@ -14,6 +16,7 @@ def validate_string_input(field_name):
         return string_input
 
 def validate_num_input(field_name, num_type):
+
     while True:
         int_input = input(f"Enter {field_name} (or q to quit): ").strip()
 
@@ -36,3 +39,6 @@ def validate_num_input(field_name, num_type):
             return val
         except ValueError:
             print("Invalid input. Please enter a valid number.")
+
+def get_menu_choice(prompt):
+    return input(prompt).strip()

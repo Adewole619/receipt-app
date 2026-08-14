@@ -1,59 +1,52 @@
-from utils.receipt_utils import calculate_subtotal, validate_input, validate_string_input, validate_num_input, save_receipt, load_receipts , generate_receipt_number, load_receipts_json, save_receipt_json
-from main3 import get_customer_for_receipt
-from utils.menus import main_menu
+import sys
+
+from menus.receipts_menu import receipts_menu
+from menus.customer_menu import customer_menu
+from menus.statistics_menu import statistics_menu
+
+from utils.receipt_utils import load_receipts_json
 
 
-store_name = validate_string_input("Store name")
+def main_menu():
 
-receipt_number = generate_receipt_number()
+    while True:
 
-receipt_items = []
+        print("""
+========================================
+        RECEIPT MANAGEMENT SYSTEM
+========================================
 
-count = validate_num_input("Number of items to generate receipt for", int)
+1. Receipt Management
+2. Customer Management
+3. Business Statistics
+4. Exit
+""")
 
-grand_total = 0
+        choice = input("Choose an option: ").strip()
 
-for i in range(count):
-    item_name = validate_string_input(f"Enter item [{i + 1}] name")
-    
-    item_price = validate_num_input(f"Enter {item_name} price", float)
+        if choice == "1":
 
-    item_quantity = validate_num_input(f"Enter {item_name} quantity", int)
+            receipts_menu()
 
-    sub_total = calculate_subtotal(item_price, item_quantity)
+        elif choice == "2":
 
-    item = {
-         "name": item_name,
-        "price": item_price,
-        "quantity": item_quantity,
-        "subtotal": sub_total,
-    }
-    receipt_items.append(item)
+            customer_menu()
 
-    grand_total += sub_total 
+        elif choice == "3":
 
+            receipts = load_receipts_json()
 
-# save_receipt(store_name, receipt_number, receipt_items, grand_total)
-# content = load_receipts()
-# print(content)
+            statistics_menu(receipts)
 
-customer = get_customer_for_receipt()
-customer_id = customer["customer_id"]
+        elif choice == "4":
 
-receipt = {
-    "store": store_name,
-    "receipt_number": receipt_number,
-    "customer_id": customer_id,
-    "items": receipt_items,
-    "grand_total": grand_total,
-}
+            print("Goodbye!")
+            break
 
-save_receipt_json(receipt)
+        else:
 
-content_json = load_receipts_json()
-# print(content_json)
+            print("Invalid option. Try again.")
 
 
-
-# main menu
-main_menu()
+if __name__ == "__main__":
+    main_menu()

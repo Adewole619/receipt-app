@@ -1,3 +1,16 @@
+from utils.validation import get_menu_choice
+from utils.receipt_utils import (
+    create_receipt,
+    load_receipts_json,
+    get_receipt_number,
+    delete_receipt,
+    search_by_store,
+    print_receipt_out,
+    save_all_receipts,
+    search_by_receipt_number
+    )
+
+import sys
 
 
 def print_receipt_list(receipts):
@@ -59,7 +72,7 @@ def search_by_store_menu(receipts):
     if not store_receipts:
         print("No receipts found.")
     else:
-        for store_receipt in st_receipts :
+        for store_receipt in store_receipts :
             print_receipt_out(store_receipt)
 
 def delete_receipt_object(receipts, receipt):
@@ -126,7 +139,7 @@ def delete_receipt_menu(receipts):
     if not deleted:
         print("Deletion cancelled.")
 
-def receipts_search_menu():
+def receipts_menu():
 
     """
     Main receipt search and deletion menu.
@@ -134,27 +147,42 @@ def receipts_search_menu():
 
     while True:
         # MAIN MENU 
-        print("====== RECEIPT SEARCH & MANAGEMENT ======")
-        print("1. Search by Receipt Number\n2. Search by Store\n3. Delete a Receipt\n4. Exit")  
+        print("""
+            ========== RECEIPT MANAGEMENT ==========
+
+            1. Create Receipt
+            2. Search by Receipt Number
+            3. Search by Store
+            4. Delete a Receipt
+            5. Back
+            """)
             
         choice = get_menu_choice("Choose an option: ")
+        
         receipts = load_receipts_json()
         if choice == "1":
-            search_by_receipt_menu(receipts)
+            create_receipt_menu()
 
         elif choice == "2":
-            search_by_store_menu(receipts)
+            search_by_receipt_menu(receipts)
 
         elif choice == "3":
-            delete_menu(receipts)
+            search_by_store_menu(receipts)
 
         elif choice == "4":
-            print("receipt Search terminated")
-            sys.exit()
+            delete_menu(receipts)
+
+        elif choice == "5":
+            break
         else:
             print("Invalid option. Try again")
 
+def create_receipt_menu():
 
+    receipt = create_receipt()
+
+    print("\nReceipt successfully created!")
+    print_receipt_out(receipt)
 #----------------------END---------------------------------------
 
 

@@ -2,15 +2,17 @@ import sys
 import json
 import os
 
+from utils.validation import (
+    get_menu_choice,
+    validate_num_input,
+    validate_string_input
+)
+
+from utils.customer_utils import get_customer_for_receipt
+
 RECEIPT_FILE = "data/receipts.txt"
 RECEIPT_FILE_JSON = "data/receipts.json"
-
-import sys
-import json
-import os
-
-RECEIPT_FILE = "data/receipts.txt"
-RECEIPT_FILE_JSON = "data/receipts.json"
+CUSTOMER_FILE_JSON = "data/customers.json"
 
 # ------------------STORAGE METHODS------------------------------
 def save_all_receipts(receipts):
@@ -95,16 +97,16 @@ def search_by_receipt_number(rcp_number):
     return None
 
 
-def search_by_store(st_name):
+def search_by_store(store_name):
     
     saved_receipt_json = load_receipts_json()
     if not saved_receipt_json:
         return []
 
-    st_name = st_name.strip().lower()
+    store_name = store_name.strip().lower()
     rcp_receipts = []
     for rcp in saved_receipt_json:
-        if rcp["store"].strip().lower() == st_name:
+        if rcp["store"].strip().lower() == store_name:
             rcp_receipts.append(rcp)
 
     return rcp_receipts
@@ -124,19 +126,80 @@ def search_by_receipt_number(receipts, rcp_number):
     return None
 
 
-def search_by_store(receipts, st_name):
+def search_by_store(receipts, store_name):
     
     if not receipts:
         return []
 
-    st_name = st_name.strip().lower()
+    store_name = store_name.strip().lower()
     rcp_receipts = []
     for rcp in receipts:
-        if rcp["store"].strip().lower() == st_name:
+        if rcp["store"].strip().lower() == store_name:
             rcp_receipts.append(rcp)
 
     return rcp_receipts
+#--------------------------------CREATE RECEIPT--------------------
 
+def create_receipt():
+    store_name = validate_string_input("Store name")
+
+    customer = get_customer_for_receipt()
+    customer_id = customer["customer_id"]
+
+    receipt_number = generate_receipt_number()
+
+    receipt_items = []
+
+    count = validate_num_input(
+        "Number of items to generate receipt for",
+        int
+    )
+
+    grand_total = 0
+
+    for i in range(count):
+
+        item_name = validate_string_input(
+            f"Enter item [{i + 1}] name"
+        )
+
+        item_price = validate_num_input(
+            f"Enter {item_name} price",
+            float
+        )
+
+        item_quantity = validate_num_input(
+            f"Enter {item_name} quantity",
+            int
+        )
+
+        sub_total = calculate_subtotal(
+            item_price,
+            item_quantity
+        )
+
+        item = {
+            "name": item_name,
+            "price": item_price,
+            "quantity": item_quantity,
+            "subtotal": sub_total,
+        }
+
+        receipt_items.append(item)
+
+        grand_total += sub_total
+
+    receipt = {
+        "store": store_name,
+        "receipt_number": receipt_number,
+        "customer_id": customer_id,
+        "items": receipt_items,
+        "grand_total": grand_total,
+    }
+
+    save_receipt_json(receipt)
+
+    return receipt
 # -----------------------------RECEIPTS MODIFICATION METHODS----------------------------------
 
 def update_receipt(rcp_number):
@@ -258,22 +321,12 @@ def save_receipt(store_name, receipt_number, receipt_items, grand_total):
 
         file.write("Thank you for shopping!\n\n")
 
-
-
-
 def load_receipts():
     try:
         with open(RECEIPT_FILE, "r") as file:
             return file.read()
     except FileNotFoundError:
         print("No receipts have been saved yet.")
-
-
-
-
-
-
-
 
 
 def get_receipt_number():

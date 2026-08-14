@@ -23,5 +23,15 @@
         "customer_id": "CUS000004",
         "name": "adewole",
         "phone": "09099999999"
+    },
+    {
+        "customer_id": "CUS000005",
+        "name": "Ayoola",
+        "phone": "12345678912"
+    },
+    {
+        "customer_id": "CUS000006",
+        "name": "John",
+        "phone": "67548399"
     }
 ]

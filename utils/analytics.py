@@ -16,7 +16,7 @@ def average_receipt(receipts):
     if not receipts:
         return 0
     average = total_sales(receipts) / total_receipts(receipts)
-    return f"Average Sales for all stores ₦{average:,.2f}"
+    return average
 
 
 def smallest_receipt(receipts):

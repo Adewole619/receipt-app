@@ -2,7 +2,7 @@ import sys
 
 from utils.customer_utils import (
     create_customer,
-    search_customer,
+    search_customer_by_customer_id,
     customer_purchase_history,
     print_customer_purchase_history,
     load_customers_json
@@ -68,7 +68,7 @@ def customer_menu():
                 "Enter Customer ID: "
             ).strip().upper()
 
-            customer = search_customer(
+            customer = search_customer_by_customer_id(
                 customers,
                 customer_id
             )

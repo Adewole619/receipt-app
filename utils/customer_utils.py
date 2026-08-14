@@ -1,6 +1,15 @@
+from utils.validation import (
+    validate_string_input,
+    get_menu_choice,
+    )
+from utils.analytics import print_a_receipt
+import json
+import os
 
 
-
+RECEIPT_FILE = "data/receipts.txt"
+RECEIPT_FILE_JSON = "data/receipts.json"
+CUSTOMER_FILE_JSON = "data/customers.json"
 
 #--------------------CUSTOMER STORAGE METHODS-------------------
 def save_customers_json(customer):
@@ -20,11 +29,11 @@ def load_customers_json():
     try:
         with open(CUSTOMER_FILE_JSON, "r") as file:
             return json.load(file)
-    except FileNotFoundError:
+    except (FileNotFoundError, json.JSONDecodeError):
         print("No customers have been saved yet.")
         return []
 
-#--------------------------CUSTOMER ID METHODS-----------------------------------------
+#--------CUSTOMER ID METHODS-----------------------------------------
 
 def generate_customer_id():
     # path to the json file where customer-id are stored
@@ -93,7 +102,7 @@ def search_customer_by_customer_id(customers, customer_id):
     customer_id = customer_id.strip().upper()
 
     for customer in customers:
-        if customer["customer_id"].strip().upper() == customer_id:
+        if customer['customer_id'].strip().upper() == customer_id:
             return customer
 
     return None
@@ -109,7 +118,7 @@ def search_customer_by_phone(customers, phone):
 
 # -----------------------------CUSTOMER / RECEIPT RELATIONSHIP METHODS ----------------------
 
-def search_receipts_by_customer(receipts, customer_id):
+def search_receipts_by_customer_id(receipts, customer_id):
 
     if not receipts:
         return []
@@ -119,9 +128,10 @@ def search_receipts_by_customer(receipts, customer_id):
     customer_receipts = []
 
     for receipt in receipts:
-        if receipt["customer_id"].strip().upper() == customer_id:
-            customer_receipts.append(receipt)
+        receipt_customer_id = receipt.get("customer_id")
 
+        if receipt_customer_id and receipt_customer_id.strip().upper() == customer_id:
+            customer_receipts.append(receipt)
     return customer_receipts
 
 
@@ -130,7 +140,7 @@ def customer_purchase_history(customers, receipts, customer_id):
     if not customer:
         return None
     
-    customer_receipts = search_receipts_by_customer(receipts, customer_id )
+    customer_receipts = search_receipts_by_customer_id(receipts, customer_id )
     if not customer_receipts:
         return {
             "customer": customer,
