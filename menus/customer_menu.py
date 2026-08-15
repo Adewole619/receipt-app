@@ -7,7 +7,11 @@ from utils.customer_utils import (
     print_customer_purchase_history,
     load_customers_json,
     update_customer,
-    delete_customer
+    delete_customer,
+    search_customers,
+    print_customer,
+    print_customers_list,
+    choose_customer,
 )
 
 from utils.receipt_utils import load_receipts_json
@@ -54,7 +58,7 @@ def customer_menu():
 ========== CUSTOMER MENU ==========
 
 1. Create Customer
-2. Search Customer
+2. Search Customers
 3. Customer Purchase History
 4. Update customer
 5. Delete Customer
@@ -67,24 +71,25 @@ def customer_menu():
             create_customer_menu()
 
         elif choice == "2":
-            customers = load_customers_json()
+            # customers = load_customers_json()
 
-            customer_id = input(
-                "Enter Customer ID: "
-            ).strip().upper()
+            # customer_id = input(
+            #     "Enter Customer ID: "
+            # ).strip().upper()
 
-            customer = search_customer_by_customer_id(
-                customers,
-                customer_id
-            )
+            # customer = search_customer_by_customer_id(
+            #     customers,
+            #     customer_id
+            # )
+            search_customer_menu()
 
-            if customer is None:
-                print("Customer not found.")
-            else:
-                print("\n========== CUSTOMER ==========")
-                print(f"Customer ID: {customer['customer_id']}")
-                print(f"Name:        {customer['name']}")
-                print(f"Phone:       {customer['phone']}")
+            # if customer is None:
+            #     print("Customer not found.")
+            # else:
+            #     print("\n========== CUSTOMER ==========")
+            #     print(f"Customer ID: {customer['customer_id']}")
+            #     print(f"Name:        {customer['name']}")
+            #     print(f"Phone:       {customer['phone']}")
 
         elif choice == "3":
             customer_purchase_history_menu()
@@ -137,3 +142,27 @@ def delete_customer_menu():
 
     if not deleted:
         print("Customer was not deleted.")
+
+def search_customer_menu():
+
+    customers = load_customers_json()
+
+    if not customers:
+        print("No customers have been saved yet.")
+        return
+    search_term = get_menu_choice("search by customer ID, name, or phone: ")
+
+    results = search_customers(customers, search_term)
+
+    if not results:
+        print("No customers found.")
+        return
+
+    print(f"\nFound {len(results)} customer(s).")
+
+    print_customers_list(results)
+
+    if len(results) == 1:
+        return results[0]
+
+    return choose_customer(results)
