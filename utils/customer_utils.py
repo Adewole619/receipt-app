@@ -79,7 +79,7 @@ def create_customer():
     customers = load_customers_json()
 
     customer_name = validate_string_input("Customer name")
-    customer_phone = validate_phone_number()
+    customer_phone = validate_optional_phone()
 
     existing_customer = search_customer_by_phone(customers,customer_phone)
     if existing_customer:
@@ -113,13 +113,58 @@ def search_customer_by_customer_id(customers, customer_id):
     return None
 
 def search_customer_by_phone(customers, phone):
+    if not phone:
+        return None
+
     phone = phone.strip()
 
     for customer in customers:
-        if customer["phone"].strip() == phone:
+        customer_phone = customer.get("phone", "")
+
+        if customer_phone and customer_phone.strip() == phone:
             return customer
 
     return None
+
+def search_customers(customers, search_term):
+    if not customers:
+        return []
+
+    search_term = search_term.strip().lower()
+
+    matches = []
+
+    for customer in customers:
+        customer_id = customer["customer_id"].lower()
+        name = customer["name"].lower()
+        phone = customer["phone"].lower()
+
+        if (search_term in customer_id or search_term in name or search_term in phone):
+            matches.append(customer)
+
+    return matches
+
+def choose_customer(customers):
+
+    if not customers:
+        return None
+
+    try:
+        choice = int(get_menu_choice("\n0. Cancel selection\nPick selection number: "))
+
+        if choice == 0:
+            print("Cancelling...")
+            return None
+
+        if 1 <= choice <= len(customers):
+            return customers[choice - 1]
+
+        print("Invalid selection number.")
+        return None
+    except ValueError:
+        print("Enter a valid selection number.")
+        return None
+
 
 # -----------------------------CUSTOMER / RECEIPT RELATIONSHIP METHODS ----------------------
 
@@ -181,6 +226,48 @@ def get_customer_for_receipt():
         else:
             print("Invalid option. Try again.")
 
+def find_customer_for_action(customers):
+
+    search_term = get_menu_choice("search customer by ID, name, or phone: ")
+
+    matches = search_customers(customers, search_term)
+
+    if not matches:
+        print("No customers found.")
+        return None
+
+    print(f"\nfound {len(matches)} customer(s).")
+
+    print_customers_list(matches)
+
+    if len(matches) == 1:
+        return matches[0]
+
+    return choose_customer(matches)
+
+def sort_customers_by_spending(customers, receipts, descending=True):
+    customer_spending = []
+
+    for customer in customers:
+        customer_id = customer["customer_id"]
+
+        customer_receipts = search_receipts_by_customer_id(
+            receipts,
+            customer_id
+        )
+
+        total_spent = customer_total_spent(customer_receipts)
+
+        customer_spending.append({
+            "customer": customer,
+            "total_spent": total_spent
+        })
+
+    return sorted(
+        customer_spending,
+        key=lambda item: item["total_spent"],
+        reverse=descending
+    )
 
 #--------------------------CUSTOMER ANALYTICS METHODS-------------------------
 
@@ -216,6 +303,90 @@ def customer_lowest_purchase(customer_receipts):
         return None
 
     return min(customer_receipts, key=lambda receipt: receipt.get("grand_total", 0))
+
+def filter_customers_by_spending(customers, receipts, minimum_spending):
+    matching_customers = []
+
+    for customer in customers:
+        customer_id = customer["customer_id"]
+
+        customer_receipts = search_receipts_by_customer_id(
+            receipts,
+            customer_id
+        )
+
+        total_spent = customer_total_spent(customer_receipts)
+
+        if total_spent >= minimum_spending:
+            matching_customers.append(customer)
+
+    return matching_customers
+
+def filter_customers_by_purchase_count(
+    customers,
+    receipts,
+    minimum_purchases
+    ):
+    matching_customers = []
+
+    for customer in customers:
+        customer_id = customer["customer_id"]
+
+        customer_receipts = search_receipts_by_customer_id(
+            receipts,
+            customer_id
+        )
+
+        purchase_count = len(customer_receipts)
+
+        if purchase_count >= minimum_purchases:
+            matching_customers.append(customer)
+
+    return matching_customers
+
+def customers_with_no_purchases(customers, receipts):
+
+    matching_customers = []
+
+    for customer in customers:
+        customer_id = customer["customer_id"]
+
+        customer_receipts = search_receipts_by_customer_id(
+            receipts,
+            customer_id
+        )
+
+        if not customer_receipts:
+            matching_customers.append(customer)
+
+    return matching_customers
+
+def customer_spending_report(customers, receipts, search_term=None,
+                             minimum_spending=0):
+    matching_customers = customers
+
+    # Step 1: Search
+    if search_term:
+        matching_customers = search_customers(
+            matching_customers,
+            search_term
+        )
+
+    # Step 2: Filter
+    matching_customers = filter_customers_by_spending(
+        matching_customers,
+        receipts,
+        minimum_spending
+    )
+
+    # Step 3: Sort
+    sorted_customers = sort_customers_by_spending(
+        matching_customers,
+        receipts,
+        descending=True
+    )
+
+    return sorted_customers
 
 
 #-------------------CUSTOMER DISPLAY METHODS-------------------------------
@@ -272,6 +443,38 @@ def print_customer(customer):
     print(f"Customer ID: {customer['customer_id']}")
     print(f"Name:        {customer['name']}")
     print(f"Phone:       {customer['phone']}")
+
+def print_customers_list(customers):
+    if not customers:
+        print("No customers found.")
+        return
+
+    for i, customer in enumerate(customers, start=1):
+        print(f"\nSelection [{i}]")
+        print(f"Customer ID: {customer['customer_id']}")
+        print(f"Name: {customer['name']}")
+        print(f"Phone: {customer['phone']}")
+
+def print_customer_spending_list(customer_spending):
+
+    if not customer_spending:
+        print("No customers found.")
+        return
+
+    print("\n========== CUSTOMER SPENDING ==========")
+
+    for i, item in enumerate(customer_spending, start=1):
+
+        customer = item["customer"]
+        total_spent = item["total_spent"]
+
+        print(f"\n[{i}]")
+        print(f"Customer ID: {customer['customer_id']}")
+        print(f"Name:        {customer['name']}")
+        print(f"Phone:       {customer['phone']}")
+        print(f"Total Spent: ₦{total_spent:,.2f}")
+
+
 #------------------CUSTOMER MODIFICATION METHOD-------------
 
 def update_customer(customers, customer_id):
@@ -285,7 +488,7 @@ def update_customer(customers, customer_id):
     print("\n========== UPDATE CUSTOMER ==========")
 
     print(f"Current name: {customer['name']}")
-    print(f'Current phone: {customer['phone']}')
+    print(f"Current phone: {customer['phone']}")
 
     new_name = get_optional_string_input("New name (press Enter to keep current): ")
 

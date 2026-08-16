@@ -94,3 +94,18 @@ def validate_optional_phone():
             continue
 
         return phone
+
+
+def validate_optional_string(field_name):
+
+    while True:
+        value = input(
+            f"{field_name} "
+            "(press Enter to keep current value): "
+        ).strip()
+
+        # Enter was pressed → keep the current value
+        if value == "":
+            return ""
+
+        return value

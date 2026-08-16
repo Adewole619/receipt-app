@@ -1,0 +1,16 @@
+[
+    {
+        "store_id": "STO000001",
+        "store_name": "Shoprite Lagos",
+        "address": "Lagos",
+        "phone": "08012345678",
+        "manager": "John"
+    },
+    {
+        "store_id": "STO000002",
+        "store_name": "Shoprite Abuja",
+        "address": "Abuja",
+        "phone": "08123456789",
+        "manager": "David"
+    }
+]
