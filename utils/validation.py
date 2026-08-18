@@ -109,3 +109,30 @@ def validate_optional_string(field_name):
             return ""
 
         return value
+
+def validate_optional_num(field_name, num_type):
+
+    while True:
+
+        value = input(
+            f"{field_name} "
+            "(press Enter to keep current value): "
+        ).strip()
+
+        if value == "":
+            return None
+
+        try:
+            value = num_type(value)
+
+            if value <= 0:
+                print("Value must be greater than 0.")
+                continue
+
+            return value
+
+        except ValueError:
+            print(
+                f"Please enter a valid {num_type.__name__}."
+            )
+

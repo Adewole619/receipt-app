@@ -12,10 +12,17 @@ from utils.customer_utils import (
     print_customer,
     print_customers_list,
     choose_customer,
+    find_customer_for_action,
+    filter_customers_by_spending,
+    filter_customers_by_purchase_count,
+    customers_with_no_purchases,
+    sort_customers_by_spending,
+    print_customer_spending_list,
+    customer_spending_report,
 )
 
 from utils.receipt_utils import load_receipts_json
-from utils.validation import get_menu_choice
+from utils.validation import get_menu_choice, validate_num_input
 
 
 def create_customer_menu():
@@ -39,15 +46,63 @@ def customer_purchase_history_menu():
         print("No customers have been saved.")
         return
 
-    customer_id = input("Enter Customer ID: ").strip().upper()
+    # customer_id = input("Enter Customer ID: ").strip().upper()
+    customer = find_customer_for_action(customers)
 
     history = customer_purchase_history(
         customers,
         receipts,
-        customer_id
+        customer['customer_id']
     )
 
     print_customer_purchase_history(history)
+
+def customer_sort_menu():
+
+    customers = load_customers_json()
+    receipts = load_receipts_json()
+
+    if not customers:
+        print("No customers have been saved yet.")
+        return
+
+    while True:
+
+        print("""
+========== CUSTOMER SORTING ==========
+
+1. Highest spending
+2. Lowest spending
+3. Back
+""")
+
+        choice = get_menu_choice("Choose an option: ")
+
+        if choice == "1":
+
+            results = sort_customers_by_spending(
+                customers,
+                receipts,
+                descending=True
+            )
+
+            print_customer_spending_list(results)
+
+        elif choice == "2":
+
+            results = sort_customers_by_spending(
+                customers,
+                receipts,
+                descending=False
+            )
+
+            print_customer_spending_list(results)
+
+        elif choice == "3":
+            break
+
+        else:
+            print("Invalid option.")
 
 
 def customer_menu():
@@ -62,7 +117,10 @@ def customer_menu():
 3. Customer Purchase History
 4. Update customer
 5. Delete Customer
-6. Back
+6. Customer Filter
+7. Customer Sorting
+8. Customer Report
+9. Back
 """)
 
         choice = get_menu_choice("Choose an option: ")
@@ -101,6 +159,15 @@ def customer_menu():
             delete_customer_menu()
 
         elif choice == "6":
+            customer_filter_menu()
+
+        elif choice == "7":
+            customer_sort_menu()
+
+        elif choice == "8":
+            customer_spending_report()
+
+        elif choice == "9":
             print("Returning to main menu...")
             break
 
@@ -117,9 +184,10 @@ def update_customer_menu():
         print("No customer have been saved yet.")
         return
 
-    customer_id = get_menu_choice("Enter customer ID: ").strip().upper()
+    # customer_id = get_menu_choice("Enter customer ID: ").strip().upper()
+    customer = find_customer_for_action(customers)
 
-    updated_customer = update_customer(customers, customer_id)
+    updated_customer = update_customer(customers, customer['costomer_id'])
     if updated_customer is None:
         return
 
@@ -136,9 +204,10 @@ def delete_customer_menu():
     if not customers:
         print("No customers have been saved yet.")
         return
-    customer_id = get_menu_choice("Enter customer ID: ").strip().upper()
+    # customer_id = get_menu_choice("Enter customer ID: ").strip().upper()
+    customer = find_customer_for_action(customers)
 
-    deleted = delete_customer(customers, receipts, customer_id)
+    deleted = delete_customer(customers, receipts, customer['customer_id'])
 
     if not deleted:
         print("Customer was not deleted.")
@@ -166,3 +235,103 @@ def search_customer_menu():
         return results[0]
 
     return choose_customer(results)
+
+def customer_filter_menu():
+
+    customers = load_customers_json()
+    receipts = load_receipts_json()
+
+    if not customers:
+        print("No customers have been saved yet.")
+        return
+
+    while True:
+
+        print("""
+========== CUSTOMER FILTER ==========
+
+1. Customers by minimum spending
+2. Customers by minimum purchases
+3. Customers with no purchases
+4. Back
+""")
+
+        choice = get_menu_choice("Choose an option: ")
+
+        if choice == "1":
+
+            minimum = validate_num_input(
+                "Minimum spending",
+                float
+            )
+
+            results = filter_customers_by_spending(
+                customers,
+                receipts,
+                minimum
+            )
+
+            print_customers_list(results)
+
+        elif choice == "2":
+
+            minimum = validate_num_input(
+                "Minimum number of purchases",
+                int
+            )
+
+            results = filter_customers_by_purchase_count(
+                customers,
+                receipts,
+                minimum
+            )
+
+            print_customers_list(results)
+
+        elif choice == "3":
+
+            results = customers_with_no_purchases(
+                customers,
+                receipts
+            )
+
+            print_customers_list(results)
+
+        elif choice == "4":
+            break
+
+        else:
+            print("Invalid option.")
+
+def customer_report_menu():
+
+    customers = load_customers_json()
+    receipts = load_receipts_json()
+
+    if not customers:
+        print("No customers have been saved yet.")
+        return
+
+    print("\n========== CUSTOMER REPORT ==========")
+
+    search_term = input(
+        "Search term (press Enter for all customers): "
+    ).strip()
+
+    minimum_spending = validate_num_input(
+        "Minimum spending",
+        float
+    )
+
+    results = customer_spending_report(
+        customers,
+        receipts,
+        search_term=search_term if search_term else None,
+        minimum_spending=minimum_spending
+    )
+
+    if not results:
+        print("\nNo customers matched your criteria.")
+        return
+
+    print_customer_spending_list(results)

@@ -1,0 +1,82 @@
+[
+  {
+    "product_id": "PRD000001",
+    "store_id": "STR000001",
+    "name": "Coca-Cola 50cl",
+    "category": "Soft Drinks",
+    "price": 500,
+    "stock_quantity": 100
+  },
+  {
+    "product_id": "PRD000002",
+    "store_id": "STR000001",
+    "name": "Pepsi 50cl",
+    "category": "Soft Drinks",
+    "price": 450,
+    "stock_quantity": 80
+  },
+  {
+    "product_id": "PRD000003",
+    "store_id": "STR000001",
+    "name": "Bottle Water 75cl",
+    "category": "Water",
+    "price": 300,
+    "stock_quantity": 150
+  },
+  {
+    "product_id": "PRD000004",
+    "store_id": "STR000001",
+    "name": "Maltina 33cl",
+    "category": "Malt Drinks",
+    "price": 600,
+    "stock_quantity": 60
+  },
+  {
+    "product_id": "PRD000005",
+    "store_id": "STR000001",
+    "name": "Indomie Instant Noodles",
+    "category": "Food",
+    "price": 500,
+    "stock_quantity": 120
+  },
+  {
+    "product_id": "PRD000006",
+    "store_id": "STR000001",
+    "name": "Golden Penny Spaghetti",
+    "category": "Food",
+    "price": 1200,
+    "stock_quantity": 50
+  },
+  {
+    "product_id": "PRD000007",
+    "store_id": "STR000001",
+    "name": "Peak Milk 150g",
+    "category": "Dairy",
+    "price": 900,
+    "stock_quantity": 70
+  },
+  {
+    "product_id": "PRD000008",
+    "store_id": "STR000001",
+    "name": "Gala Sausage Roll",
+    "category": "Snacks",
+    "price": 500,
+    "stock_quantity": 90
+  },
+  {
+    "product_id": "PRD000009",
+    "store_id": "STR000001",
+    "name": "Pringles Original",
+    "category": "Snacks",
+    "price": 2500,
+    "stock_quantity": 30
+  },
+  {
+    "product_id": "PRD000010",
+    "store_id": "STR000001",
+    "name": "Dettol Antiseptic 250ml",
+    "category": "Personal Care",
+    "price": 3500,
+    "stock_quantity": 40
+  }
+]
