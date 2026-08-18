@@ -385,3 +385,40 @@ def delete_product(products, receipts, product_id):
 
         return False
 
+def deduct_stock(products, receipt_items):
+
+    for item in receipt_items:
+
+        product = search_product_by_id(
+            products,
+            item["product_id"]
+        )
+
+        if product is None:
+            print(
+                f"Product {item['product_id']} "
+                "not found."
+            )
+            return False
+
+        if item["quantity"] > product["stock_quantity"]:
+            print(
+                f"Insufficient stock for "
+                f"{product['name']}."
+            )
+            return False
+
+    # Only change stock after ALL products
+    # have passed the validation above.
+    for item in receipt_items:
+
+        product = search_product_by_id(
+            products,
+            item["product_id"]
+        )
+
+        product["stock_quantity"] -= item["quantity"]
+
+    save_all_products(products)
+
+    return True

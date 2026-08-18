@@ -181,6 +181,10 @@ def create_receipt_menu():
 
     receipt = create_receipt()
 
+    if receipt is None:
+        print("\nReceipt creation failed or cancelled.")
+        return
+
     print("\nReceipt successfully created!")
     print_receipt_out(receipt)
 #----------------------END---------------------------------------

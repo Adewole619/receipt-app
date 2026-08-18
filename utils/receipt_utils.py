@@ -8,6 +8,14 @@ from utils.validation import (
     validate_string_input
 )
 
+from utils.store_utils import load_stores_json, search_store_by_id
+from utils.product_utils import deduct_stock
+
+from utils.product_utils import (
+    load_products_json,
+    search_product_by_id,
+    save_all_products
+)
 from utils.customer_utils import get_customer_for_receipt
 
 RECEIPT_FILE = "data/receipts.txt"
@@ -34,14 +42,25 @@ def save_receipt_json(receipt):
     try:
         with open(RECEIPT_FILE_JSON, "r") as file:
             receipts = json.load(file)
+
     except (FileNotFoundError, json.JSONDecodeError):
         receipts = []
 
     receipts.append(receipt)
 
-    with open(RECEIPT_FILE_JSON, "w") as file:
-        json.dump(receipts, file, indent=4)
+    try:
+        with open(RECEIPT_FILE_JSON, "w") as file:
+            json.dump(
+                receipts,
+                file,
+                indent=4
+            )
 
+        return True
+
+    except OSError:
+        print("Could not save receipt.")
+        return False
 # ----------------------RECEIPT ID METHOD------------------------------
 
 def generate_receipt_number():
@@ -141,65 +160,415 @@ def search_by_store(receipts, store_name):
 #--------------------------------CREATE RECEIPT--------------------
 
 def create_receipt():
-    store_name = validate_string_input("Store name")
+    # store_name = validate_string_input("Store name")
+    stores = load_stores_json()
+    products = load_products_json()
+
+    store_id = input("Enter Store ID: ").strip().upper()
+
+    store = search_store_by_id(stores, store_id)
+    if store is None:
+        print("Store not found.")
+        return None
+
+    store_name = store["store_name"]
 
     customer = get_customer_for_receipt()
+    if customer is None:
+        print("Customer selection failed.")
+        return None
     customer_id = customer["customer_id"]
 
     receipt_number = generate_receipt_number()
 
     receipt_items = []
 
-    count = validate_num_input(
-        "Number of items to generate receipt for",
+    while True:
+
+        completed = receipt_cart_menu(
+            receipt_items,
+            products,
+            store
+        )
+
+        if not completed:
+            return None
+
+        grand_total = 0
+
+        for item in receipt_items:
+            grand_total += item["subtotal"]
+
+        receipt = {
+            "store": store_name,
+            "receipt_number": receipt_number,
+            "customer_id": customer_id,
+            "items": receipt_items,
+            "grand_total": grand_total,
+        }
+
+        confirmation = confirm_receipt(receipt)
+
+        if confirmation == "confirm":
+            break
+
+        elif confirmation == "edit":
+            continue
+
+        elif confirmation == "cancel":
+            print("Receipt creation cancelled.")
+            return None
+    
+    if not finalize_receipt(receipt, products):
+        print("Receipt could not be completed.")
+        return None
+
+    print("Receipt successfully created.")
+      
+    return receipt
+
+def receipt_cart_menu(
+    receipt_items,
+    products,
+    store
+):
+
+    while True:
+
+        print("\n========== RECEIPT ITEMS ==========")
+
+        print("1. Add Product")
+        print("2. Remove Product")
+        print("3. Update Product Quantity")
+        print("4. View Current Receipt")
+        print("5. Finish Receipt")
+        print("6. Cancel Receipt")
+
+        choice = input(
+            "\nChoose an option: "
+        ).strip()
+
+        if choice == "1":
+
+            add_product_to_receipt(
+                receipt_items,
+                products,
+                store
+            )
+
+        elif choice == "2":
+
+            remove_product_from_receipt(
+                receipt_items
+            )
+        elif choice == "3":
+                
+            update_product_quantity(
+                receipt_items,
+                products
+            )
+                
+        elif choice == "4":
+
+            print_receipt_cart(
+                receipt_items
+            )
+
+        elif choice == "5":
+
+            if not receipt_items:
+                print(
+                    "You must add at least "
+                    "one product."
+                )
+                continue
+
+            return True
+
+        elif choice == "6":
+
+            print("Receipt creation cancelled.")
+
+            return False
+
+        else:
+
+            print("Invalid option.")
+
+def remove_product_from_receipt(receipt_items):
+
+    if not receipt_items:
+        print("There are no products to remove.")
+        return False
+
+    product_id = input(
+        "Enter Product ID to remove: "
+    ).strip().upper()
+
+    for item in receipt_items:
+
+        if item["product_id"] == product_id:
+
+            receipt_items.remove(item)
+
+            print(
+                f"{item['name']} removed "
+                "from receipt."
+            )
+
+            return True
+
+    print("Product is not on this receipt.")
+
+    return False
+
+def add_product_to_receipt(
+    receipt_items,
+    products,
+    store
+):
+    product_id = input(
+        "Enter Product ID: "
+    ).strip().upper()
+
+    product = search_product_by_id(
+        products,
+        product_id
+    )
+
+    if product is None:
+        print("Product not found.")
+        return False
+
+    if product["store_id"] != store["store_id"]:
+        print(
+            "This product does not belong "
+            "to the selected store."
+        )
+        return False
+
+    # Prevent adding the same product twice
+    for item in receipt_items:
+        if item["product_id"] == product["product_id"]:
+            print(
+                f"{product['name']} is already "
+                "on this receipt."
+            )
+            return False
+
+    print(f"\nProduct: {product['name']}")
+    print(f"Price: ₦{product['price']:,.2f}")
+    print(
+        f"Available stock: "
+        f"{product['stock_quantity']}"
+    )
+
+    quantity = validate_num_input(
+        f"Enter {product['name']} quantity",
         int
     )
 
-    grand_total = 0
-
-    for i in range(count):
-
-        item_name = validate_string_input(
-            f"Enter item [{i + 1}] name"
+    if quantity > product["stock_quantity"]:
+        print(
+            f"Insufficient stock. "
+            f"Only {product['stock_quantity']} "
+            "available."
         )
+        return False
 
-        item_price = validate_num_input(
-            f"Enter {item_name} price",
-            float
-        )
+    subtotal = calculate_subtotal(
+        product["price"],
+        quantity
+    )
 
-        item_quantity = validate_num_input(
-            f"Enter {item_name} quantity",
-            int
-        )
-
-        sub_total = calculate_subtotal(
-            item_price,
-            item_quantity
-        )
-
-        item = {
-            "name": item_name,
-            "price": item_price,
-            "quantity": item_quantity,
-            "subtotal": sub_total,
-        }
-
-        receipt_items.append(item)
-
-        grand_total += sub_total
-
-    receipt = {
-        "store": store_name,
-        "receipt_number": receipt_number,
-        "customer_id": customer_id,
-        "items": receipt_items,
-        "grand_total": grand_total,
+    item = {
+        "product_id": product["product_id"],
+        "name": product["name"],
+        "price": product["price"],
+        "quantity": quantity,
+        "subtotal": subtotal
     }
 
-    save_receipt_json(receipt)
+    receipt_items.append(item)
 
-    return receipt
+    print(
+        f"{product['name']} added successfully."
+    )
+
+    return True
+
+def print_receipt_cart(receipt_items):
+    print("\n========== CURRENT RECEIPT ==========")
+
+    if not receipt_items:
+        print("No products have been added.")
+        print("=====================================")
+        return
+
+    grand_total = 0
+
+    for i, item in enumerate(receipt_items, start=1):
+        print(f"\n[{i}] {item['name']}")
+        print(f"    Product ID: {item['product_id']}")
+        print(f"    Quantity:   {item['quantity']}")
+        print(f"    Price:      ₦{item['price']:,.2f}")
+        print(f"    Subtotal:   ₦{item['subtotal']:,.2f}")
+
+        grand_total += item["subtotal"]
+
+    print("\n-------------------------------------")
+    print(f"Grand Total: ₦{grand_total:,.2f}")
+    print("=====================================")
+
+def finalize_receipt(receipt, products):
+
+    receipt_items = receipt["items"]
+
+    # Step 1: Validate stock
+    for item in receipt_items:
+
+        product = search_product_by_id(
+            products,
+            item["product_id"]
+        )
+
+        if product is None:
+            print(
+                f"Product {item['product_id']} "
+                "no longer exists."
+            )
+            return False
+
+        if item["quantity"] > product["stock_quantity"]:
+            print(
+                f"Not enough stock for "
+                f"{product['name']}."
+            )
+            return False
+
+    # Step 2: Save receipt
+    if not save_receipt_json(receipt):
+        print("Receipt could not be saved.")
+        return False
+
+    # Step 3: Deduct stock
+    for item in receipt_items:
+
+        product = search_product_by_id(
+            products,
+            item["product_id"]
+        )
+
+        product["stock_quantity"] -= item["quantity"]
+
+    # Step 4: Save products
+    save_all_products(products)
+
+    return True
+
+def confirm_receipt(receipt):
+    while True:
+
+        print("\n========== RECEIPT REVIEW ==========")
+
+        print(f"Store: {receipt['store']}")
+        print(f"Receipt Number: {receipt['receipt_number']}")
+        print(f"Customer ID: {receipt['customer_id']}")
+
+        print("\nItems:")
+
+        for i, item in enumerate(receipt["items"], start=1):
+            print(
+                f"{i}. {item['name']} "
+                f"x {item['quantity']} "
+                f"= ₦{item['subtotal']:,.2f}"
+            )
+
+        print("\n-------------------------------------")
+        print(
+            f"Grand Total: "
+            f"₦{receipt['grand_total']:,.2f}"
+        )
+        print("-------------------------------------")
+
+        print("\n1. Confirm & Save")
+        print("2. Go Back & Edit")
+        print("3. Cancel")
+
+        choice = input(
+            "\nChoose an option: "
+        ).strip()
+
+        if choice == "1":
+            return "confirm"
+
+        elif choice == "2":
+            return "edit"
+
+        elif choice == "3":
+            return "cancel"
+
+        else:
+            print("Invalid option.")
+
+def update_product_quantity(receipt_items, products):
+
+    if not receipt_items:
+        print("There are no products on the receipt.")
+        return False
+
+    product_id = input(
+        "Enter Product ID to update: "
+    ).strip().upper()
+
+    for item in receipt_items:
+
+        if item["product_id"] == product_id:
+
+            product = search_product_by_id(
+                products,
+                product_id
+            )
+
+            if product is None:
+                print("Product no longer exists.")
+                return False
+
+            print(f"\nProduct: {item['name']}")
+            print(f"Current quantity: {item['quantity']}")
+            print(f"Available stock: {product['stock_quantity']}")
+
+            new_quantity = validate_num_input(
+                "Enter new quantity",
+                int
+            )
+
+            if new_quantity > product["stock_quantity"]:
+                print(
+                    f"Insufficient stock. "
+                    f"Only {product['stock_quantity']} available."
+                )
+                return False
+
+            item["quantity"] = new_quantity
+
+            item["subtotal"] = calculate_subtotal(
+                item["price"],
+                new_quantity
+            )
+
+            print(
+                f"{item['name']} quantity updated "
+                "successfully."
+            )
+
+            return True
+
+    print("Product is not on this receipt.")
+
+    return False
+
+
 # -----------------------------RECEIPTS MODIFICATION METHODS----------------------------------
 
 def update_receipt(rcp_number):
@@ -240,6 +609,7 @@ def delete_receipt(receipts, rcp_number):
             return True
         
         return False
+
 
 # ------------------------RECEIPT DISPLAY-----------------------
 

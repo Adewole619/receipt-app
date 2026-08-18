@@ -1330,5 +1330,27 @@
             }
         ],
         "grand_total": 718000.0
+    },
+    {
+        "store": "Shoprite Lagos",
+        "receipt_number": "RCP0000102",
+        "customer_id": "CUS000005",
+        "items": [
+            {
+                "product_id": "PRD000001",
+                "name": "Coca-Cola 50cl",
+                "price": 500,
+                "quantity": 4,
+                "subtotal": 2000
+            },
+            {
+                "product_id": "PRD000002",
+                "name": "Pepsi 50cl",
+                "price": 450,
+                "quantity": 5,
+                "subtotal": 2250
+            }
+        ],
+        "grand_total": 4250
     }
 ]
