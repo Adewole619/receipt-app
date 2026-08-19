@@ -14,7 +14,9 @@ from utils.product_utils import deduct_stock
 from utils.product_utils import (
     load_products_json,
     search_product_by_id,
-    save_all_products
+    save_all_products,
+    deduct_stock,
+    validate_stock
 )
 from utils.customer_utils import get_customer_for_receipt
 
@@ -173,11 +175,15 @@ def create_receipt():
 
     store_name = store["store_name"]
 
-    customer = get_customer_for_receipt()
-    if customer is None:
-        print("Customer selection failed.")
+    customer, customer_type = get_customer_for_receipt()
+    if customer_type == "Cancel":
         return None
-    customer_id = customer["customer_id"]
+
+    if customer_type == "walk_in":
+        customer_id = None
+
+    else:
+        customer_id = customer["customer_id"]
 
     receipt_number = generate_receipt_number()
 
@@ -423,46 +429,59 @@ def print_receipt_cart(receipt_items):
 def finalize_receipt(receipt, products):
 
     receipt_items = receipt["items"]
-
     # Step 1: Validate stock
-    for item in receipt_items:
+    if not validate_stock(products, receipt_items):
+        print("Receipt cannot be completed.")
+        return False
 
-        product = search_product_by_id(
-            products,
-            item["product_id"]
-        )
+    if not deduct_stock(products, receipt_items):
+        print("Stock could not be deducted.")
+        return False
 
-        if product is None:
-            print(
-                f"Product {item['product_id']} "
-                "no longer exists."
-            )
-            return False
+    save_all_products(products)
+    # # Step 1: Validate stock
+    # for item in receipt_items:
 
-        if item["quantity"] > product["stock_quantity"]:
-            print(
-                f"Not enough stock for "
-                f"{product['name']}."
-            )
-            return False
+    #     product = search_product_by_id(
+    #         products,
+    #         item["product_id"]
+    #     )
+
+    #     if product is None:
+    #         print(
+    #             f"Product {item['product_id']} "
+    #             "no longer exists."
+    #         )
+    #         return False
+
+    #     if item["quantity"] > product["stock_quantity"]:
+    #         print(
+    #             f"Not enough stock for "
+    #             f"{product['name']}."
+    #         )
+    #         return False
 
     # Step 2: Save receipt
     if not save_receipt_json(receipt):
         print("Receipt could not be saved.")
         return False
 
+    # # Step 3: Deduct stock
+    # for item in receipt_items:
+
+    #     product = search_product_by_id(
+    #         products,
+    #         item["product_id"]
+    #     )
+
+    #     product["stock_quantity"] -= item["quantity"]
+
+    # # Step 4: Save products
+    # save_all_products(products)
     # Step 3: Deduct stock
-    for item in receipt_items:
-
-        product = search_product_by_id(
-            products,
-            item["product_id"]
-        )
-
-        product["stock_quantity"] -= item["quantity"]
-
-    # Step 4: Save products
-    save_all_products(products)
+    # if not deduct_stock(products, receipt_items):
+    #     print("Stock could not be deducted.")
+    #     return False
 
     return True
 
@@ -473,7 +492,11 @@ def confirm_receipt(receipt):
 
         print(f"Store: {receipt['store']}")
         print(f"Receipt Number: {receipt['receipt_number']}")
-        print(f"Customer ID: {receipt['customer_id']}")
+        # print(f"Customer ID: {receipt['customer_id']}")
+        if receipt["customer_id"] is None:
+            print("Customer: Walk-in Customer")
+        else:
+            print(f"Customer ID: {receipt['customer_id']}")
 
         print("\nItems:")
 
@@ -568,6 +591,20 @@ def update_product_quantity(receipt_items, products):
 
     return False
 
+def search_walk_in_receipts(receipts):
+
+    if not receipts:
+        return []
+
+    walk_in_receipts = []
+
+    for receipt in receipts:
+
+        if receipt.get("customer_id") is None:
+            walk_in_receipts.append(receipt)
+
+    return walk_in_receipts
+
 
 # -----------------------------RECEIPTS MODIFICATION METHODS----------------------------------
 
@@ -614,24 +651,38 @@ def delete_receipt(receipts, rcp_number):
 # ------------------------RECEIPT DISPLAY-----------------------
 
 def print_receipt_out(receipt):
+
     store_name = receipt["store"]
     receipt_number = receipt["receipt_number"]
     receipt_items = receipt["items"]
     grand_total = receipt["grand_total"]
+
     print("==========RECEIPT==============")
+
     print(f"Store: {store_name}")
-    print(f"Receipt No: {receipt_number}\n")
+    print(f"Receipt No: {receipt_number}")
+
+    customer_id = receipt.get("customer_id")
+
+    if customer_id:
+        print(f"Customer ID: {customer_id}")
+    else:
+        print("Customer: Walk-in Customer")
+
+    print()
 
     for index, item in enumerate(receipt_items, start=1):
-            
+
         print(f"{index}. {item['name']}")
         print(f"Price: ₦{item['price']:.2f}")
         print(f"Qty: {item['quantity']}")
-        print(f"Subtotal: ₦{item['subtotal']:.2f}\n")
+        print(
+            f"Subtotal: "
+            f"₦{item['subtotal']:.2f}\n"
+        )
 
     print("------------------------")
     print(f"Grand Total: ₦{grand_total:.2f}")
-        # print()
 
     print("Thank you for shopping!\n")
 

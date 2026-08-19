@@ -29,23 +29,35 @@ def generate_product_id():
         with open(PRODUCT_FILE_JSON, "r") as file:
             products = json.load(file)
 
-    except json.JSONDecodeError:
+    except (FileNotFoundError, json.JSONDecodeError):
         return "PRD000001"
 
     if not products:
         return "PRD000001"
 
-    last_product = products[-1]
+    highest_number = 0
 
-    last_product_id = last_product["product_id"]
+    for product in products:
 
-    number = int(
-        last_product_id.replace("PRD", "")
-    )
+        product_id = product.get("product_id", "")
 
-    number += 1
+        if not product_id.startswith("PRD"):
+            continue
 
-    return f"PRD{number:06d}"
+        try:
+            number = int(
+                product_id.replace("PRD", "")
+            )
+
+            if number > highest_number:
+                highest_number = number
+
+        except ValueError:
+            continue
+
+    next_number = highest_number + 1
+
+    return f"PRD{next_number:06d}"
 
 def load_products_json():
 
@@ -147,6 +159,11 @@ def create_product(stores):
         int
     )
 
+    minimum_stock = validate_num_input(
+        "Minimum stock level",
+        int
+    )
+
     product_id = generate_product_id()
 
     product = {
@@ -155,7 +172,8 @@ def create_product(stores):
         "name": product_name,
         "category": category,
         "price": price,
-        "stock_quantity": stock_quantity
+        "stock_quantity": stock_quantity,
+        "minimum_stock": minimum_stock
     }
 
     save_product_json(product)
@@ -280,10 +298,10 @@ def update_product(products, product_id):
         float
     )
 
-    new_stock = validate_optional_num(
-        "New stock quantity",
-        int
-    )
+    # new_stock = validate_optional_num(
+    #     "New stock quantity",
+    #     int
+    # )
 
     # Check whether the new name belongs
     # to another product in the same store.
@@ -314,12 +332,48 @@ def update_product(products, product_id):
     if new_price is not None:
         product["price"] = new_price
 
-    if new_stock is not None:
-        product["stock_quantity"] = new_stock
+    # if new_stock is not None:
+    #     product["stock_quantity"] = new_stock
 
     save_all_products(products)
 
     print("\nProduct successfully updated.")
+
+    return product
+
+def restock_product(products, product_id):
+
+    product = search_product_by_id(
+        products,
+        product_id
+    )
+
+    if product is None:
+        print("Product not found.")
+        return None
+
+    print("\n========== RESTOCK PRODUCT ==========")
+
+    print(f"Product:        {product['name']}")
+    print(f"Current stock:  {product['stock_quantity']}")
+
+    restock_quantity = validate_num_input(
+        "Quantity to add",
+        int
+    )
+
+    product["stock_quantity"] += restock_quantity
+
+    save_all_products(products)
+
+    print(
+        f"\n{product['name']} successfully restocked."
+    )
+
+    print(
+        f"New stock quantity: "
+        f"{product['stock_quantity']}"
+    )
 
     return product
 
@@ -385,6 +439,31 @@ def delete_product(products, receipts, product_id):
 
         return False
 
+def validate_stock(products, receipt_items):
+
+    for item in receipt_items:
+
+        product = search_product_by_id(
+            products,
+            item["product_id"]
+        )
+
+        if product is None:
+            print(
+                f"Product {item['product_id']} "
+                "not found."
+            )
+            return False
+
+        if item["quantity"] > product["stock_quantity"]:
+            print(
+                f"Insufficient stock for "
+                f"{product['name']}."
+            )
+            return False
+
+    return True
+
 def deduct_stock(products, receipt_items):
 
     for item in receipt_items:
@@ -419,6 +498,77 @@ def deduct_stock(products, receipt_items):
 
         product["stock_quantity"] -= item["quantity"]
 
-    save_all_products(products)
+    # save_all_products(products)
 
     return True
+
+def migrate_product_stock_levels(products):
+
+    changed = False
+
+    for product in products:
+
+        if "minimum_stock" not in product:
+
+            product["minimum_stock"] = 10
+            changed = True
+
+    if changed:
+        save_all_products(products)
+
+    return products
+
+
+def search_low_stock_products(products):
+
+    if not products:
+        return []
+
+    low_stock_products = []
+
+    for product in products:
+
+        stock_quantity = product.get("stock_quantity", 0)
+        minimum_stock = product.get("minimum_stock", 0)
+
+        if stock_quantity <= minimum_stock:
+            low_stock_products.append(product)
+
+    return low_stock_products
+
+def correct_stock(products, product_id):
+
+    product = search_product_by_id(
+        products,
+        product_id
+    )
+
+    if product is None:
+        print("Product not found.")
+        return None
+
+    print("\n========== STOCK CORRECTION ==========")
+
+    print(f"Product:       {product['name']}")
+    print(f"Current stock: {product['stock_quantity']}")
+
+    new_stock = validate_num_input(
+        "Correct stock quantity",
+        int
+    )
+
+    product["stock_quantity"] = new_stock
+
+    save_all_products(products)
+
+    print(
+        f"\nStock successfully corrected."
+    )
+
+    print(
+        f"New stock quantity: "
+        f"{product['stock_quantity']}"
+    )
+
+    return product
+

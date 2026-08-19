@@ -1352,5 +1352,57 @@
             }
         ],
         "grand_total": 4250
+    },
+    {
+        "store": "Shoprite Lagos",
+        "receipt_number": "RCP0000103",
+        "customer_id": null,
+        "items": [
+            {
+                "product_id": "PRD000001",
+                "name": "Coca-Cola 50cl",
+                "price": 500,
+                "quantity": 3,
+                "subtotal": 1500
+            },
+            {
+                "product_id": "PRD000002",
+                "name": "Pepsi 50cl",
+                "price": 450,
+                "quantity": 5,
+                "subtotal": 2250
+            }
+        ],
+        "grand_total": 3750
+    },
+    {
+        "store": "Shoprite Lagos",
+        "receipt_number": "RCP0000104",
+        "customer_id": null,
+        "items": [
+            {
+                "product_id": "PRD000001",
+                "name": "Coca-Cola 50cl",
+                "price": 500,
+                "quantity": 2,
+                "subtotal": 1000
+            }
+        ],
+        "grand_total": 1000
+    },
+    {
+        "store": "Shoprite Lagos",
+        "receipt_number": "RCP0000105",
+        "customer_id": null,
+        "items": [
+            {
+                "product_id": "PRD000012",
+                "name": "Mr V permium water 75cl",
+                "price": 150.0,
+                "quantity": 4,
+                "subtotal": 600.0
+            }
+        ],
+        "grand_total": 600.0
     }
 ]

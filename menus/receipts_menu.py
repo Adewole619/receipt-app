@@ -7,7 +7,8 @@ from utils.receipt_utils import (
     search_by_store,
     print_receipt_out,
     save_all_receipts,
-    search_by_receipt_number
+    search_by_receipt_number,
+    search_walk_in_receipts
     )
 
 import sys
@@ -153,8 +154,9 @@ def receipts_menu():
             1. Create Receipt
             2. Search by Receipt Number
             3. Search by Store
-            4. Delete a Receipt
-            5. Back
+            4. Search Walk-in Receipts
+            5. Delete a Receipt
+            6. Back
             """)
             
         choice = get_menu_choice("Choose an option: ")
@@ -170,9 +172,12 @@ def receipts_menu():
             search_by_store_menu(receipts)
 
         elif choice == "4":
+            search_walk_in_menu(receipts)
+            
+        elif choice == "5":
             delete_menu(receipts)
 
-        elif choice == "5":
+        elif choice == "6":
             break
         else:
             print("Invalid option. Try again")
@@ -187,6 +192,20 @@ def create_receipt_menu():
 
     print("\nReceipt successfully created!")
     print_receipt_out(receipt)
+
+def search_walk_in_menu(receipts):
+
+    walk_in_receipts = search_walk_in_receipts(receipts)
+
+    if not walk_in_receipts:
+        print("No walk-in receipts found.")
+        return
+
+    print("\n========== WALK-IN RECEIPTS ==========")
+
+    print_receipt_list(walk_in_receipts)
+
+
 #----------------------END---------------------------------------
 
 

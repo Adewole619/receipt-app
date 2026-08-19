@@ -1,56 +1,42 @@
-from utils.receipt_utils import (
-    search_by_receipt_number,
-    search_by_store , 
-    print_receipt_out,
-)
+from utils.customer_utils import search_receipts_by_customer_id
 
-print("===== TEST: Search by Receipt Number =====")
-receipt = search_by_receipt_number("RCP0000001")
 
-if receipt:
-    print("✅ Receipt Found\n")
-    print_receipt_out(receipt)
-else:
-    print("❌ Receipt Not Found")
+def test_customer_receipt_history():
 
-print("===== TEST: Receipt Does Not Exist =====")
-receipt = search_by_receipt_number("RCP9999999")
+    receipts = [
+        {
+            "receipt_number": "RCP000001",
+            "customer_id": "CUS000001"
+        },
+        {
+            "receipt_number": "RCP000002",
+            "customer_id": None
+        },
+        {
+            "receipt_number": "RCP000003",
+            "customer_id": "CUS000002"
+        },
+        {
+            "receipt_number": "RCP000004",
+            "customer_id": None
+        },
+        {
+            "receipt_number": "RCP000005",
+            "customer_id": "CUS000001"
+        }
+    ]
 
-if receipt:
-    print("Test Failed")
-else:
-    print("✅ Correct")
-    print("Receipt was not found.")
+    results = search_receipts_by_customer_id(
+        receipts,
+        "CUS000001"
+    )
 
-print("===== TEST: Search by Store =====")
-receipts = search_by_store("Shoprite")
+    assert len(results) == 2
 
-if receipts:
-    print(f"Found {len(receipts)} receipt(s).\n")
+    assert results[0]["receipt_number"] == "RCP000001"
+    assert results[1]["receipt_number"] == "RCP000005"
 
-    for receipt in receipts:
-        print_receipt_out(receipt)
-else:
-    print("No receipts found.")
+    print("Customer receipt history test passed.")
 
-print("===== TEST: Store Does Not Exist =====")
-receipts = search_by_store("Amazon")
 
-if receipts:
-    print("Test Failed")
-else:
-    print("✅ Correct")
-    print("No receipts found.")
-
-print("===== TEST: Case Insensitive Search =====")
-tests = [
-    "shoprite",
-    "SHOPRITE",
-    "Shoprite",
-    "sHoPrItE",
-]
-
-for store in tests:
-    receipts = search_by_store(store)
-
-    print(f"{store} -> {len(receipts)} receipt(s)")
+test_customer_receipt_history()

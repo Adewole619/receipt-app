@@ -5,7 +5,8 @@
         "name": "Coca-Cola 50cl",
         "category": "Soft Drinks",
         "price": 500,
-        "stock_quantity": 96
+        "stock_quantity": 101,
+        "minimum_stock": 10
     },
     {
         "product_id": "PRD000002",
@@ -13,7 +14,8 @@
         "name": "Pepsi 50cl",
         "category": "Soft Drinks",
         "price": 450,
-        "stock_quantity": 75
+        "stock_quantity": 70,
+        "minimum_stock": 10
     },
     {
         "product_id": "PRD000003",
@@ -21,7 +23,8 @@
         "name": "Bottle Water 75cl",
         "category": "Water",
         "price": 300,
-        "stock_quantity": 150
+        "stock_quantity": 150,
+        "minimum_stock": 10
     },
     {
         "product_id": "PRD000004",
@@ -29,7 +32,8 @@
         "name": "Maltina 33cl",
         "category": "Malt Drinks",
         "price": 600,
-        "stock_quantity": 60
+        "stock_quantity": 60,
+        "minimum_stock": 10
     },
     {
         "product_id": "PRD000005",
@@ -37,7 +41,8 @@
         "name": "Indomie Instant Noodles",
         "category": "Food",
         "price": 500,
-        "stock_quantity": 120
+        "stock_quantity": 120,
+        "minimum_stock": 10
     },
     {
         "product_id": "PRD000006",
@@ -45,7 +50,8 @@
         "name": "Golden Penny Spaghetti",
         "category": "Food",
         "price": 1200,
-        "stock_quantity": 50
+        "stock_quantity": 50,
+        "minimum_stock": 10
     },
     {
         "product_id": "PRD000007",
@@ -53,7 +59,8 @@
         "name": "Peak Milk 150g",
         "category": "Dairy",
         "price": 900,
-        "stock_quantity": 70
+        "stock_quantity": 20,
+        "minimum_stock": 30
     },
     {
         "product_id": "PRD000008",
@@ -61,7 +68,8 @@
         "name": "Gala Sausage Roll",
         "category": "Snacks",
         "price": 500,
-        "stock_quantity": 90
+        "stock_quantity": 33,
+        "minimum_stock": 40
     },
     {
         "product_id": "PRD000009",
@@ -69,7 +77,8 @@
         "name": "Pringles Original",
         "category": "Snacks",
         "price": 2500,
-        "stock_quantity": 30
+        "stock_quantity": 30,
+        "minimum_stock": 10
     },
     {
         "product_id": "PRD000010",
@@ -77,14 +86,25 @@
         "name": "Dettol Antiseptic 250ml",
         "category": "Personal Care",
         "price": 3500,
-        "stock_quantity": 40
+        "stock_quantity": 40,
+        "minimum_stock": 10
     },
     {
-        "product_id": "PRD000002",
+        "product_id": "PRD000011",
         "store_id": "STR000001",
         "name": "Bread",
         "category": "Food",
         "price": 1500.0,
-        "stock_quantity": 10
+        "stock_quantity": 10,
+        "minimum_stock": 10
+    },
+    {
+        "product_id": "PRD000012",
+        "store_id": "STR000001",
+        "name": "Mr V permium water 75cl",
+        "category": "Soft Drinks",
+        "price": 150.0,
+        "stock_quantity": 146,
+        "minimum_stock": 50
     }
 ]

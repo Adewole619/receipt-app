@@ -2,7 +2,7 @@ from utils.validation import (
     validate_string_input,
     validate_optional_phone,
     get_optional_string_input,
-    get_menu_choice,
+    get_menu_choice
     )
 from utils.analytics import print_a_receipt
 import json
@@ -206,23 +206,44 @@ def get_customer_for_receipt():
     customers = load_customers_json()
 
     while True:
-        choice = get_menu_choice("Display:\n1. Existing customer\n2. New customer\nChoice: ")
+        print("\n========== CUSTOMER FOR RECEIPT ==========")
+        print("1. Existing Customer")
+        print("2. Create New Customer")
+        print("3. Walk-in Customer")
+        print("4. Cancel")
+
+        choice = get_menu_choice("\nChoose an option: ")
 
         if choice == "1":
             phone_number = get_menu_choice("Enter phone number: ")
 
             customer = search_customer_by_phone(customers, phone_number)
 
-            if customer:
-                print("Customer found:")
-                return customer
+            if customer is None:
+                print("Customer not found:")
+                continue
 
-            print("Customer not found.")
-            continue
+            return customer , "registered"
 
         elif choice == "2":
-            return create_customer()
+            customer = create_customer()
+
+            if customer is None:
+                print("Customer creation failed.")
+                continue
+
+            return customer , "registered"
         
+        elif choice == "3":
+            print("Walk-in customer selected.")
+
+            return None, "walk_in"
+
+        elif choice == "4":
+            print("Customer selection cancelled.")
+
+            return None, "Cancel"
+
         else:
             print("Invalid option. Try again.")
 
@@ -534,7 +555,10 @@ def delete_customer(customers, receipts, customer_id):
             "Delete the customer's receipts first "
             "before deleting the customer."
         )
-
+        print(
+            "This customer has existing receipts."
+            "Customer records with purchase history cannot be deleted."
+        )
         return False
 
     print_customer(customer)

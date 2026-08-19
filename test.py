@@ -1,9 +1,15 @@
-from utils.customer_utils import load_customers_json, update_customer
-customers = load_customers_json()
-
-updated_customer = update_customer(
-    customers,
-    "CUS000005"
+from utils.product_utils import (
+    load_products_json,
+    search_low_stock_products
 )
 
-print(updated_customer)
+products = load_products_json()
+
+low_stock = search_low_stock_products(products)
+
+for product in low_stock:
+    print(
+        product["name"],
+        product["stock_quantity"],
+        product["minimum_stock"]
+    )

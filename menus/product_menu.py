@@ -7,11 +7,14 @@ from utils.product_utils import (
     print_product,
     print_product_list,
     update_product,
-    delete_product
+    delete_product,
+    restock_product,
+    search_low_stock_products,
+    correct_stock
 )
 
 from utils.store_utils import load_stores_json, search_store_by_id
-from utils.receipt_utils import load_receipts_json
+from utils.receipt_utils import load_receipts_json, get_menu_choice
 
 def product_menu():
 
@@ -25,7 +28,10 @@ def product_menu():
         print("4. Update Product")
         print("5. Delete Product")
         print("6. Products by Store")
-        print("7. Back")
+        print("7. Restock Product")
+        print("8. Low Stock Products")
+        print("9. Correct Stock")
+        print("10. Back")
 
         choice = input("\nChoose an option: ").strip()
 
@@ -48,9 +54,17 @@ def product_menu():
             products_by_store_menu()
 
         elif choice == "7":
+            restock_product_menu()
+
+        elif choice == "8":
+            low_stock_products_menu()
+
+        elif choice == "9":
             print("Returning to main menu...")
             break
-
+        elif choice == "10":
+            correct_stock_menu()
+            
         else:
             print("Invalid option.")
 
@@ -171,4 +185,57 @@ def products_by_store_menu():
     )
 
     print_product_list(store_products)
+
+def restock_product_menu():
+
+    products = load_products_json()
+
+    print("\n========== RESTOCK PRODUCT ==========")
+
+    product_id = get_menu_choice(
+        "Enter Product ID: "
+    ).strip().upper()
+
+    product = restock_product(
+        products,
+        product_id
+    )
+
+    if product is None:
+        print("Product restocking failed.")
+
+def low_stock_products_menu():
+
+    products = load_products_json()
+
+    low_stock_products = search_low_stock_products(
+        products
+    )
+
+    if not low_stock_products:
+        print("\nNo low-stock products.")
+        return
+
+    print("\n========== LOW STOCK PRODUCTS ==========")
+
+    print_product_list(low_stock_products)
+
+
+def correct_stock_menu():
+
+    products = load_products_json()
+
+    print("\n========== STOCK CORRECTION ==========")
+
+    product_id = get_menu_choice(
+        "Enter Product ID: "
+    ).strip().upper()
+
+    product = correct_stock(
+        products,
+        product_id
+    )
+
+    if product is None:
+        print("Stock correction failed.")
 
