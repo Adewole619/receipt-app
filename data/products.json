@@ -5,7 +5,7 @@
         "name": "Coca-Cola 50cl",
         "category": "Soft Drinks",
         "price": 500,
-        "stock_quantity": 101,
+        "stock_quantity": 122,
         "minimum_stock": 10
     },
     {
@@ -14,7 +14,7 @@
         "name": "Pepsi 50cl",
         "category": "Soft Drinks",
         "price": 450,
-        "stock_quantity": 70,
+        "stock_quantity": 111,
         "minimum_stock": 10
     },
     {
@@ -23,7 +23,7 @@
         "name": "Bottle Water 75cl",
         "category": "Water",
         "price": 300,
-        "stock_quantity": 150,
+        "stock_quantity": 154,
         "minimum_stock": 10
     },
     {
@@ -32,7 +32,7 @@
         "name": "Maltina 33cl",
         "category": "Malt Drinks",
         "price": 600,
-        "stock_quantity": 60,
+        "stock_quantity": 52,
         "minimum_stock": 10
     },
     {
@@ -41,7 +41,7 @@
         "name": "Indomie Instant Noodles",
         "category": "Food",
         "price": 500,
-        "stock_quantity": 120,
+        "stock_quantity": 105,
         "minimum_stock": 10
     },
     {
@@ -50,7 +50,7 @@
         "name": "Golden Penny Spaghetti",
         "category": "Food",
         "price": 1200,
-        "stock_quantity": 50,
+        "stock_quantity": 41,
         "minimum_stock": 10
     },
     {
@@ -68,7 +68,7 @@
         "name": "Gala Sausage Roll",
         "category": "Snacks",
         "price": 500,
-        "stock_quantity": 33,
+        "stock_quantity": 30,
         "minimum_stock": 40
     },
     {
@@ -77,7 +77,7 @@
         "name": "Pringles Original",
         "category": "Snacks",
         "price": 2500,
-        "stock_quantity": 30,
+        "stock_quantity": 44,
         "minimum_stock": 10
     },
     {
@@ -104,7 +104,7 @@
         "name": "Mr V permium water 75cl",
         "category": "Soft Drinks",
         "price": 150.0,
-        "stock_quantity": 146,
+        "stock_quantity": 138,
         "minimum_stock": 50
     }
 ]

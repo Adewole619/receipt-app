@@ -8,6 +8,7 @@ from utils.validation import (
     validate_optional_num,
     validate_optional_string,
 )
+from utils.inventory_utils import record_inventory_movement
 
 PRODUCT_FILE_JSON = "data/products.json"
 
@@ -357,12 +358,25 @@ def restock_product(products, product_id):
     print(f"Product:        {product['name']}")
     print(f"Current stock:  {product['stock_quantity']}")
 
+    # Before changing the stock, capture the old value
+    previous_stock = product["stock_quantity"]
+
     restock_quantity = validate_num_input(
         "Quantity to add",
         int
     )
 
     product["stock_quantity"] += restock_quantity
+
+    # After the change, record the movement
+    record_inventory_movement(
+        product["product_id"],
+        "RESTOCK",
+        restock_quantity,
+        previous_stock,
+        product["stock_quantity"],
+        "Manual restock"
+    )
 
     save_all_products(products)
 
@@ -464,7 +478,7 @@ def validate_stock(products, receipt_items):
 
     return True
 
-def deduct_stock(products, receipt_items):
+def deduct_stock(products, receipt_items, receipt_number):
 
     for item in receipt_items:
 
@@ -496,7 +510,18 @@ def deduct_stock(products, receipt_items):
             item["product_id"]
         )
 
+        previous_stock = product["stock_quantity"]
+        
         product["stock_quantity"] -= item["quantity"]
+
+        movement = record_inventory_movement(
+            product["product_id"],
+            "SALE",
+            -item["quantity"],
+            previous_stock,
+            product["stock_quantity"],
+            f"Receipt {receipt_number}"
+        )
 
     # save_all_products(products)
 
@@ -552,12 +577,25 @@ def correct_stock(products, product_id):
     print(f"Product:       {product['name']}")
     print(f"Current stock: {product['stock_quantity']}")
 
+    previous_stock = product["stock_quantity"]
+
     new_stock = validate_num_input(
         "Correct stock quantity",
         int
     )
 
+    change_quantity = new_stock - previous_stock
+
     product["stock_quantity"] = new_stock
+
+    record_inventory_movement(
+        product["product_id"],
+        "CORRECTION",
+        change_quantity,
+        previous_stock,
+        product["stock_quantity"],
+        "Manual stock correction"
+    )
 
     save_all_products(products)
 

@@ -1404,5 +1404,64 @@
             }
         ],
         "grand_total": 600.0
+    },
+    {
+        "store": "Shoprite Lagos",
+        "receipt_number": "RCP0000106",
+        "customer_id": "CUS000006",
+        "items": [
+            {
+                "product_id": "PRD000012",
+                "name": "Mr V permium water 75cl",
+                "price": 150.0,
+                "quantity": 8,
+                "subtotal": 1200.0
+            }
+        ],
+        "grand_total": 1200.0
+    },
+    {
+        "store": "Shoprite Lagos",
+        "receipt_number": "RCP0000107",
+        "customer_id": null,
+        "items": [
+            {
+                "product_id": "PRD000002",
+                "name": "Pepsi 50cl",
+                "price": 450,
+                "quantity": 3,
+                "subtotal": 1350
+            },
+            {
+                "product_id": "PRD000004",
+                "name": "Maltina 33cl",
+                "price": 600,
+                "quantity": 5,
+                "subtotal": 3000
+            }
+        ],
+        "grand_total": 4350
+    },
+    {
+        "store": "Shoprite Lagos",
+        "receipt_number": "RCP0000108",
+        "customer_id": null,
+        "items": [
+            {
+                "product_id": "PRD000006",
+                "name": "Golden Penny Spaghetti",
+                "price": 1200,
+                "quantity": 9,
+                "subtotal": 10800
+            },
+            {
+                "product_id": "PRD000004",
+                "name": "Maltina 33cl",
+                "price": 600,
+                "quantity": 3,
+                "subtotal": 1800
+            }
+        ],
+        "grand_total": 12600
     }
 ]

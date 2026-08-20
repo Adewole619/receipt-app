@@ -1,0 +1,110 @@
+[
+    {
+        "movement_id": "MOV000001",
+        "product_id": "PRD000001",
+        "type": "RESTOCK",
+        "quantity": 50,
+        "previous_stock": 101,
+        "new_stock": 151,
+        "reason": "Supplier delivery"
+    },
+    {
+        "movement_id": "MOV000002",
+        "product_id": "PRD000012",
+        "type": "SALE",
+        "quantity": 8,
+        "previous_stock": 146,
+        "new_stock": 138,
+        "reason": "Receipt RCP0000106"
+    },
+    {
+        "movement_id": "MOV000003",
+        "product_id": "PRD000002",
+        "type": "SALE",
+        "quantity": -3,
+        "previous_stock": 70,
+        "new_stock": 67,
+        "reason": "Receipt RCP0000107"
+    },
+    {
+        "movement_id": "MOV000004",
+        "product_id": "PRD000004",
+        "type": "SALE",
+        "quantity": -5,
+        "previous_stock": 60,
+        "new_stock": 55,
+        "reason": "Receipt RCP0000107"
+    },
+    {
+        "movement_id": "MOV000005",
+        "product_id": "PRD000001",
+        "type": "RESTOCK",
+        "quantity": 21,
+        "previous_stock": 101,
+        "new_stock": 122,
+        "reason": "Manual restock"
+    },
+    {
+        "movement_id": "MOV000006",
+        "product_id": "PRD000006",
+        "type": "SALE",
+        "quantity": -9,
+        "previous_stock": 50,
+        "new_stock": 41,
+        "reason": "Receipt RCP0000108"
+    },
+    {
+        "movement_id": "MOV000007",
+        "product_id": "PRD000004",
+        "type": "SALE",
+        "quantity": -3,
+        "previous_stock": 55,
+        "new_stock": 52,
+        "reason": "Receipt RCP0000108"
+    },
+    {
+        "movement_id": "MOV000008",
+        "product_id": "PRD000002",
+        "type": "RESTOCK",
+        "quantity": 44,
+        "previous_stock": 67,
+        "new_stock": 111,
+        "reason": "Manual restock"
+    },
+    {
+        "movement_id": "MOV000009",
+        "product_id": "PRD000005",
+        "type": "CORRECTION",
+        "quantity": -15,
+        "previous_stock": 120,
+        "new_stock": 105,
+        "reason": "Manual stock correction"
+    },
+    {
+        "movement_id": "MOV000010",
+        "product_id": "PRD000008",
+        "type": "CORRECTION",
+        "quantity": -3,
+        "previous_stock": 33,
+        "new_stock": 30,
+        "reason": "Manual stock correction"
+    },
+    {
+        "movement_id": "MOV000011",
+        "product_id": "PRD000003",
+        "type": "CORRECTION",
+        "quantity": 4,
+        "previous_stock": 150,
+        "new_stock": 154,
+        "reason": "Manual stock correction"
+    },
+    {
+        "movement_id": "MOV000012",
+        "product_id": "PRD000009",
+        "type": "CORRECTION",
+        "quantity": 14,
+        "previous_stock": 30,
+        "new_stock": 44,
+        "reason": "Manual stock correction"
+    }
+]

@@ -4,6 +4,9 @@ from utils.inventory_utils import (
     print_inventory_history,
     search_inventory_history_by_product,
     search_inventory_history_by_type,
+    validate_inventory_history,
+    inventory_movement_report,
+    product_movement_report,
 )
 
 
@@ -17,7 +20,10 @@ def inventory_history_menu():
 1. View All History
 2. Search by Product
 3. Search by Movement Type
-4. Back
+4. Validate History
+5. Movement Report
+6. Product Movement Report
+7. Back
 """)
 
         choice = get_menu_choice("Choose an option: ")
@@ -60,13 +66,27 @@ def inventory_history_menu():
                 print("No inventory history found.")
             else:
                 print_inventory_history(movements)
-
         elif choice == "4":
+
+            validate_inventory_history(history)
+
+        elif choice == "5":
+
+            inventory_movement_report(history)
+        elif choice == "6":
+
+            product_id = get_menu_choice(
+                "Enter Product ID: "
+            )
+
+            product_movement_report(
+                history,
+                product_id
+            )
+        elif choice == "7":
 
             break
 
         else:
 
             print("Invalid option.")
-
-inventory_history_menu()

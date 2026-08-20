@@ -427,14 +427,14 @@ def print_receipt_cart(receipt_items):
     print("=====================================")
 
 def finalize_receipt(receipt, products):
-
+    receipt_number = receipt["receipt_number"]
     receipt_items = receipt["items"]
     # Step 1: Validate stock
     if not validate_stock(products, receipt_items):
         print("Receipt cannot be completed.")
         return False
 
-    if not deduct_stock(products, receipt_items):
+    if not deduct_stock(products, receipt_items, receipt_number):
         print("Stock could not be deducted.")
         return False
 

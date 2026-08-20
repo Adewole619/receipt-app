@@ -15,6 +15,7 @@ from utils.product_utils import (
 
 from utils.store_utils import load_stores_json, search_store_by_id
 from utils.receipt_utils import load_receipts_json, get_menu_choice
+from menus.inventory_menu import inventory_history_menu
 
 def product_menu():
 
@@ -31,7 +32,8 @@ def product_menu():
         print("7. Restock Product")
         print("8. Low Stock Products")
         print("9. Correct Stock")
-        print("10. Back")
+        print("10. Inventory History")
+        print("11. Back")
 
         choice = input("\nChoose an option: ").strip()
 
@@ -60,10 +62,14 @@ def product_menu():
             low_stock_products_menu()
 
         elif choice == "9":
+            correct_stock_menu()
+
+        elif choice == "10":
+            inventory_history_menu()
+            
+        elif choice == "11":
             print("Returning to main menu...")
             break
-        elif choice == "10":
-            correct_stock_menu()
             
         else:
             print("Invalid option.")
