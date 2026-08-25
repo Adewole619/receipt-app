@@ -9,7 +9,6 @@ from utils.validation import (
 )
 
 from utils.store_utils import load_stores_json, search_store_by_id
-from utils.product_utils import deduct_stock
 
 from utils.product_utils import (
     load_products_json,
@@ -19,6 +18,8 @@ from utils.product_utils import (
     validate_stock
 )
 from utils.customer_utils import get_customer_for_receipt
+
+from datetime import datetime
 
 RECEIPT_FILE = "data/receipts.txt"
 RECEIPT_FILE_JSON = "data/receipts.json"
@@ -103,34 +104,34 @@ def generate_receipt_number():
 
 # ------------------------RECEIPT SEARCHING METHODS -----------------------
 
-def search_by_receipt_number(rcp_number):
+# def search_by_receipt_number(rcp_number):
     
-    saved_receipt_json = load_receipts_json()
-    if not saved_receipt_json:
-        return None
+#     saved_receipt_json = load_receipts_json()
+#     if not saved_receipt_json:
+#         return None
 
-    rcp_number = rcp_number.strip().upper()
+#     rcp_number = rcp_number.strip().upper()
 
-    for rcp in saved_receipt_json:
-        if rcp["receipt_number"].strip().upper() == rcp_number :
-            return rcp
+#     for rcp in saved_receipt_json:
+#         if rcp["receipt_number"].strip().upper() == rcp_number :
+#             return rcp
 
-    return None
+#     return None
 
 
-def search_by_store(store_name):
+# def search_by_store(store_name):
     
-    saved_receipt_json = load_receipts_json()
-    if not saved_receipt_json:
-        return []
+#     saved_receipt_json = load_receipts_json()
+#     if not saved_receipt_json:
+#         return []
 
-    store_name = store_name.strip().lower()
-    rcp_receipts = []
-    for rcp in saved_receipt_json:
-        if rcp["store"].strip().lower() == store_name:
-            rcp_receipts.append(rcp)
+#     store_name = store_name.strip().lower()
+#     rcp_receipts = []
+#     for rcp in saved_receipt_json:
+#         if rcp["store"].strip().lower() == store_name:
+#             rcp_receipts.append(rcp)
 
-    return rcp_receipts
+#     return rcp_receipts
 
 
 def search_by_receipt_number(receipts, rcp_number):
@@ -205,6 +206,7 @@ def create_receipt():
         for item in receipt_items:
             grand_total += item["subtotal"]
 
+
         receipt = {
             "store": store_name,
             "receipt_number": receipt_number,
@@ -224,7 +226,11 @@ def create_receipt():
         elif confirmation == "cancel":
             print("Receipt creation cancelled.")
             return None
-    
+    # Receipt has now been confirmed
+    created_at = datetime.now().isoformat(timespec="seconds")
+
+    receipt["created_at"] = created_at
+
     if not finalize_receipt(receipt, products):
         print("Receipt could not be completed.")
         return None
@@ -439,49 +445,10 @@ def finalize_receipt(receipt, products):
         return False
 
     save_all_products(products)
-    # # Step 1: Validate stock
-    # for item in receipt_items:
-
-    #     product = search_product_by_id(
-    #         products,
-    #         item["product_id"]
-    #     )
-
-    #     if product is None:
-    #         print(
-    #             f"Product {item['product_id']} "
-    #             "no longer exists."
-    #         )
-    #         return False
-
-    #     if item["quantity"] > product["stock_quantity"]:
-    #         print(
-    #             f"Not enough stock for "
-    #             f"{product['name']}."
-    #         )
-    #         return False
-
-    # Step 2: Save receipt
+   
     if not save_receipt_json(receipt):
         print("Receipt could not be saved.")
         return False
-
-    # # Step 3: Deduct stock
-    # for item in receipt_items:
-
-    #     product = search_product_by_id(
-    #         products,
-    #         item["product_id"]
-    #     )
-
-    #     product["stock_quantity"] -= item["quantity"]
-
-    # # Step 4: Save products
-    # save_all_products(products)
-    # Step 3: Deduct stock
-    # if not deduct_stock(products, receipt_items):
-    #     print("Stock could not be deducted.")
-    #     return False
 
     return True
 
@@ -656,11 +623,16 @@ def print_receipt_out(receipt):
     receipt_number = receipt["receipt_number"]
     receipt_items = receipt["items"]
     grand_total = receipt["grand_total"]
+    created_at = receipt.get("created_at")
 
     print("==========RECEIPT==============")
 
     print(f"Store: {store_name}")
     print(f"Receipt No: {receipt_number}")
+
+    created_at = receipt.get("created_at")
+    if created_at:
+        print(f"date & Time: {created_at}")
 
     customer_id = receipt.get("customer_id")
 
@@ -757,4 +729,8 @@ def print_a_receipt(receipt, title="Receipt"):
     print(f"{title}")
     print(f"Store:         {receipt['store']}")
     print(f"Receipt:       {receipt['receipt_number']}")
+    created_at = receipt.get("created_at")
+
+    if created_at:
+        print(f"Date & Time:   {created_at}")
     print(f"Grand Total:   ₦{receipt['grand_total']:,.2f}\n")
